@@ -1,0 +1,231 @@
+/* -----------------------------------------------------------------------
+   Site footer
+   (extracted from globals.css)
+   ----------------------------------------------------------------------- */
+.siteFooter {
+  background: #0d2244;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.footerTop {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 40px;
+}
+
+.footerBrand {
+  min-width: 0;
+}
+
+.footerLogo {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 18px;
+  text-decoration: none;
+}
+
+.footerLogoIcon {
+  width: 356px;
+  height: 54px;
+  background: transparent url("/assets/img/logo.png") left center / contain
+    no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  color: transparent;
+  flex-shrink: 0;
+}
+
+.footerBrand p {
+  font-size: 0.855rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 24px;
+}
+
+.footerSocial {
+  display: flex;
+  gap: 10px;
+}
+
+.socialLink {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.socialLink:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.footerCol h4 {
+  color: var(--white);
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.footerCol h4::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  height: 2px;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footerLinks :global(a) {
+  font-size: 0.848rem;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.footerLinks :global(a):hover {
+  color: var(--gold);
+}
+
+.footerLinks :global(a) :global(i) {
+  font-size: 0.7rem;
+  color: var(--primary);
+}
+
+.footerContactList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footerContactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.848rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footerContactItem :global(i) {
+  color: var(--gold);
+  margin-top: 3px;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.footerContactItem :global(svg) {
+  color: var(--gold);
+  margin-top: 3px;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.footerBottom {
+  padding: 20px 0;
+}
+
+.footerBottom :global(.container) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footerBottom p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 0;
+}
+
+.footerBottomLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.footerBottomLinks :global(a) {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color var(--transition-fast);
+}
+
+.footerBottomLinks :global(a):hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 1199px) {
+  .footerGrid {
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 991px) {
+  .footerGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .footerBrand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .footerGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .footerTop {
+    padding: 40px 0 32px;
+  }
+
+  .footerBottom :global(.container) {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 575px) {
+  .footerSocial {
+    flex-wrap: wrap;
+  }
+
+  .footerBottomLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media print {
+  .siteFooter {
+    display: none !important;
+  }
+}

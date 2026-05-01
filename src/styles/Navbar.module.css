@@ -1,0 +1,424 @@
+/* -----------------------------------------------------------------------
+   Top utility bar + main navigation
+   (extracted from globals.css)
+   ----------------------------------------------------------------------- */
+.topBar {
+  background: var(--secondary-dark);
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+}
+
+.topBar :global(.container) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topBar a,
+.topBar span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--transition-fast);
+}
+
+.topBar a:hover {
+  color: var(--white);
+}
+
+.topBar :global(i) {
+  font-size: 0.75rem;
+}
+
+.topBarDivider {
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.siteHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  background: var(--white);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    height: auto;
+    min-height: var(--nav-height);
+    padding-block: 8px;
+  }
+}
+
+.navbar :global(.container) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.navLogo {
+  /* display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0; */
+}
+
+.navLogoImage {
+  width: 100%;
+  height: auto;
+  max-height: 48px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+@media (max-width: 767px) {
+  .navLogo {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: min(100%, 200px);
+  }
+
+  .navLogoImage {
+    width: auto;
+    max-width: 100%;
+    height: 38px;
+    max-height: 38px;
+  }
+  .topBar {
+    display: none;
+  }
+}
+
+.navMenu {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+}
+
+.navMenu .navLink {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-body);
+  padding: 8px 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.navMenu .navLink:hover,
+.navMenu .navLink:global(.active) {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 10px;
+}
+
+.navGovtLogos {
+  display: flex;
+  align-items: center;
+  /* gap: 10px; */
+}
+
+.navGovtLogo {
+  display: block;
+}
+
+.navToggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+@media (max-width: 767px) {
+  .navToggle {
+    display: flex;
+  }
+}
+
+.navToggle:hover {
+  background: var(--bg-light);
+}
+
+.navToggle span {
+  display: block;
+  height: 2px;
+  background: var(--text-dark);
+  border-radius: var(--radius-full);
+  transition: all var(--transition);
+}
+
+.navToggle span:nth-child(1) {
+  width: 22px;
+}
+
+.navToggle span:nth-child(2) {
+  width: 16px;
+}
+
+.navToggle span:nth-child(3) {
+  width: 22px;
+}
+
+.navToggle:global(.active) span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+  width: 22px;
+}
+
+.navToggle:global(.active) span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.navToggle:global(.active) span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+  width: 22px;
+}
+
+.navItemDropdown {
+  position: relative;
+}
+
+.navItemDropdown > .navLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navItemDropdown > .navLink :global(svg) {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+@media (max-width: 767px) {
+  .navItemDropdown:global(.is-open) > .navLink :global(svg) {
+    transform: rotate(180deg);
+  }
+}
+
+/* Desktop: off-canvas flyout. Do NOT set opacity/visibility here for all breakpoints — it overrides responsive.css on mobile and hides expanded submenus. */
+.navSubmenu {
+  background: var(--white);
+  min-width: 260px;
+  z-index: 1001;
+  padding: 8px 0;
+  margin-top: 4px;
+}
+
+@media (min-width: 768px) {
+  .navSubmenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all var(--transition-fast);
+  }
+
+  .navItemDropdown:hover > .navSubmenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .navItemDropdown:hover > .navLink :global(svg) {
+    transform: rotate(180deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .navSubmenu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+}
+
+.navSubmenu :global(li) {
+  padding: 0;
+}
+
+.navSubmenu :global(a) {
+  display: block;
+  padding: 5px 14px;
+  font-size: 0.8rem;
+  color: var(--text-body);
+  transition: all var(--transition-fast);
+}
+
+@media (min-width: 768px) {
+  .navSubmenu :global(a) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 767px) {
+  .navSubmenu :global(a) {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+}
+
+.navSubmenu :global(a):hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding-left: 24px;
+}
+
+/* --- Mobile drawer + accordion (from responsive.css, component-scoped) --- */
+@media (max-width: 767px) {
+  :global(:root) {
+    --nav-height: 64px;
+  }
+
+  .navbar :global(.container) {
+    gap: 12px;
+  }
+
+  .navActions {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .navMenu {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--white);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 24px var(--container-px);
+    gap: 4px;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+    z-index: 10050;
+    isolation: isolate;
+    box-shadow: var(--shadow-xl);
+  }
+
+  .navMenu:global(.open) {
+    transform: translateX(0);
+  }
+
+  .navMenu .navLink {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .navItemDropdown {
+    width: 100%;
+  }
+
+  .navItemDropdown > .navLink {
+    justify-content: space-between;
+  }
+
+  .navSubmenu {
+    position: static;
+    min-width: 0;
+    width: 100%;
+    margin-top: 0;
+    padding: 0 0 0 14px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    display: none;
+    background: transparent;
+  }
+
+  .navItemDropdown:global(.is-open) > .navSubmenu {
+    display: block;
+  }
+
+  .navSubmenu :global(a) {
+    padding: 10px 16px;
+    font-size: 0.92rem;
+  }
+
+  .navGovtLogos {
+    gap: 8px;
+  }
+
+  .navGovtLogo {
+    height: 24px;
+    width: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .navbar :global(.container) {
+    gap: 10px;
+  }
+
+  .navLogoImage {
+    height: 34px;
+  }
+
+  .navActions {
+    gap: 6px;
+  }
+
+  .navGovtLogos {
+    gap: 6px;
+  }
+
+  .navGovtLogo {
+    height: 22px;
+  }
+}
+
+@media print {
+  .siteHeader,
+  .topBar {
+    display: none !important;
+  }
+}
