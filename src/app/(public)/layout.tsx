@@ -41,7 +41,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
-        <FooterCTA/>
+        {/* <FooterCTA/> */}
         <Footer />
       </body>
     </html>
