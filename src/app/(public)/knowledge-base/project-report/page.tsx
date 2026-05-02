@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Project Report | Knowledge Base | ODOP UP Portal",
@@ -55,7 +56,7 @@ export default async function ProjectReportPage() {
           <div className="kb-pr-grid" role="list">
             {reports.map(({ slug, district, title, desc, img }) => (
               <article key={slug} className="kb-pr-card" role="listitem">
-                <a href={`/knowledge-base/project-report/${slug}`} className="kb-pr-card__link">
+                <Link href={`/knowledge-base/project-report/${slug}`} className="kb-pr-card__link">
                   <span className="kb-pr-card__district">{district}</span>
                   <h3 className="kb-pr-card__title">{title}</h3>
                   <p className="kb-pr-card__desc">{desc}</p>
@@ -65,7 +66,7 @@ export default async function ProjectReportPage() {
                       <i className="fa-solid fa-angle-right" />
                     </span>
                   </div>
-                </a>
+                </Link>
               </article>
             ))}
           </div>
@@ -75,7 +76,7 @@ export default async function ProjectReportPage() {
             <div className="kb-pr-grid" role="list">
               {decryptedData.data.project_reports.map((item: any) => (
                 <article key={item.id || item.slug} className="kb-pr-card" role="listitem">
-                  <a href={`/knowledge-base/project-report/${item.slug}`} className="kb-pr-card__link">
+                <Link href={`/knowledge-base/project-report/${item.slug}`} className="kb-pr-card__link">
                     <span className="kb-pr-card__district">{item.name}</span>
                     <h3 className="kb-pr-card__title">{item.title}</h3>
                     <p className="kb-pr-card__desc">{item.short_description}</p>
@@ -92,7 +93,7 @@ export default async function ProjectReportPage() {
                         <i className="fa-solid fa-angle-right" />
                       </span>
                     </div>
-                  </a>
+                  </Link>
                 </article>
               ))}
             </div>
