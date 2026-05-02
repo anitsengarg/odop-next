@@ -13952,6 +13952,18 @@ select.form-control {
     letter-spacing: 0.04em;
 }
 
+.cfc-link-btn {
+    color: #0f4f9b;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.cfc-link-btn:hover {
+    color: #0c3e7a;
+    text-decoration: underline;
+}
+
 .faq-page .static-card h4 {
     margin: 14px 0 10px;
     font-size: 1.02rem;

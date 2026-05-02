@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function OdopCellPage() {
   return (
-    <main className="main-content schemes-page about-static-page">
+    <main className="main-content schemes-page about-static-page policy-page">
       <section className="page-hero schemes-hero">
         <div className="page-hero-overlay" />
         <div className="container page-hero-content">
