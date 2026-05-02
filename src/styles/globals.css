@@ -1209,6 +1209,7 @@ p:last-child {
 .section-header {
     text-align: center;
     margin-bottom: 56px;
+    margin-top: 40px;
 }
 
 .section-header .eyebrow {
@@ -7542,7 +7543,7 @@ select.form-control {
 }
 
 .schemes-page {
-    padding-top: 28px;
+    padding-top: 0;
 }
 
 .filter-bar-inner {
