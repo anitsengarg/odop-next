@@ -103,7 +103,7 @@ export default function ProjectReportPage() {
           </div>
 
           {/* Static data Field  */}
-          <div className="kb-pr-grid" role="list">
+          {/* <div className="kb-pr-grid" role="list">
             {reports.map(({ slug, district, title, desc, img }) => (
               <article key={slug} className="kb-pr-card" role="listitem">
                 <Link href={`/knowledge-base/project-report/${slug}`} className="kb-pr-card__link">
@@ -119,12 +119,12 @@ export default function ProjectReportPage() {
                 </Link>
               </article>
             ))}
-          </div>
+          </div> */}
 
           {/* Dynamic data from API with Suspense */}
-          <Suspense fallback={<LoadingSkeleton />}>
-            <DynamicProjectReports />
-          </Suspense>
+          {/* <Suspense fallback={<LoadingSkeleton />}> */}
+          <DynamicProjectReports />
+          {/* </Suspense> */}
         </div>
       </div>
     </main>
