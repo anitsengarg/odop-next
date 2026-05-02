@@ -282,7 +282,7 @@ function Navbar() {
                                         </Link>
                                         <ul id="partnerships-submenu" role="list" className={`${styles.navSubmenu} nav-submenu`}>
                                             <li role="listitem"><Link href="/partnerships/mous-list" onClick={onLeafNavClick} aria-current={pathname === "/partnerships/mous-list" ? "page" : undefined}>MOUs/GOs</Link></li>
-                                            <li role="listitem"><Link href="/partnerships/mou-report" onClick={onLeafNavClick} aria-current={pathname === "/partnerships/mou-report" ? "page" : undefined}>MOU Report</Link></li>
+                                            <li role="listitem"><Link href="/partnerships/mous-list/amazon-flipkart-ecommerce-marketplace-mou" onClick={onLeafNavClick} aria-current={pathname === "/partnerships/mous-list/amazon-flipkart-ecommerce-marketplace-mou" ? "page" : undefined}>MOU Report</Link></li>
                                             <li role="listitem"><Link href="/partnerships/event-budget-report" onClick={onLeafNavClick} aria-current={pathname === "/partnerships/event-budget-report" ? "page" : undefined}>Budget Report</Link></li>
                                         </ul>
                                     </li>
@@ -302,6 +302,7 @@ function Navbar() {
                                         <ul id="resources-submenu" role="list" className={`${styles.navSubmenu} nav-submenu`}>
                                             <li role="listitem"><Link href="/resources/tenders" onClick={onLeafNavClick} aria-current={pathname === "/resources/tenders" ? "page" : undefined}>Tenders</Link></li>
                                             <li role="listitem"><Link href="/resources/cfc-list" onClick={onLeafNavClick} aria-current={pathname === "/resources/cfc-list" ? "page" : undefined}>List of CFCs</Link></li>
+                                            <li role="listitem"><Link href="/resources/nabl-labs" onClick={onLeafNavClick} aria-current={pathname === "/resources/nabl-labs" ? "page" : undefined}>List of NABL Labs</Link></li>
                                             <li role="listitem"><a href="/assets/document/pdf-attachment/639126219125732430.pdf" target="_blank" rel="noopener noreferrer" onClick={onLeafNavClick}>ODOP Book</a></li>
                                             <li role="listitem"><a href="/assets/document/pdf-attachment/Coffee-Table-Book_040424.pdf" target="_blank" rel="noopener noreferrer" onClick={onLeafNavClick}>Coffee Table Book</a></li>
                                             <li role="listitem"><a href="/assets/document/pdf-attachment/639126231469087908.pdf" target="_blank" rel="noopener noreferrer" onClick={onLeafNavClick}>ODOP Registered Business Unit</a></li>

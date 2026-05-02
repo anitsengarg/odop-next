@@ -4,10 +4,6 @@ export async function fetchAboutUs(options?: RequestOptions) {
   return httpClient.get(ENDPOINTS.aboutUs, options);
 }
 
-export async function fetchSuccessStories(options?: RequestOptions) {
-  return httpClient.get(ENDPOINTS.successStories, options);
-}
-
 export async function fetchGovernmentSchemes(options?: RequestOptions) {
   return httpClient.get(ENDPOINTS.governmentSchemes, options);
 }

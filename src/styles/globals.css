@@ -13742,9 +13742,9 @@ select.form-control {
    STATIC ABOUT PAGES (MESSAGE / OBJECTIVE / BRAND / BUDGET)
    ----------------------------------------------------------------------- */
 
-.static-content-wrap{
+/* .static-content-wrap{
       padding-bottom: 40px;
-   }
+   } */
 
 .about-static-page .static-content-wrap {
     margin: 24px 0 44px;
@@ -13955,6 +13955,18 @@ select.form-control {
     font-size: 0.82rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+}
+
+.cfc-link-btn {
+    color: #0f4f9b;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.cfc-link-btn:hover {
+    color: #0c3e7a;
+    text-decoration: underline;
 }
 
 .faq-page .static-card h4 {
