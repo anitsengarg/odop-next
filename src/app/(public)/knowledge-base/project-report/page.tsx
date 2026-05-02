@@ -15,7 +15,12 @@ const reports = [
   { slug: "baghpat", district: "Baghpat", title: "Curtains Making Unit", desc: "Baghpat is mainly known for its home furnishing works across the country. Curtains are often...", img: "/assets/img/knowledge-base/project-report/baghpat.jpg" },
 ];
 
-export default function ProjectReportPage() {
+import { fetchProjectReports } from "@/services/project-report.service";
+
+export default async function ProjectReportPage() {
+  const reportsData = await fetchProjectReports();
+  console.log("Project Reports Data:", JSON.stringify(reportsData, null, 2));
+
   return (
     <main className="main-content schemes-page">
       {/* ===== PAGE HERO ===== */}

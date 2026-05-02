@@ -13,9 +13,9 @@ function FooterCTA() {
                             through the ODOP UP Portal.</p>
                         <div className={styles.ctaActions}>
                             <Link href="supplier-registration.html"
-                            className="btn btn-outline-white btn-lg"><FaUserPlus /> Register as Supplier
-                        </Link>
-                        <Link href="about-odop.html" className="btn btn-gold btn-lg"><FaInfoCircle /> Learn About ODOP </Link></div>
+                                className="btn btn-outline-white btn-lg"><FaUserPlus /> Register as Supplier
+                            </Link>
+                            <Link href="about-odop.html" className="btn btn-gold btn-lg"><FaInfoCircle /> Learn About ODOP </Link></div>
                     </div>
                 </div>
             </div>
