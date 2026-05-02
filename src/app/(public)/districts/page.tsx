@@ -94,7 +94,7 @@ export default function DistrictsPage() {
           <p className="page-hero-subtitle">
             Explore ODOP products district-wise using the same card-based layout used on the homepage.
           </p>
-          <form className="hero-search" onSubmit={(e) => e.preventDefault()}>
+          <form className="hero-search">
             <label className="hero-search-field" htmlFor="district-products-ai-search">
               <i className="fas fa-search" aria-hidden="true" />
               <input

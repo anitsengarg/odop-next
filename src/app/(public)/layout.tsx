@@ -3,7 +3,6 @@ import { Inter, Poppins } from "next/font/google";
 import "@/styles/globals.css";
 import "@/styles/responsive.css";
 import Navbar from "@/components/shared/Navbar";
-import FooterCTA from "@/components/shared/FooterCTA";
 import Footer from "@/components/shared/Footer";
 
 /** Pairs with `--font-body` / `--font-heading` used throughout `globals.css`. */
@@ -41,7 +40,6 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
-        {/* <FooterCTA/> */}
         <Footer />
       </body>
     </html>
