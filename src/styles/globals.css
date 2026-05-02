@@ -13741,6 +13741,11 @@ select.form-control {
 /* -----------------------------------------------------------------------
    STATIC ABOUT PAGES (MESSAGE / OBJECTIVE / BRAND / BUDGET)
    ----------------------------------------------------------------------- */
+
+.static-content-wrap{
+      padding-bottom: 40px;
+   }
+
 .about-static-page .static-content-wrap {
     margin: 24px 0 44px;
     display: grid;
