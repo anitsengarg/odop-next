@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Project Report | Knowledge Base | ODOP UP Portal",
@@ -15,7 +16,21 @@ const reports = [
   { slug: "baghpat", district: "Baghpat", title: "Curtains Making Unit", desc: "Baghpat is mainly known for its home furnishing works across the country. Curtains are often...", img: "/assets/img/knowledge-base/project-report/baghpat.jpg" },
 ];
 
-export default function ProjectReportPage() {
+import { fetchProjectReports } from "@/services/project-report.service";
+import { decrypt128, API_CONFIG } from "@/lib/api";
+
+export default async function ProjectReportPage() {
+  const reportsData = await fetchProjectReports();
+  let decryptedData: any = null;
+  if (reportsData.success && reportsData.data && typeof (reportsData.data as any).body === "string") {
+    try {
+      decryptedData = await decrypt128((reportsData.data as any).body);
+      console.log("Decrypted Project Reports Data:", decryptedData);
+    } catch (error) {
+      console.error("Decryption failed:", error);
+    }
+  }
+
   return (
     <main className="main-content schemes-page">
       {/* ===== PAGE HERO ===== */}
@@ -37,11 +52,11 @@ export default function ProjectReportPage() {
             <h2 className="section-title">Project Report</h2>
             <div className="divider"><span /><span /><span /></div>
           </div>
-
+          {/* Static data Field  */}
           <div className="kb-pr-grid" role="list">
             {reports.map(({ slug, district, title, desc, img }) => (
               <article key={slug} className="kb-pr-card" role="listitem">
-                <a href={`/knowledge-base/project-report/${slug}`} className="kb-pr-card__link">
+                <Link href={`/knowledge-base/project-report/${slug}`} className="kb-pr-card__link">
                   <span className="kb-pr-card__district">{district}</span>
                   <h3 className="kb-pr-card__title">{title}</h3>
                   <p className="kb-pr-card__desc">{desc}</p>
@@ -51,10 +66,38 @@ export default function ProjectReportPage() {
                       <i className="fa-solid fa-angle-right" />
                     </span>
                   </div>
-                </a>
+                </Link>
               </article>
             ))}
           </div>
+
+          {/* Dynamic data from API */}
+          {decryptedData?.data && Array.isArray(decryptedData.data.project_reports) && (
+            <div className="kb-pr-grid" role="list">
+              {decryptedData.data.project_reports.map((item: any) => (
+                <article key={item.id || item.slug} className="kb-pr-card" role="listitem">
+                <Link href={`/knowledge-base/project-report/${item.slug}`} className="kb-pr-card__link">
+                    <span className="kb-pr-card__district">{item.name}</span>
+                    <h3 className="kb-pr-card__title">{item.title}</h3>
+                    <p className="kb-pr-card__desc">{item.short_description}</p>
+                    <div className="kb-pr-card__media">
+                      <img
+                        src={`${API_CONFIG.IMAGE_BASE_URL}${item.thumbnail}`}
+                        alt={item.title || ""}
+                        className="kb-pr-card__img"
+                        width={640}
+                        height={400}
+                        loading="lazy"
+                      />
+                      <span className="kb-pr-card__action" aria-hidden="true">
+                        <i className="fa-solid fa-angle-right" />
+                      </span>
+                    </div>
+                  </Link>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </main>

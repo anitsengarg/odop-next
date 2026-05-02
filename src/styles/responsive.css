@@ -152,6 +152,18 @@
     .contact-grid { grid-template-columns: 1fr; gap: 28px; }
     .contact-info-cards { flex-direction: row; flex-wrap: wrap; }
     .contact-card { flex: 1; min-width: 240px; }
+    
+    /* Login Modal */
+    .login-modal-layout { grid-template-columns: 1fr; }
+    .login-modal-promo { min-height: 0; padding: 28px 22px; }
+    .login-modal-box { max-width: 580px; }
+    .login-modal-promo h3 { font-size: 1.6rem; margin-bottom: 0; }
+    .login-modal-illustration { max-width: 180px; margin-top: 16px; }
+    .login-modal-panel { padding: 24px; }
+    .login-modal-back { margin-bottom: 24px; }
+    .login-modal-formwrap { max-width: none; }
+    .login-modal-brandbar { padding-right: 48px; }
+    .login-modal-brand-logo { width: 210px; }
 }
 
 /* -----------------------------------------------------------------------
@@ -509,12 +521,10 @@
     .district-entry-grid-stats { grid-template-columns: 1fr; }
 
     .login-modal-shell { padding: 22px; }
-    .login-modal-layout { grid-template-columns: 1fr; }
-    .login-modal-promo { min-height: 0; }
-    .login-modal-brandbar { padding-right: 44px; }
-    .login-modal-panel { padding: 24px; }
-    .login-modal-back { margin-bottom: 24px; }
-    .login-modal-formwrap { max-width: none; }
+    .login-modal-box { max-width: 100%; }
+    .login-modal-promo { padding: 24px 18px; }
+    .login-modal-brandbar { padding-right: 44px; margin-bottom: 12px; }
+    .login-modal-brand-logo { width: 190px; }
     .login-register-screen { padding: 18px; }
     .pre-registration-grid-roles { grid-template-columns: 1fr; }
     .pre-registration-grid-sectors { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -616,7 +626,7 @@
         padding-right: 52px;
         margin-bottom: 12px;
     }
-    .login-modal-brand-logo { width: 220px; }
+    .login-modal-brand-logo { width: 170px; }
     .login-modal-promo,
     .login-modal-panel {
         border-radius: 20px;
