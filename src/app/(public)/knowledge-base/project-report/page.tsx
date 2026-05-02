@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { fetchProjectReports } from "@/services/project-report.service";
 import { decrypt128, API_CONFIG } from "@/lib/api";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Project Report | Knowledge Base | ODOP UP Portal",
@@ -44,7 +45,7 @@ async function DynamicProjectReports() {
             <h3 className="kb-pr-card__title">{item.title}</h3>
             <p className="kb-pr-card__desc">{item.short_description}</p>
             <div className="kb-pr-card__media">
-              <img
+              <Image
                 src={`${API_CONFIG.IMAGE_BASE_URL}${item.thumbnail}`}
                 alt={item.title || ""}
                 className="kb-pr-card__img"
