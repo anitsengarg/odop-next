@@ -2,9 +2,77 @@ import type { Metadata } from "next";
 export const metadata: Metadata = { title: "Minutes of Meeting | About ODOP UP", description: "Minutes of meetings held under the ODOP programme in Uttar Pradesh." };
 export default function MinutesOfMeetingPage() {
   return (
-    <main className="main-content schemes-page">
-      <section className="page-hero schemes-hero"><div className="page-hero-overlay" /><div className="container page-hero-content"><h1 className="page-hero-title">Minutes of Meeting</h1><p className="page-hero-subtitle">Recorded minutes from official meetings held under the ODOP programme.</p></div></section>
-      <div className="container"><div className="section-header"><span className="eyebrow">Official Records</span><h2>Meeting Minutes</h2><div className="divider"><span /><span /><span /></div></div><section className="static-content-wrap"><article className="static-card"><p>Minutes of meetings held as part of the One District One Product (ODOP) programme administration in Uttar Pradesh are published on the official ODOP UP portal. Please visit the official portal for access to meeting minutes and related records.</p></article></section></div>
+    <main className="main-content schemes-page about-static-page policy-page">
+      <section className="page-hero schemes-hero">
+        <div className="page-hero-overlay" />
+        <div className="container page-hero-content">
+          <h1 className="page-hero-title">Minutes of Meeting</h1>
+          <p className="page-hero-subtitle">Official meeting records and action points published under ODOP reports.</p>
+        </div>
+      </section>
+
+      <div className="container">
+        <section className="static-content-wrap">
+          <article className="static-card">
+            <p className="static-note">
+              The source page also carries the message &quot;content will be available soon..&quot;.
+              The following action-point files are available in page links.
+            </p>
+            <div className="policy-table-wrap">
+              <table className="policy-table">
+                <thead>
+                  <tr>
+                    <th>DOCUMENT</th>
+                    <th>ACCESS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Action point of ODOP Meeting on 13-03-18 at New Delhi</td>
+                    <td>
+                      <a 
+                        className="cfc-link-btn"
+                        href="https://odopup.in/pdf/20180405_Action%20point%20of%20ODOP%20Meeting%20on%2013-03-18%20at%20New%20Delhi.pdf"
+                        target="_blank" 
+                        rel="noopener"
+                      >
+                        View / Download
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Action point of ODOP Meeting on 14-03-18 at Varanasi</td>
+                    <td>
+                      <a 
+                        className="cfc-link-btn"
+                        href="https://odopup.in/pdf/20180405_Action%20point%20of%20ODOP%20Meeting%20on%2014-03-18%20at%20Varanasi.pdf"
+                        target="_blank" 
+                        rel="noopener"
+                      >
+                        View / Download
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Action point of ODOP Meeting on 17-03-18 at Agra</td>
+                    <td>
+                      <a 
+                        className="cfc-link-btn"
+                        href="https://odopup.in/pdf/20180405_Action%20point%20of%20ODOP%20Meeting%20on%2017-03-18%20at%20Agra.pdf"
+                        target="_blank" 
+                        rel="noopener"
+                      >
+                        View / Download
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+      </div>
     </main>
   );
 }
+
