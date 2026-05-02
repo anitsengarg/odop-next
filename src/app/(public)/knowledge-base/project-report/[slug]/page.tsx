@@ -1,5 +1,8 @@
 import { fetchProjectReportDetail } from "@/services/project-report.service";
 import { decrypt128 } from "@/lib/api";
+import Link from "next/link";
+import ClientView from "./ClientView";
+import type { ProjectReportGroup } from "./ClientView";
 
 interface ProjectReportDetailPageProps {
   params: Promise<{
@@ -13,10 +16,12 @@ export default async function ProjectReportDetailPage(props: ProjectReportDetail
 
   const detailData = await fetchProjectReportDetail(slug);
   let decryptedData: any = null;
+  let reportGroups: ProjectReportGroup[] = [];
 
   if (detailData.success && detailData.data && typeof (detailData.data as any).body === "string") {
     try {
       decryptedData = await decrypt128((detailData.data as any).body);
+      reportGroups = decryptedData?.data?.project_reports || [];
       console.log(`\n=== Decrypted Project Report Detail Data for [${slug}] ===\n`, decryptedData, `\n========================================================\n`);
     } catch (error) {
       console.error("Decryption failed:", error);
@@ -25,23 +30,25 @@ export default async function ProjectReportDetailPage(props: ProjectReportDetail
     console.log(`Failed to fetch or decrypt project report detail for [${slug}]. Response:`, detailData);
   }
 
-  return (
-    <main className="main-content schemes-page">
-      <section className="page-hero schemes-hero">
-        <div className="page-hero-overlay" />
-        <div className="container page-hero-content">
-          <h1 className="page-hero-title">Project Report Detail</h1>
-          <p className="page-hero-subtitle">
-            Currently viewing project report details for: {slug}
-          </p>
-        </div>
-      </section>
+  const breadcrumbName = reportGroups.length > 0 ? reportGroups[0].name : "Detail";
 
-      <div className="container" style={{ padding: "60px 0", minHeight: "400px" }}>
-        <p style={{ textAlign: "center", fontSize: "1.2rem", color: "#666" }}>
-          UI Implementation is pending. Please check the terminal console for the decrypted API data.
-        </p>
+  return (
+    <main className="main-content">
+      <div className="breadcrumb-bar kb-pr-detail-breadcrumb-bar">
+        <div className="container">
+          <nav className="breadcrumb kb-pr-detail-breadcrumb" aria-label="Breadcrumb">
+            <Link href="/"><i className="fas fa-home"></i> Home</Link>
+            <span className="separator"><i className="fas fa-chevron-right"></i></span>
+            <Link href="/knowledge-base/project-report">Knowledge Base</Link>
+            <span className="separator"><i className="fas fa-chevron-right"></i></span>
+            <Link href="/knowledge-base/project-report">Project Report</Link>
+            <span className="separator"><i className="fas fa-chevron-right"></i></span>
+            <span className="current">{breadcrumbName}</span>
+          </nav>
+        </div>
       </div>
+
+      <ClientView slug={slug} reportGroups={reportGroups} />
     </main>
   );
 }
