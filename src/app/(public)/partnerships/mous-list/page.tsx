@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { mouRecords } from "@/lib/mou-data";
 
 export const metadata: Metadata = {
   title: "MOUs and GOs | Partnerships | ODOP UP",
@@ -21,18 +23,45 @@ export default function MousListPage() {
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">Partnerships</span>
-          <h2>Official Directives & Agreements</h2>
+          <h2>List of MOUs</h2>
           <div className="divider"><span /><span /><span /></div>
         </div>
         <section className="static-content-wrap">
           <article className="static-card">
-            <h3>Memorandums of Understanding</h3>
+            <h3>Memorandums of Understanding (Sample)</h3>
             <p>
-              The Government of Uttar Pradesh has signed various MOUs with leading e-commerce platforms, financial institutions, and knowledge partners to provide market access, funding, and skill development to ODOP artisans and manufacturers.
+              This page lists sample ODOP MOUs. Click any MOU title to open its detail and report page.
             </p>
-            <p>
-              Check back here for the latest published documents.
-            </p>
+
+            <div className="overflow-x-auto mt-6">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="text-left border-b border-gray-200">
+                    <th className="py-3 pr-4">S. No.</th>
+                    <th className="py-3 pr-4">MOU Title</th>
+                    <th className="py-3 pr-4">Partner</th>
+                    <th className="py-3">Signed On</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {mouRecords.map((mou, index) => (
+                    <tr key={mou.slug} className="border-b border-gray-100 align-top">
+                      <td className="py-3 pr-4">{index + 1}</td>
+                      <td className="py-3 pr-4">
+                        <Link
+                          href={`/partnerships/mous-list/${mou.slug}`}
+                          className="text-[#0056b3] hover:underline font-semibold"
+                        >
+                          {mou.title}
+                        </Link>
+                      </td>
+                      <td className="py-3 pr-4">{mou.partner}</td>
+                      <td className="py-3">{mou.signedOn}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </article>
         </section>
       </div>
