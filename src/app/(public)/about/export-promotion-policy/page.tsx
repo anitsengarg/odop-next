@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function ExportPromotionPolicyPage() {
   return (
-    <main className="main-content schemes-page">
+    <main className="main-content schemes-page about-static-page">
       <section className="page-hero schemes-hero">
         <div className="page-hero-overlay" />
         <div className="container page-hero-content">
