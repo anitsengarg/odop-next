@@ -11,3 +11,5 @@ export * from "./user.service";
 export * from "./loan.service";
 export * from "./edp.service";
 export * from "./exhibition.service";
+export * from "./documentary.service";
+export * from "./success-story.service";
