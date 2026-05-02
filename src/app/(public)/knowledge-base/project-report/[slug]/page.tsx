@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { fetchProjectReportDetail } from "@/services/project-report.service";
 import { decrypt128 } from "@/lib/api";
 import Link from "next/link";
@@ -10,10 +11,7 @@ interface ProjectReportDetailPageProps {
   }>;
 }
 
-export default async function ProjectReportDetailPage(props: ProjectReportDetailPageProps) {
-  const params = await props.params;
-  const { slug } = params;
-
+async function ProjectReportDetailContent({ slug }: { slug: string }) {
   const detailData = await fetchProjectReportDetail(slug);
   let decryptedData: any = null;
   let reportGroups: ProjectReportGroup[] = [];
@@ -22,15 +20,28 @@ export default async function ProjectReportDetailPage(props: ProjectReportDetail
     try {
       decryptedData = await decrypt128((detailData.data as any).body);
       reportGroups = decryptedData?.data?.project_reports || [];
-      console.log(`\n=== Decrypted Project Report Detail Data for [${slug}] ===\n`, decryptedData, `\n========================================================\n`);
     } catch (error) {
       console.error("Decryption failed:", error);
     }
-  } else {
-    console.log(`Failed to fetch or decrypt project report detail for [${slug}]. Response:`, detailData);
   }
 
-  const breadcrumbName = reportGroups.length > 0 ? reportGroups[0].name : "Detail";
+  return <ClientView slug={slug} reportGroups={reportGroups} />;
+}
+
+function DetailLoadingSkeleton() {
+  return (
+    <div className="container mt-4">
+      <div className="skeleton-line title" style={{ width: '60%', height: '40px', marginBottom: '20px' }}></div>
+      <div className="skeleton-line desc" style={{ width: '100%', height: '20px', marginBottom: '10px' }}></div>
+      <div className="skeleton-line desc" style={{ width: '90%', height: '20px', marginBottom: '30px' }}></div>
+      <div className="skeleton-media" style={{ height: '400px' }}></div>
+    </div>
+  );
+}
+
+export default async function ProjectReportDetailPage(props: ProjectReportDetailPageProps) {
+  const params = await props.params;
+  const { slug } = params;
 
   return (
     <main className="main-content">
@@ -43,12 +54,14 @@ export default async function ProjectReportDetailPage(props: ProjectReportDetail
             <span className="separator"><i className="fas fa-chevron-right"></i></span>
             <Link href="/knowledge-base/project-report">Project Report</Link>
             <span className="separator"><i className="fas fa-chevron-right"></i></span>
-            <span className="current">{breadcrumbName}</span>
+            <span className="current">Detail</span>
           </nav>
         </div>
       </div>
 
-      <ClientView slug={slug} reportGroups={reportGroups} />
+      <Suspense fallback={<DetailLoadingSkeleton />}>
+        <ProjectReportDetailContent slug={slug} />
+      </Suspense>
     </main>
   );
 }
