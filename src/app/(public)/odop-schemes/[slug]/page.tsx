@@ -12,7 +12,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
     const { slug } = await params
 
     const allSchemes = [...SCHEMES_PAGE_CATALOG.odop, ...SCHEMES_PAGE_CATALOG.otherMsme]
-    const scheme = allSchemes.find((s) => s.id)
+    const scheme = allSchemes.find((s) => s.id === slug)
 
     if (!scheme || !scheme.detail) {
         notFound()
@@ -21,7 +21,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
     const { detail } = scheme
 
     return (
-        <div className="scheme-detail-page">
+        <div className="about-static-page policy-page scheme-detail-page">
             <section className="page-hero scheme-detail-hero">
                 <div className="page-hero-overlay"></div>
                 <div className="container page-hero-content">
@@ -33,12 +33,12 @@ export default async function SchemeDetailPage({ params }: PageProps) {
                         rel="noopener noreferrer"
                         className="btn btn-primary btn-lg"
                     >
-                        <FaFileInvoice className="mr-2" /> Apply Now
+                        <FaFileLines className="mr-2" /> Apply Now
                     </a>
                 </div>
             </section>
 
-            <main className="main-content schemes-page">
+            <main className="main-content schemes-page about-static-page policy-page">
                 <div className="container">
                     <div className="section-header">
                         <span className="eyebrow">Scheme Overview</span>
