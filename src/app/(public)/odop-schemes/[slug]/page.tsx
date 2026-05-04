@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { SCHEMES_PAGE_CATALOG, SCHEME_META_ICONS } from '@/lib/schemes'
-import { FaArrowUpRightFromSquare, FaBookOpen, FaChevronRight, FaFileLines, FaFileInvoice, FaBuildingColumns, FaIdCard, FaHeadset, FaFileSignature, FaCircleInfo, FaPhoneAlt, FaEnvelope, FaCircleCheck } from 'react-icons/fa6'
+import { FaArrowUpRightFromSquare, FaBookOpen, FaChevronRight, FaFileLines, FaFileInvoice, FaBuildingColumns, FaIdCard, FaHeadset, FaFileSignature, FaCircleInfo, FaEnvelope, FaCircleCheck } from 'react-icons/fa6'
+import { FaPhoneAlt } from 'react-icons/fa'
 
 interface PageProps {
     params: Promise<{ slug: string }>
@@ -11,7 +12,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
     const { slug } = await params
 
     const allSchemes = [...SCHEMES_PAGE_CATALOG.odop, ...SCHEMES_PAGE_CATALOG.otherMsme]
-    const scheme = allSchemes.find((s) => s.id === slug)
+    const scheme = allSchemes.find((s) => s.id)
 
     if (!scheme || !scheme.detail) {
         notFound()
