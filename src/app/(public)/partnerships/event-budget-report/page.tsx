@@ -1,39 +1,646 @@
-import type { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Event Budget Report | Partnerships | ODOP UP",
-  description: "Financial reports and budget allocations for ODOP exhibitions and events.",
-};
+import "@/styles/event-budget-report.css";
+import { useEffect, useRef } from "react";
+import {
+  Chart,
+  DoughnutController,
+  ArcElement,
+  Tooltip,
+  Legend,
+  BarController,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineController,
+  LineElement,
+  PointElement,
+} from "chart.js";
+import Counter from "@/components/Counter";
+import {
+  FaStore,
+  FaVideo,
+  FaFlag,
+  FaMapPin,
+  FaUsers,
+  FaHandshake,
+  FaStar,
+  FaDesktop,
+  FaPersonChalkboard,
+  FaCertificate,
+  FaTags,
+  FaShip,
+  FaBullhorn,
+  FaTrademark,
+  FaCoins,
+  FaQrcode,
+  FaRecycle,
+  FaFileInvoiceDollar,
+  FaChartLine,
+} from "react-icons/fa6";
+
+// Register Chart.js components
+Chart.register(
+  DoughnutController,
+  ArcElement,
+  Tooltip,
+  Legend,
+  BarController,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineController,
+  LineElement,
+  PointElement
+);
 
 export default function EventBudgetReportPage() {
+  const allocationChartRef = useRef<HTMLCanvasElement>(null);
+  const monthlyTrendChartRef = useRef<HTMLCanvasElement>(null);
+  const categoryCompareChartRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    // Shared font defaults
+    Chart.defaults.font.family = "'Inter', 'Segoe UI', sans-serif";
+    Chart.defaults.color = "#4A5568";
+
+    const primaryColor = "#1B3C72";
+    const orangeColor = "#E8562E";
+    const purpleColor = "#7B5EA7";
+    const greenColor = "#27AE60";
+    const goldColor = "#F5A623";
+
+    let allocationChart: Chart | null = null;
+    let monthlyTrendChart: Chart | null = null;
+    let categoryCompareChart: Chart | null = null;
+
+    if (allocationChartRef.current) {
+      allocationChart = new Chart(allocationChartRef.current, {
+        type: "doughnut",
+        data: {
+          labels: [
+            "National Trade Fairs",
+            "International Exhibitions",
+            "Workshops & Training",
+            "Webinars & Digital",
+          ],
+          datasets: [
+            {
+              data: [15, 8, 6, 6],
+              backgroundColor: [
+                primaryColor,
+                orangeColor,
+                purpleColor,
+                greenColor,
+              ],
+              borderWidth: 2,
+              borderColor: "#ffffff",
+              hoverOffset: 8,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: "62%",
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) =>
+                  ` ₹${ctx.parsed} Cr  (${Math.round(
+                    (ctx.parsed / 35) * 100
+                  )}%)`,
+              },
+            },
+          },
+        },
+      });
+    }
+
+    if (monthlyTrendChartRef.current) {
+      const months = [
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "Mar",
+      ];
+      const monthlySpend = [2, 3, 4, 1.5, 2, 3.5, 4.5, 3, 2.5, 1.5, 1.5, 1.5];
+      const cumulative = monthlySpend.reduce((acc: number[], val, i) => {
+        acc.push((acc[i - 1] || 0) + val);
+        return acc;
+      }, []);
+
+      monthlyTrendChart = new Chart(monthlyTrendChartRef.current, {
+        type: "bar",
+        data: {
+          labels: months,
+          datasets: [
+            {
+              label: "Monthly Spend (₹ Cr)",
+              data: monthlySpend,
+              backgroundColor: [
+                "rgba(27,60,114,0.5)",
+                "rgba(27,60,114,0.6)",
+                "rgba(27,60,114,0.75)",
+                "rgba(27,60,114,0.4)",
+                "rgba(27,60,114,0.5)",
+                "rgba(27,60,114,0.65)",
+                primaryColor,
+                "rgba(27,60,114,0.7)",
+                "rgba(27,60,114,0.6)",
+                "rgba(27,60,114,0.45)",
+                "rgba(27,60,114,0.45)",
+                "rgba(27,60,114,0.45)",
+              ],
+              borderColor: primaryColor,
+              borderWidth: 1,
+              borderRadius: 6,
+            },
+            {
+              label: "Cumulative Spend (₹ Cr)",
+              data: cumulative,
+              type: "line",
+              borderColor: orangeColor,
+              backgroundColor: "rgba(232,86,46,0.08)",
+              borderWidth: 2.5,
+              pointBackgroundColor: orangeColor,
+              pointRadius: 4,
+              tension: 0.4,
+              fill: false,
+              yAxisID: "y1",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: "index", intersect: false },
+          plugins: {
+            legend: {
+              position: "top",
+              labels: { padding: 20, usePointStyle: true },
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.dataset.label}: ₹${ctx.parsed.y} Cr`,
+              },
+            },
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+            },
+            y: {
+              position: "left",
+              title: { display: true, text: "Monthly (₹ Cr)", font: { size: 11 } },
+              grid: { color: "rgba(0,0,0,0.05)" },
+              ticks: { callback: (v) => "₹" + v },
+            },
+            y1: {
+              position: "right",
+              title: {
+                display: true,
+                text: "Cumulative (₹ Cr)",
+                font: { size: 11 },
+              },
+              grid: { drawOnChartArea: false },
+              ticks: { callback: (v) => "₹" + v },
+            },
+          },
+        },
+      });
+    }
+
+    if (categoryCompareChartRef.current) {
+      categoryCompareChart = new Chart(categoryCompareChartRef.current, {
+        type: "bar",
+        data: {
+          labels: [
+            "National Trade Fairs",
+            "International Exhibitions",
+            "Workshops & Training",
+            "Webinars & Digital",
+          ],
+          datasets: [
+            {
+              label: "Allocated (₹ Cr)",
+              data: [15, 8, 6, 6],
+              backgroundColor: "rgba(27,60,114,0.75)",
+              borderColor: primaryColor,
+              borderWidth: 1,
+              borderRadius: 6,
+            },
+            {
+              label: "Spent (₹ Cr)",
+              data: [12, 5, 4, 5],
+              backgroundColor: "rgba(232,86,46,0.8)",
+              borderColor: orangeColor,
+              borderWidth: 1,
+              borderRadius: 6,
+            },
+            {
+              label: "Pending (₹ Cr)",
+              data: [3, 3, 2, 1],
+              backgroundColor: "rgba(245,166,35,0.75)",
+              borderColor: goldColor,
+              borderWidth: 1,
+              borderRadius: 6,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "top",
+              labels: { padding: 20, usePointStyle: true },
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.dataset.label}: ₹${ctx.parsed.y} Cr`,
+              },
+            },
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+            },
+            y: {
+              title: { display: true, text: "₹ Crore", font: { size: 11 } },
+              grid: { color: "rgba(0,0,0,0.05)" },
+              ticks: { callback: (v) => "₹" + v },
+            },
+          },
+        },
+      });
+    }
+
+    return () => {
+      allocationChart?.destroy();
+      monthlyTrendChart?.destroy();
+      categoryCompareChart?.destroy();
+    };
+  }, []);
+
   return (
-    <main className="main-content schemes-page">
-      <section className="page-hero schemes-hero">
-        <div className="page-hero-overlay" />
-        <div className="container page-hero-content">
-          <h1 className="page-hero-title">Budget Report</h1>
-          <p className="page-hero-subtitle">
-            Financial transparency in ODOP promotional events and exhibitions.
+    <main className="main-content schemes-page about-static-page event-budget-report-page">
+      <section className="page-hero event-budget-hero">
+        <div className="container">
+          <div className="breadcrumb-wrap">
+            <span className="breadcrumb-item">Partnerships &amp; Reports</span>
+            <span className="breadcrumb-sep">/</span>
+            <span className="breadcrumb-item active">Budget Report</span>
+          </div>
+          <h1>
+            <FaFileInvoiceDollar className="page-title-icon" />
+            Events &amp; Webinars Budget Report
+          </h1>
+          <p>
+            Detailed analysis of budget allocation, utilization and financial
+            impact of ODOP exhibitions and digital events in FY 2025–26.
           </p>
         </div>
       </section>
 
       <div className="container">
-        <div className="section-header">
-          <span className="eyebrow">Financials</span>
-          <h2>Event Budget Allocation</h2>
-          <div className="divider"><span /><span /><span /></div>
-        </div>
-        <section className="static-content-wrap">
-          <article className="static-card">
-            <h3>Exhibition & Event Budgets</h3>
+        {/* SECTION 1 – FINANCIAL OVERVIEW */}
+        <section className="report-section" aria-labelledby="overview-heading">
+          <div className="section-header">
+            <span className="eyebrow">Financial Overview</span>
+            <h2 id="overview-heading">FY 2025-26 Budget Snapshot</h2>
             <p>
-              To promote ODOP products globally, the department participates in and organizes numerous trade fairs, exhibitions, and promotional events. The budget reports provide a breakdown of the sanctioned and utilized funds for these activities.
+              Consolidated financial status of the Events &amp; Webinars budget
+              as of March 2026.
             </p>
-            <p>
-              The latest financial year's reports are being compiled and will be available soon.
-            </p>
-          </article>
+            <div className="divider">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          <div className="kpi-grid">
+            <div className="kpi-card kpi-blue">
+              <div className="kpi-icon">
+                <FaCoins />
+              </div>
+              <div className="kpi-value">₹<Counter value="35.00" /> Cr</div>
+              <div className="kpi-label">Total Allocated Budget</div>
+            </div>
+            <div className="kpi-card kpi-orange">
+              <div className="kpi-icon">
+                {/* <FaChartLine /> */}
+              </div>
+              <div className="kpi-value">₹<Counter value="26.00" /> Cr</div>
+              <div className="kpi-label">Total Budget Utilized</div>
+            </div>
+            <div className="kpi-card kpi-green">
+              <div className="kpi-icon">
+                <FaHandshake />
+              </div>
+              <div className="kpi-value"><Counter value="74.2" />%</div>
+              <div className="kpi-label">Utilization Rate</div>
+            </div>
+            <div className="kpi-card kpi-gold">
+              <div className="kpi-icon">
+                <FaFlag />
+              </div>
+              <div className="kpi-value">₹<Counter value="9.00" /> Cr</div>
+              <div className="kpi-label">Remaining Balance</div>
+            </div>
+          </div>
+
+          <div className="allocation-shell">
+            <div className="report-card allocation-card">
+              <div className="report-card-title">
+                <FaChartLine /> Budget Allocation by Category
+              </div>
+              <div className="allocation-content">
+                <div className="chart-wrap-doughnut">
+                  <canvas ref={allocationChartRef} id="allocationChart"></canvas>
+                  <div className="chart-center-label">
+                    <span className="total-val">₹35 Cr</span>
+                    <span className="total-label">Total</span>
+                  </div>
+                </div>
+                <div className="allocation-legend">
+                  <div className="legend-item">
+                    <span className="dot blue"></span>
+                    <div className="legend-info">
+                      <strong>National Trade Fairs</strong>
+                      <span>₹15 Cr (43%)</span>
+                    </div>
+                  </div>
+                  <div className="legend-item">
+                    <span className="dot orange"></span>
+                    <div className="legend-info">
+                      <strong>International Exhibitions</strong>
+                      <span>₹8 Cr (23%)</span>
+                    </div>
+                  </div>
+                  <div className="legend-item">
+                    <span className="dot purple"></span>
+                    <div className="legend-info">
+                      <strong>Workshops &amp; Training</strong>
+                      <span>₹6 Cr (17%)</span>
+                    </div>
+                  </div>
+                  <div className="legend-item">
+                    <span className="dot green"></span>
+                    <div className="legend-info">
+                      <strong>Webinars &amp; Digital</strong>
+                      <span>₹6 Cr (17%)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="report-card summary-card">
+              <div className="report-card-title">
+                <FaFlag /> Utilization Status (₹ Crore)
+              </div>
+              <div className="summary-status-list">
+                <div className="status-item">
+                  <div className="status-head">
+                    <span>National Trade Fairs</span>
+                    <strong>80%</strong>
+                  </div>
+                  <div className="status-bar-wrap">
+                    <div
+                      className="status-bar blue"
+                      style={{ width: "80%" }}
+                    ></div>
+                  </div>
+                  <div className="status-meta">Spent: ₹12 Cr / ₹15 Cr</div>
+                </div>
+                <div className="status-item">
+                  <div className="status-head">
+                    <span>International Exhibitions</span>
+                    <strong>62%</strong>
+                  </div>
+                  <div className="status-bar-wrap">
+                    <div
+                      className="status-bar orange"
+                      style={{ width: "62%" }}
+                    ></div>
+                  </div>
+                  <div className="status-meta">Spent: ₹5 Cr / ₹8 Cr</div>
+                </div>
+                <div className="status-item">
+                  <div className="status-head">
+                    <span>Workshops &amp; Training</span>
+                    <strong>67%</strong>
+                  </div>
+                  <div className="status-bar-wrap">
+                    <div
+                      className="status-bar purple"
+                      style={{ width: "67%" }}
+                    ></div>
+                  </div>
+                  <div className="status-meta">Spent: ₹4 Cr / ₹6 Cr</div>
+                </div>
+                <div className="status-item">
+                  <div className="status-head">
+                    <span>Webinars &amp; Digital</span>
+                    <strong>83%</strong>
+                  </div>
+                  <div className="status-bar-wrap">
+                    <div
+                      className="status-bar green"
+                      style={{ width: "83%" }}
+                    ></div>
+                  </div>
+                  <div className="status-meta">Spent: ₹5 Cr / ₹6 Cr</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2 – UTILIZATION TRENDS */}
+        <section className="report-section" aria-labelledby="trends-heading">
+          <div className="section-header">
+            <span className="eyebrow">Financial Analytics</span>
+            <h2 id="trends-heading">Utilization Trends</h2>
+            <p>Analysis of monthly spending patterns and category-wise performance.</p>
+            <div className="divider">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          {/* Monthly Trend Chart */}
+          <div className="report-card">
+            <div className="report-card-title">
+              <FaChartLine /> Monthly Expenditure on Events &amp; Webinars (₹ Crore)
+            </div>
+            <div className="chart-wrap" style={{ height: "350px" }}>
+              <canvas ref={monthlyTrendChartRef} id="monthlyTrendChart"></canvas>
+            </div>
+          </div>
+
+          {/* Spent vs Allocated per category bar chart */}
+          <div className="report-card">
+            <div className="report-card-title">
+              <FaChartLine /> Budget Allocated vs. Spent – By Category (₹ Crore)
+            </div>
+            <div className="chart-wrap" style={{ height: "350px" }}>
+              <canvas ref={categoryCompareChartRef} id="categoryCompareChart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 3 – EVENTS & WEBINARS BREAKDOWN */}
+        <section className="report-section" aria-labelledby="breakdown-heading">
+          <div className="section-header">
+            <span className="eyebrow">Activity Details</span>
+            <h2 id="breakdown-heading">Events &amp; Webinars Breakdown</h2>
+            <p>Detailed activity metrics for physical events and digital webinars conducted during the year.</p>
+            <div className="divider">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          <div className="breakdown-grid">
+            {/* Physical Events */}
+            <div className="report-card report-card-no-margin">
+              <div className="report-card-title">
+                <FaStore /> A. Physical Events
+              </div>
+              <ul className="event-info-list">
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaFlag />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Exhibitions Conducted</strong>
+                    <span>68 physical exhibitions held across Uttar Pradesh and nationally</span>
+                  </div>
+                </li>
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaMapPin />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Locations Covered</strong>
+                    <span>Lucknow, Delhi, Mumbai, Varanasi, Agra, Moradabad, Jaipur, Kolkata, Chennai</span>
+                  </div>
+                </li>
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaUsers />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Average Participation per Event</strong>
+                    <span>240 participants per exhibition on average</span>
+                  </div>
+                </li>
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaHandshake />
+                  </span>
+                  <div className="eit-text">
+                    <strong>B2B Meetings Facilitated</strong>
+                    <span>3,200+ business-to-business meetings with buyers and distributors</span>
+                  </div>
+                </li>
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaStar />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Notable Events</strong>
+                    <span>ODOP Expo Lucknow, Trade Fair Delhi, Craftopia Mumbai, UP MSME Expo Varanasi, One India Bazaar Agra</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Webinars / Digital Events */}
+            <div className="report-card report-card-no-margin">
+              <div className="report-card-title">
+                <FaVideo /> B. Webinars &amp; Digital Events
+              </div>
+              <ul className="event-info-list">
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaDesktop />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Webinars Conducted</strong>
+                    <span>52 online webinars and digital interaction sessions held</span>
+                  </div>
+                </li>
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaPersonChalkboard />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Average Attendees per Session</strong>
+                    <span>310 registrants per webinar on average</span>
+                  </div>
+                </li>
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaCertificate />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Certificates Issued</strong>
+                    <span>6,800+ digital certificates distributed to participants</span>
+                  </div>
+                </li>
+                <li className="event-info-item">
+                  <span className="eit-icon">
+                    <FaTags />
+                  </span>
+                  <div className="eit-text">
+                    <strong>Webinar Topics Covered</strong>
+                    <span>Key areas addressed across all sessions:</span>
+                  </div>
+                </li>
+              </ul>
+              <div className="webinar-topics">
+                <span className="webinar-topic-tag">
+                  <FaShip className="webinar-topic-icon" /> Export Procedures
+                </span>
+                <span className="webinar-topic-tag">
+                  <FaBullhorn className="webinar-topic-icon" /> Digital Marketing
+                </span>
+                <span className="webinar-topic-tag">
+                  <FaTrademark className="webinar-topic-icon" /> Branding &amp; Packaging
+                </span>
+                <span className="webinar-topic-tag">
+                  <FaCoins className="webinar-topic-icon" /> Finance &amp; Loans
+                </span>
+                <span className="webinar-topic-tag">
+                  <FaQrcode className="webinar-topic-icon" /> E-Commerce Onboarding
+                </span>
+                <span className="webinar-topic-tag">
+                  {/* <FaShieldAlt className="webinar-topic-icon" /> GI Tag Registration */}
+                </span>
+                <span className="webinar-topic-tag">
+                  <FaChartLine className="webinar-topic-icon" /> MSME Policy Updates
+                </span>
+                <span className="webinar-topic-tag">
+                  <FaRecycle className="webinar-topic-icon" /> Sustainable Practices
+                </span>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </main>
