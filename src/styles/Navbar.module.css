@@ -9,6 +9,63 @@
   align-items: center;
 }
 
+.accessibilityBar {
+  background: #f4f6fa;
+  border-bottom: 1px solid #dce3ef;
+}
+
+.accessibilityBar :global(.container) {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.accessibilityLinks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.accessibilityLink {
+  color: #213147;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.accessibilityLink:hover {
+  color: var(--primary);
+}
+
+.accessibilityDivider {
+  width: 1px;
+  height: 12px;
+  background: #c6cfdd;
+}
+
+.fontSizeControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fontSizeButton {
+  border: 1px solid #c6cfdd;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: #1f2a3d;
+}
+
+.fontSizeButton:hover {
+  background: #eef3ff;
+  border-color: #a8b8d8;
+}
+
 .topBar :global(.container) {
   display: flex;
   align-items: center;
@@ -90,7 +147,7 @@
 .navLogoImage {
   width: 100%;
   height: auto;
-  max-height: 48px;
+  max-height: 58px;
   object-fit: contain;
   object-position: left center;
 }
@@ -110,6 +167,21 @@
     max-height: 38px;
   }
   .topBar {
+    display: none;
+  }
+
+  .accessibilityBar :global(.container) {
+    min-height: 42px;
+    align-items: flex-start;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .accessibilityLinks {
+    gap: 8px;
+  }
+
+  .accessibilityDivider {
     display: none;
   }
 }
@@ -418,7 +490,8 @@
 
 @media print {
   .siteHeader,
-  .topBar {
+  .topBar,
+  .accessibilityBar {
     display: none !important;
   }
 }
