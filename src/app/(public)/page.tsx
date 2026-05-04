@@ -6,9 +6,12 @@ import Link from "next/link";
 import { FaAddressBook, FaAmazon, FaArrowRight, FaBagShopping, FaBookOpenReader, FaCalendarDays, FaCartShopping, FaCircleExclamation, FaClockRotateLeft, FaCubes, FaEbay, FaFileInvoice, FaGlobe, FaHandHoldingDollar, FaHandPointDown, FaHands, FaHandshake, FaHeadset, FaIndustry, FaLayerGroup, FaListCheck, FaPaperPlane, FaPhone, FaQuoteLeft, FaShop, FaStore, FaTag, FaTruck, FaUserPlus, FaWarehouse } from "react-icons/fa6";
 import { FaEye, FaGlobeAsia, FaListAlt, FaMapMarkedAlt } from "react-icons/fa";
 import HeroSlider from "@/components/ui/HeroSlider";
+import { useState } from "react";
+import LoginModal from "@/components/ui/LoginModal";
 
 
 export default function Home() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
 
   useScrollReveal();
@@ -43,10 +46,10 @@ export default function Home() {
               <div className="quick-icon"><FaCircleExclamation /></div>
               <span className="quick-label">File Grievance</span>
             </Link>
-            <a className="quick-item">
+            <button onClick={() => setIsLoginModalOpen(true)} className="quick-item">
               <div className="quick-icon"><FaListCheck /></div>
               <span className="quick-label">Track Application</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -820,7 +823,11 @@ export default function Home() {
         </div>
       </section>
 
-    </main >
+      <LoginModal
+        open={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
+    </main>
   );
 }
 
