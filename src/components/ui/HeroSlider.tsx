@@ -5,9 +5,10 @@ import { FaArrowRight, FaCertificate } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 
 const slides = [
-    "/assets/img/hero-odop-1.png",
-    "/assets/img/hero-odop-2.jpg",
+    "/assets/img/hero-odop-1.jpeg",
+    "/assets/img/hero-odop-2.jpeg",
     "/assets/img/hero-odop-3.jpg",
+    "/assets/img/hero-odop-4.jpg",
 ];
 
 
