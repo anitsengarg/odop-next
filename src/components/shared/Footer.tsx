@@ -18,47 +18,42 @@ function Footer() {
                                     connect local artisans, manufacturers and wholesalers with buyers across India and the
                                     world.</p>
                                 <div className={`${styles.footerSocial} footer-social`}>
-                                    <Link href="#" className={styles.socialLink} aria-label="Facebook"><FaFacebookF /> </Link>
-                                    <Link href="#" className={styles.socialLink} aria-label="Twitter"><FaXTwitter   /><i
-                                        className="fab fa-twitter"></i></Link>
-                                    <Link href="#" className={styles.socialLink} aria-label="Instagram"><FaInstagram  /><  i
-                                        className="fab fa-instagram"></i></Link>
-                                    <Link href="#" className={styles.socialLink} aria-label="YouTube"><FaYoutube  /><i
-                                        className="fab fa-youtube"></i></Link>
-                                    <Link href="#" className={styles.socialLink} aria-label="LinkedIn">
-                                        <FaLinkedinIn />
-                                    </Link>
+                                    <Link href="#" className={styles.socialLink} aria-label="Facebook"><FaFacebookF/></Link>
+                                    <Link href="#" className={styles.socialLink} aria-label="Twitter"><FaXTwitter/></Link>
+                                    <Link href="#" className={styles.socialLink} aria-label="Instagram"><FaInstagram/></Link>
+                                    <Link href="#" className={styles.socialLink} aria-label="YouTube"><FaYoutube/></Link>
+                                    <Link href="#" className={styles.socialLink} aria-label="LinkedIn"><FaLinkedinIn/></Link>
                                 </div>
                             </div>
                             <div className={styles.footerCol}>
                                 <h4>Quick Links</h4>
                                 <ul className={styles.footerLinks}>
                                     <li>
-                                        <Link href="/project-report.html"><LuChevronRight /> Project Report</Link>
+                                        <Link href="/knowledge-base/project-report"><LuChevronRight /> Project Report</Link>
                                     </li>
                                     <li>
-                                        <Link href="/documentary.html"><LuChevronRight /> Documentary</Link>
+                                        <Link href="/knowledge-base/documentary"><LuChevronRight /> Documentary</Link>
                                     </li>
                                     <li>
-                                        <Link href="/success-story.html"><LuChevronRight /> Success Story</Link>
+                                        <Link href="/knowledge-base/success-story"><LuChevronRight /> Success Story</Link>
                                     </li>
                                     <li>
-                                        <Link href="/project-video.html"><LuChevronRight /> Project Video</Link>
+                                        <Link href="/knowledge-base/project-video"><LuChevronRight /> Project Video</Link>
                                     </li>
                                     <li>
-                                        <Link href="/district-products.html"><LuChevronRight /> Districts</Link>
+                                        <Link href="/districts"><LuChevronRight /> Districts</Link>
                                     </li>
                                     <li>
-                                        <Link href="/supplier-listing.html"><LuChevronRight /> Supplier Listing</Link>
+                                        <Link href="/suppliers"><LuChevronRight /> Supplier Listing</Link>
                                     </li>
                                     <li>
                                         <Link href="/odop-schemes"><LuChevronRight /> Govt Schemes</Link>
                                     </li>
                                     <li>
-                                        <Link href="/about-odop.html"><LuChevronRight /> About ODOP</Link>
+                                        <Link href="/about"><LuChevronRight /> About ODOP</Link>
                                     </li>
                                     <li>
-                                        <Link href="/contact-us.html"><LuChevronRight /> Contact Us</Link>
+                                        <Link href="/contact-us"><LuChevronRight /> Contact Us</Link>
                                     </li>
                                 </ul>
                             </div>

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function AboutIntroductionPage() {
   return (
-    <main className="main-content schemes-page">
+    <main className="main-content schemes-page about-static-page">
       {/* ===== PAGE HERO BANNER ===== */}
       <section className="page-hero about-hero">
         <div className="page-hero-overlay" />
