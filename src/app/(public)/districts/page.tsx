@@ -97,7 +97,7 @@ async function getDistricts(): Promise<DistrictProduct[]> {
     let data: any
     let decryptedData: any = await decrypt128((response.data as any).body);
     const items = decryptedData?.data?.district ||  [];
-    console.log(items)
+
 
     if (!Array.isArray(items) || items.length === 0) {
       return fallbackDistricts;

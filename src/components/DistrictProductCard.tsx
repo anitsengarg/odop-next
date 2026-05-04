@@ -11,6 +11,8 @@ export interface DistrictProduct {
   product: string;
   secondary_product?: string;
   tertiary_product?: string;
+  sec?: string;
+  ter?: string;
   profile?: string;
 }
 
