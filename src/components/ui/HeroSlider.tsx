@@ -52,19 +52,20 @@ function HeroSlider() {
                             </button>
                         </label>
                     </form>
-                    <div className="hero-prompt-tags" aria-label="Suggested AI searches">
+                    <div className="hero-prompt-tags" aria-label="Suggested AI searches"> 
                         <button className="hero-prompt-chip" type="button"
-                            data-prompt="Show brass decor suppliers from Moradabad">Brass decor suppliers</button>
+                            data-prompt="Find ODOP products for gifting and retail">Agra leather</button>
                         <button className="hero-prompt-chip" type="button"
-                            data-prompt="Find Chikankari wholesalers in Lucknow">Lucknow Chikankari</button>
+                            data-prompt="Show brass decor suppliers from Moradabad">Moradabad brass decor</button>
                         <button className="hero-prompt-chip" type="button"
-                            data-prompt="Which ODOP schemes support new businesses?">ODOP business schemes</button>
+                            data-prompt="Find Chikankari wholesalers in Lucknow">Lucknow chikankari</button>
+                        <button className="hero-prompt-chip" type="button"
+                            data-prompt="Which ODOP schemes support new businesses?">Aligarh lock and hardware</button>
                         <button className="hero-prompt-chip" type="button"
                             data-prompt="List exporters for Banarasi silk products">Banarasi silk exporters</button>
                         <button className="hero-prompt-chip" type="button"
                             data-prompt="Show artisans for Gorakhpur terracotta">Gorakhpur terracotta artisans</button>
-                        <button className="hero-prompt-chip" type="button"
-                            data-prompt="Find ODOP products for gifting and retail">Gift and retail ideas</button>
+                       
                     </div>
                 </div>
             </div>

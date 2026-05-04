@@ -20,7 +20,7 @@ export default function Home() {
       -------------------------------- */}
       <HeroSlider />
 
-    
+
       {/* --------------------------------
                   QUICK STRIP
       -------------------------------- */}
@@ -34,10 +34,6 @@ export default function Home() {
             <a href="govt-schemes.html" className="quick-item">
               <div className="quick-icon"><FaFileInvoice /> </div>
               <span className="quick-label">Govt. Schemes</span>
-            </a>
-            <a href="govt-schemes.html" className="quick-item">
-              <div className="quick-icon"><FaHandHoldingDollar /></div>
-              <span className="quick-label">Apply for Loan</span>
             </a>
             <a href="supplier-listing.html" className="quick-item">
               <div className="quick-icon"><FaCartShopping /></div>
@@ -55,38 +51,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* --------------------------------
-                 SUPPLIER CATEGORIES
-      -------------------------------- */}
-      <section className="section section-surface-soft">
-        <div className="container">
-          <div className="section-header"><span className="eyebrow">Browse By Type</span>
-            <h2>ODOP Supplier Categories</h2>
-            <p>Find the right business partner from our diverse network of verified suppliers across all categories.
-            </p>
-            <div className="divider"><span></span><span></span><span></span></div>
-          </div>
-          <div className="category-grid"><a href="supplier-listing.html?type=manufacturer" className="category-card reveal">
-            <div className="category-icon"><FaIndustry /></div>
-            <h5>Manufacturer</h5><span className="category-count">4,820 registered</span>
-          </a><a href="supplier-listing.html?type=wholesaler" className="category-card reveal delay-1">
-              <div className="category-icon"><FaWarehouse /></div>
-              <h5>Wholesaler</h5><span className="category-count">3,140 registered</span>
-            </a><a href="supplier-listing.html?type=distributor" className="category-card reveal delay-2">
-              <div className="category-icon"><FaTruck /></div>
-              <h5>Distributor</h5><span className="category-count">1,680 registered</span>
-            </a><a href="supplier-listing.html?type=shopkeeper" className="category-card reveal delay-3">
-              <div className="category-icon"><FaStore /></div>
-              <h5>Shopkeeper</h5><span className="category-count">2,280 registered</span>
-            </a><a href="supplier-listing.html?type=artisan" className="category-card reveal">
-              <div className="category-icon"><FaHands /></div>
-              <h5>Artisan</h5><span className="category-count">3,200+ certified</span>
-            </a><a href="supplier-listing.html?type=exporter" className="category-card reveal delay-1">
-              <div className="category-icon"><FaGlobe /></div>
-              <h5>Exporter</h5><span className="category-count">1,120 active</span>
-            </a></div>
-        </div>
-      </section>
 
       {/* --------------------------------
                  LEADERSHIP DESK
@@ -800,8 +764,6 @@ export default function Home() {
               </div>
               <div className="grievance-actions">
                 <a className="btn btn-primary"><FaClockRotateLeft /> Track Grievance Status</a>
-                <a href="contact-us.html" className="btn btn-outline-secondary"><FaPhone /> Call
-                  1800-180-5555</a>
               </div>
             </div>
             <div className="grievance-form">

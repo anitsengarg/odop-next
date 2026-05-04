@@ -98,11 +98,6 @@ function Footer() {
                                         Niryat Bhawan, Second Floor, 8 Cantt Road, Qaiserbagh, Lucknow &ndash; 226001</span>
                                     </div>
                                     <div className={styles.footerContactItem}>
-                                        <FaPhone />
-                                        <span>Helpline: 1800-180-5555
-                                        (Toll Free)</span>
-                                    </div>
-                                    <div className={styles.footerContactItem}>
                                         <FaEnvelope  />
                                         <span>odop-up@nic.in</span>
                                     </div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FaQuestionCircle, FaSignInAlt } from "react-icons/fa";
-import { FaChevronDown, FaGlobe, FaLandmark, FaPhone } from "react-icons/fa6";
+import { FaChevronDown, FaEnvelope, FaGlobe, FaLandmark, FaPhone } from "react-icons/fa6";
 import styles from "@/styles/Navbar.module.css";
 import LoginModal from "@/components/ui/LoginModal";
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
@@ -98,7 +98,7 @@ function Navbar() {
                     <div className={styles.topBarLeft}>
                         <span><FaLandmark /> Government of Uttar Pradesh</span>
                         <span className={styles.topBarDivider}></span>
-                        <a href="tel:18001805555"><FaPhone /> Helpline: 1800-180-5555</a>
+                        <a href="mailto:odop-up@nic.in"><FaEnvelope /> odop-up@nic.in</a>
                     </div>
                     <div className={styles.topBarRight}>
                         <a href="#"><FaGlobe />
