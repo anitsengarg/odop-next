@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import { fetchHamaraPradeshDistricts } from "@/services/hamara-pradesh.service";
+import { decrypt128 } from "@/lib/api";
+import DistrictList from "./DistrictList";
+import { DistrictProduct } from "@/components/DistrictProductCard";
 
 export const metadata: Metadata = {
   title: "District Wise Products | ODOP UP Portal",
   description: "District wise ODOP products of Uttar Pradesh. Browse all 75 districts with primary, secondary and tertiary products.",
 };
 
-const districts = [
+const fallbackDistricts: DistrictProduct[] = [
   { slug: "agra", name: "Agra", img: "/assets/img/district/agra.jpg", product: "Leather Products", sec: "Marble inlay work", ter: "Petha Making", profile: "/districts/agra" },
   { slug: "aligarh", name: "Aligarh", img: "/assets/img/district/aligarh.jpg", product: "Locks & Hardware", sec: "Brass Furniture Hardware", ter: "Steel Sheet Cutting & Stamping", profile: "#" },
   { slug: "ambedkar-nagar", name: "Ambedkar Nagar", img: "/assets/img/district/ambedkar-nagar.jpg", product: "Textile Products", sec: "Textile Yarn", ter: "Recycled Textile Rug & Mat", profile: "#" },
@@ -83,7 +87,41 @@ const districts = [
   { slug: "varanasi", name: "Varanasi", img: "/assets/img/district/varanasi.jpg", product: "Banarasi Silk Saree", sec: "Gulabi Meenakari", ter: "Wooden Toys", profile: "#" },
 ];
 
-export default function DistrictsPage() {
+
+async function getDistricts(): Promise<DistrictProduct[]> {
+  try {
+    const response = await fetchHamaraPradeshDistricts({
+      next: { revalidate: 3600 },
+    });
+    
+    let data: any
+    let decryptedData: any = await decrypt128((response.data as any).body);
+    const items = decryptedData?.data?.district ||  [];
+    console.log(items)
+
+    if (!Array.isArray(items) || items.length === 0) {
+      return fallbackDistricts;
+    }
+
+    return items.map((item: any) => ({
+      id: item.id,
+      slug: item.slug || item.district_name?.toLowerCase().replace(/\s+/g, "-") || "",
+      name: item.district_name || item.name || "District",
+      img: item.image || item.thumbnail || `/assets/img/district/${item.slug}.jpg`,
+      product: item.title || "-",
+      secondary_product: item.secondary_product || "",
+      tertiary_product: item.tertiary_product || "",
+      profile: item.slug ? `/districts/${item.slug}` : "#",
+    }));
+  } catch (error) {
+    console.error("Error fetching districts:", error);
+    return fallbackDistricts;
+  }
+}
+
+export default async function DistrictsPage() {
+  const districts = await getDistricts();
+
   return (
     <main className="main-content district-products-page">
       {/* ===== PAGE HERO ===== */}
@@ -109,10 +147,10 @@ export default function DistrictsPage() {
             </label>
           </form>
           <div className="hero-prompt-tags" aria-label="Suggested AI searches">
-            <button className="hero-prompt-chip" type="button" data-prompt="Show leather districts in Uttar Pradesh">Leather districts</button>
-            <button className="hero-prompt-chip" type="button" data-prompt="Find districts with handicraft products">Handicraft districts</button>
-            <button className="hero-prompt-chip" type="button" data-prompt="List districts with textile ODOP products">Textile ODOP districts</button>
-            <button className="hero-prompt-chip" type="button" data-prompt="Show food processing ODOP products by district">Food product districts</button>
+            <button className="hero-prompt-chip" type="button">Leather districts</button>
+            <button className="hero-prompt-chip" type="button">Handicraft districts</button>
+            <button className="hero-prompt-chip" type="button">Textile ODOP districts</button>
+            <button className="hero-prompt-chip" type="button">Food product districts</button>
           </div>
         </div>
       </section>
@@ -126,32 +164,11 @@ export default function DistrictsPage() {
             <p>Complete district-wise listing with primary, secondary and tertiary products.</p>
             <div className="divider"><span /><span /><span /></div>
           </div>
-          <div className="districts-grid">
-            {districts.map(({ slug, name, img, product, sec, ter, profile }, i) => (
-              <div key={slug} className={`district-card reveal${i % 4 === 1 ? " delay-1" : i % 4 === 2 ? " delay-2" : i % 4 === 3 ? " delay-3" : ""}`}>
-                <div className="district-card-img">
-                  <img src={img} alt={`${name} primary product`} loading="lazy" />
-                  <span className="product-tag">{product}</span>
-                </div>
-                <div className="district-card-thumb">
-                  <img src={img} alt="District thumbnail" loading="lazy" />
-                </div>
-                <div className="district-card-body">
-                  <h4>{name}</h4>
-                  <p className="district-product"><i className="fas fa-tag" aria-hidden="true" /> {product}</p>
-                  <div className="district-meta district-meta-list">
-                    <span><i className="fas fa-layer-group" aria-hidden="true" /> {sec}</span>
-                    <span><i className="fas fa-cubes" aria-hidden="true" /> {ter}</span>
-                  </div>
-                  <a href={profile} className="btn btn-outline-primary btn-sm w-100">
-                    <i className="fas fa-eye" aria-hidden="true" /> View District Profile
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
+          
+          <DistrictList districts={districts} />
         </div>
       </section>
     </main>
   );
 }
+
