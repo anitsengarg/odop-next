@@ -94,7 +94,6 @@ async function getDistricts(): Promise<DistrictProduct[]> {
       next: { revalidate: 3600 },
     });
     
-    let data: any
     let decryptedData: any = await decrypt128((response.data as any).body);
     const items = decryptedData?.data?.district ||  [];
 
