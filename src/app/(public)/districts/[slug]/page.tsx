@@ -19,9 +19,8 @@ async function getDistrictDetail(slug: string) {
     }
 
     const decryptedData: any = await decrypt128((response.data as any).body);
-
-    console.log(decrypt128)
     
+    console.log(decryptedData)
     // Validate the decrypted data structure
     if (!decryptedData || !decryptedData.data || !decryptedData.data.district) {
       return null;
