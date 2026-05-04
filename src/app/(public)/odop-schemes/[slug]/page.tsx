@@ -240,9 +240,9 @@ export default async function SchemeDetailPage({ params }: PageProps) {
                                 <FaPhoneAlt />
                             </div>
                             <div className="qc-content">
-                                <h3>ODOP Helpline</h3>
+                                <h3>ODOP Email</h3>
                                 <p>Reach the support desk for guidance on eligibility, application flow, and documentation.</p>
-                                <a href="tel:18001805555" className="qc-link">1800-180-5555</a>
+                                <a href="mailto:odop-up@nic.in" className="qc-link">odop-up@nic.in</a>
                             </div>
                         </div>
                         <div className="quick-contact-card">
