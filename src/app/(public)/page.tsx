@@ -31,18 +31,18 @@ export default function Home() {
               <div className="quick-icon"><FaShop /></div>
               <span className="quick-label">Register Business</span>
             </a>
-            <a href="govt-schemes.html" className="quick-item">
+            <a href="#schemes" className="quick-item">
               <div className="quick-icon"><FaFileInvoice /> </div>
               <span className="quick-label">Govt. Schemes</span>
             </a>
-            <a href="supplier-listing.html" className="quick-item">
+            <a href="https://odopmart.up.gov.in/" className="quick-item">
               <div className="quick-icon"><FaCartShopping /></div>
               <span className="quick-label">ODOP Mart</span>
             </a>
-            <a href="contact-us.html" className="quick-item">
+            <Link href={'resources/grievance-redressal'}  className="quick-item">
               <div className="quick-icon"><FaCircleExclamation /></div>
               <span className="quick-label">File Grievance</span>
-            </a>
+            </Link>
             <a className="quick-item">
               <div className="quick-icon"><FaListCheck /></div>
               <span className="quick-label">Track Application</span>
