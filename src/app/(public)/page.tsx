@@ -55,7 +55,11 @@ export default function Home() {
       {/* --------------------------------
                  LEADERSHIP DESK
       -------------------------------- */}
-      <section className="section section-surface-white leadership-section" id="leadership-desk">
+      <section
+        className="section section-surface-white leadership-section"
+        id="leadership-desk"
+        style={{ scrollMarginTop: "140px" }}
+      >
         <div className="container">
           <div className="section-header">
             <span className="eyebrow">Leadership Desk</span>

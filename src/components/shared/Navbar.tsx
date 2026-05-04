@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FaQuestionCircle, FaSignInAlt } from "react-icons/fa";
-import { FaChevronDown, FaEnvelope, FaGlobe, FaLandmark, FaPhone } from "react-icons/fa6";
+import { FaChevronDown, FaEnvelope, FaGlobe, FaLandmark } from "react-icons/fa6";
 import styles from "@/styles/Navbar.module.css";
 import LoginModal from "@/components/ui/LoginModal";
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
@@ -10,6 +10,11 @@ import { usePathname } from "next/navigation";
 
 /** Matches responsive breakpoint used across the portal */
 const MOBILE_MQ = "(max-width: 767px)";
+const FONT_SCALE_STORAGE_KEY = "odop-font-scale";
+const DEFAULT_FONT_SCALE = 100;
+const MIN_FONT_SCALE = 90;
+const MAX_FONT_SCALE = 120;
+const FONT_SCALE_STEP = 5;
 
 function subscribeMobileMq(onStoreChange: () => void) {
     const mq = window.matchMedia(MOBILE_MQ);
@@ -43,6 +48,12 @@ function Navbar() {
     const [loginModalOpen, setLoginModalOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [expandedDropdown, setExpandedDropdown] = useState<DropdownId | null>(null);
+    const [fontScale, setFontScale] = useState(() => {
+        if (typeof window === "undefined") return DEFAULT_FONT_SCALE;
+        const savedScale = Number(window.localStorage.getItem(FONT_SCALE_STORAGE_KEY));
+        if (!Number.isFinite(savedScale)) return DEFAULT_FONT_SCALE;
+        return Math.min(MAX_FONT_SCALE, Math.max(MIN_FONT_SCALE, savedScale));
+    });
 
     const pathname = usePathname();
 
@@ -54,12 +65,6 @@ function Navbar() {
     }, []);
 
     useEffect(() => {
-        if (!isMobile) {
-            closeMobileNav();
-        }
-    }, [isMobile, closeMobileNav]);
-
-    useEffect(() => {
         if (!mobileMenuOpen) return;
         const previous = document.body.style.overflow;
         document.body.style.overflow = "hidden";
@@ -67,6 +72,11 @@ function Navbar() {
             document.body.style.overflow = previous;
         };
     }, [mobileMenuOpen]);
+
+    useEffect(() => {
+        document.documentElement.style.fontSize = `${fontScale}%`;
+        window.localStorage.setItem(FONT_SCALE_STORAGE_KEY, String(fontScale));
+    }, [fontScale]);
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen((open) => {
@@ -89,6 +99,37 @@ function Navbar() {
         }
     };
 
+    const onSkipToMainContent = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (pathname !== "/") return;
+        e.preventDefault();
+
+        const target = document.getElementById("leadership-desk");
+        if (!target) return;
+
+        const headerOffset = 140;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top, behavior: "smooth" });
+
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+
+        if (isMobile) {
+            closeMobileNav();
+        }
+    };
+
+    const decreaseFontSize = () => {
+        setFontScale((current) => Math.max(MIN_FONT_SCALE, current - FONT_SCALE_STEP));
+    };
+
+    const resetFontSize = () => {
+        setFontScale(DEFAULT_FONT_SCALE);
+    };
+
+    const increaseFontSize = () => {
+        setFontScale((current) => Math.min(MAX_FONT_SCALE, current + FONT_SCALE_STEP));
+    };
+
     const dropdownOpen = (id: DropdownId) => expandedDropdown === id;
 
     return (
@@ -96,18 +137,56 @@ function Navbar() {
             <div className={`${styles.topBar} top-bar`}>
                 <div className="container">
                     <div className={styles.topBarLeft}>
-                        <span><FaLandmark /> Government of Uttar Pradesh</span>
-                        <span className={styles.topBarDivider}></span>
-                        <a href="mailto:odop-up@nic.in"><FaEnvelope /> odop-up@nic.in</a>
+                        <div className={styles.accessibilityLinks}>
+                            <Link href="/#leadership-desk" className={styles.accessibilityLink} onClick={onSkipToMainContent}>
+                                Skip to Main Content
+                            </Link>
+                            <span className={styles.accessibilityDivider} aria-hidden="true"></span>
+                            <Link href="/screen-reader-access" className={styles.accessibilityLink}>
+                                Screen Reader Access
+                            </Link>
+                            <span className={styles.accessibilityDivider} aria-hidden="true"></span>
+                            <Link href="/sitemap" className={styles.accessibilityLink}>
+                                Sitemap
+                            </Link>
+                            <span className={styles.accessibilityDivider} aria-hidden="true"></span>
+                            <div className={styles.fontSizeControls} role="group" aria-label="Adjust font size">
+                                <button
+                                    type="button"
+                                    className={styles.fontSizeButton}
+                                    onClick={decreaseFontSize}
+                                    aria-label="Decrease font size"
+                                >
+                                    A-
+                                </button>
+                                <button
+                                    type="button"
+                                    className={styles.fontSizeButton}
+                                    onClick={resetFontSize}
+                                    aria-label="Reset font size"
+                                >
+                                    A
+                                </button>
+                                <button
+                                    type="button"
+                                    className={styles.fontSizeButton}
+                                    onClick={increaseFontSize}
+                                    aria-label="Increase font size"
+                                >
+                                    A+
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.topBarRight}>
                         <a href="#"><FaGlobe />
-                            &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;
+                           Hindi
                         </a>
                         <span className={styles.topBarDivider}></span>
                         <a href="#" onClick={(e) => { e.preventDefault(); setLoginModalOpen(true); }}><FaSignInAlt /> Login / Register</a>
                         <span className={styles.topBarDivider}></span>
-                        <a href="#"> <FaQuestionCircle />Help</a></div>
+                        <a href="#"> <FaQuestionCircle />Help</a>
+                    </div>
                 </div>
             </div>
 
@@ -130,7 +209,7 @@ function Navbar() {
                                 </Link>
                             </div>
 
-                            <div className="order-3 col-span-12 md:order-2 md:col-span-9">
+                            <div className="order-3 col-span-12 md:order-2 md:col-span-8">
                                 <ul
                                     className={`${styles.navMenu} nav-menu max-md:z-[10050] max-md:isolate ${mobileMenuOpen ? "open" : ""}`}
                                     id="nav-menu"
@@ -186,17 +265,17 @@ function Navbar() {
                                         </Link>
                                         <ul id="schemes-submenu" role="list" className={`${styles.navSubmenu} nav-submenu`}>
                                             <li role="listitem"><Link href="/odop-schemes" onClick={onLeafNavClick} aria-current={pathname === "/odop-schemes" ? "page" : undefined}>ODOP Scheme</Link></li>
-                                            <li role="listitem"><Link href="/assets/document/pdf-attachment/639126275519019895.pdf"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "/assets/document/pdf-attachment/639126275519019895.pdf" ? "page" : undefined}>Start-Up Schemes</Link></li>
-                                            <li role="listitem"><Link href="/assets/document/pdf-attachment/Stand-up-India.pdf"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "/assets/document/pdf-attachment/Stand-up-India.pdf" ? "page" : undefined}>Stand-Up Schemes</Link></li>
-                                            <li role="listitem"><Link href="https://cmyuva.org.in/"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://cmyuva.org.in/" ? "page" : undefined}>CMYUVA</Link></li>
-                                            <li role="listitem"><Link href="https://msme1connect.up.gov.in/scheme-list/financial-assistance-scheme-for-one-district-one-product-(odop-margin-money-scheme)"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://msme1connect.up.gov.in/scheme-list/financial-assistance-scheme-for-one-district-one-product-(odop-margin-money-scheme)" ? "page" : undefined}>ODOP Margin Money Scheme</Link></li>
-                                            <li role="listitem"><Link href="https://msme1connect.up.gov.in/scheme-list/odop-training-and-toolkit-scheme"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://msme1connect.up.gov.in/scheme-list/odop-training-and-toolkit-scheme" ? "page" : undefined}>ODOP Training and Toolkit Scheme</Link></li>
-                                            <li role="listitem"><Link href="https://msme1connect.up.gov.in/registration"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://msme1connect.up.gov.in/registration" ? "page" : undefined}>Apply for Loan – ODOP Margin Money</Link></li>
-                                            <li role="listitem"><Link href="https://bankofbaroda.bank.in/"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://bankofbaroda.bank.in/" ? "page" : undefined}>BOB PSB Loans in 59 Minutes</Link></li>
-                                            <li role="listitem"><Link href="https://www.sidbi.in/en/"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://www.sidbi.in/en/" ? "page" : undefined}>SIDBI Loan Support</Link></li>
-                                            <li role="listitem"><Link href="https://onlineloanappl.sidbi.in/OnlineApplication/"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://onlineloanappl.sidbi.in/OnlineApplication/" ? "page" : undefined}>SIDBI Online Loan Application</Link></li>
-                                            <li role="listitem"><Link href="https://www.rxil.in/"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://www.rxil.in/" ? "page" : undefined}>MSME Financing – TReDS</Link></li>
-                                            <li role="listitem"><Link href="https://udyamimitra.in/"  target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://udyamimitra.in/" ? "page" : undefined}>UdyamiMitra – Loan Facilitation</Link></li>
+                                            <li role="listitem"><Link href="/assets/document/pdf-attachment/639126275519019895.pdf" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "/assets/document/pdf-attachment/639126275519019895.pdf" ? "page" : undefined}>Start-Up Schemes</Link></li>
+                                            <li role="listitem"><Link href="/assets/document/pdf-attachment/Stand-up-India.pdf" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "/assets/document/pdf-attachment/Stand-up-India.pdf" ? "page" : undefined}>Stand-Up Schemes</Link></li>
+                                            <li role="listitem"><Link href="https://cmyuva.org.in/" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://cmyuva.org.in/" ? "page" : undefined}>CMYUVA</Link></li>
+                                            <li role="listitem"><Link href="https://msme1connect.up.gov.in/scheme-list/financial-assistance-scheme-for-one-district-one-product-(odop-margin-money-scheme)" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://msme1connect.up.gov.in/scheme-list/financial-assistance-scheme-for-one-district-one-product-(odop-margin-money-scheme)" ? "page" : undefined}>ODOP Margin Money Scheme</Link></li>
+                                            <li role="listitem"><Link href="https://msme1connect.up.gov.in/scheme-list/odop-training-and-toolkit-scheme" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://msme1connect.up.gov.in/scheme-list/odop-training-and-toolkit-scheme" ? "page" : undefined}>ODOP Training and Toolkit Scheme</Link></li>
+                                            <li role="listitem"><Link href="https://msme1connect.up.gov.in/registration" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://msme1connect.up.gov.in/registration" ? "page" : undefined}>Apply for Loan – ODOP Margin Money</Link></li>
+                                            <li role="listitem"><Link href="https://bankofbaroda.bank.in/" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://bankofbaroda.bank.in/" ? "page" : undefined}>BOB PSB Loans in 59 Minutes</Link></li>
+                                            <li role="listitem"><Link href="https://www.sidbi.in/en/" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://www.sidbi.in/en/" ? "page" : undefined}>SIDBI Loan Support</Link></li>
+                                            <li role="listitem"><Link href="https://onlineloanappl.sidbi.in/OnlineApplication/" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://onlineloanappl.sidbi.in/OnlineApplication/" ? "page" : undefined}>SIDBI Online Loan Application</Link></li>
+                                            <li role="listitem"><Link href="https://www.rxil.in/" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://www.rxil.in/" ? "page" : undefined}>MSME Financing – TReDS</Link></li>
+                                            <li role="listitem"><Link href="https://udyamimitra.in/" target="_blank" onClick={onLeafNavClick} aria-current={pathname === "https://udyamimitra.in/" ? "page" : undefined}>UdyamiMitra – Loan Facilitation</Link></li>
                                         </ul>
                                     </li>
                                     <li
@@ -318,7 +397,7 @@ function Navbar() {
                                 </ul>
                             </div>
 
-                            <div className="order-2 col-span-4 shrink-0 md:order-3 md:col-span-1 md:col-start-12 flex justify-end">
+                            <div className="order-2 col-span-4 shrink-0 md:order-3 md:col-span-2 md:col-start-11 flex justify-end">
                                 <div className={`${styles.navActions} nav-actions`}>
                                     <div
                                         className={`${styles.navGovtLogos} nav-govt-logos hidden md:flex`}
