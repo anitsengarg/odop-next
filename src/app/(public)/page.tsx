@@ -6,9 +6,12 @@ import Link from "next/link";
 import { FaAddressBook, FaAmazon, FaArrowRight, FaBagShopping, FaBookOpenReader, FaCalendarDays, FaCartShopping, FaCircleExclamation, FaClockRotateLeft, FaCubes, FaEbay, FaFileInvoice, FaGlobe, FaHandHoldingDollar, FaHandPointDown, FaHands, FaHandshake, FaHeadset, FaIndustry, FaLayerGroup, FaListCheck, FaPaperPlane, FaPhone, FaQuoteLeft, FaShop, FaStore, FaTag, FaTruck, FaUserPlus, FaWarehouse } from "react-icons/fa6";
 import { FaEye, FaGlobeAsia, FaListAlt, FaMapMarkedAlt } from "react-icons/fa";
 import HeroSlider from "@/components/ui/HeroSlider";
+import { useState } from "react";
+import LoginModal from "@/components/ui/LoginModal";
 
 
 export default function Home() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
 
   useScrollReveal();
@@ -27,10 +30,10 @@ export default function Home() {
       <div className="quick-strip" role="navigation" aria-label="Quick access">
         <div className="container">
           <div className="quick-grid">
-            <a href="supplier-registration.html" className="quick-item quick-item-primary">
+            <Link href="supplier-registration" className="quick-item quick-item-primary">
               <div className="quick-icon"><FaShop /></div>
               <span className="quick-label">Register Business</span>
-            </a>
+            </Link>
             <a href="#schemes" className="quick-item">
               <div className="quick-icon"><FaFileInvoice /> </div>
               <span className="quick-label">Govt. Schemes</span>
@@ -43,10 +46,10 @@ export default function Home() {
               <div className="quick-icon"><FaCircleExclamation /></div>
               <span className="quick-label">File Grievance</span>
             </Link>
-            <a className="quick-item">
+            <button onClick={() => setIsLoginModalOpen(true)} className="quick-item">
               <div className="quick-icon"><FaListCheck /></div>
               <span className="quick-label">Track Application</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -297,7 +300,7 @@ export default function Home() {
               <h4>Register Business</h4>
               <p>Start your ODOP supplier registration and onboarding process.</p>
               <div className="service-links">
-                <Link href="supplier-registration.html" className="btn btn-primary btn-sm">Apply for Registration</Link>
+                <Link href="/supplier-registration" className="btn btn-primary btn-sm">Apply for Registration</Link>
               </div>
             </article>
           </div>
@@ -824,7 +827,11 @@ export default function Home() {
         </div>
       </section>
 
-    </main >
+      <LoginModal
+        open={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
+    </main>
   );
 }
 

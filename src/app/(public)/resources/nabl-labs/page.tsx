@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "@/styles/nabl-labs.css";
 
 export const metadata: Metadata = {
   title: "List of NABL Labs | Resources | ODOP UP",
@@ -117,11 +118,10 @@ const nablLabs: NablLab[] = [
 
 export default function NablLabsPage() {
   return (
-    <main className="main-content schemes-page">
-      {/* ── Hero ── */}
-      <section className="page-hero schemes-hero">
-        <div className="page-hero-overlay" />
-        <div className="container page-hero-content">
+    <div className="nabl-labs-page">
+      <section className="page-hero nabl-hero relative">
+        <div className="page-hero-overlay"></div>
+        <div className="container page-hero-content relative z-10">
           <h1 className="page-hero-title">List of NABL Labs</h1>
           <p className="page-hero-subtitle">
             NABL-accredited laboratories in Uttar Pradesh providing quality testing,
@@ -130,107 +130,86 @@ export default function NablLabsPage() {
         </div>
       </section>
 
-      <div className="container">
-        <div className="section-header">
-          <span className="eyebrow">Quality Assurance</span>
-          <h2>NABL-Accredited Laboratories</h2>
-          <div className="divider"><span /><span /><span /></div>
-        </div>
-
-        {/* ── Intro: image left + content right ── */}
-        <section className="static-content-wrap">
-          <article className="static-card">
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              {/* Image */}
-              <div className="w-full md:w-2/5 shrink-0">
+      <section className="about-section">
+        <div className="container">
+          <div className="about-overview-grid">
+            <div className="about-overview-visual">
+              <div className="about-image-stack">
                 <img
                   src="/assets/img/NABL.jpg"
                   alt="NABL Accredited Laboratory"
-                  className="w-full rounded-xl object-cover shadow-md"
-                  style={{ maxHeight: "320px" }}
+                  className="about-main-image"
+                  loading="lazy"
                 />
               </div>
-
-              {/* Content */}
-              <div className="w-full md:w-3/5">
-                <h3 className="mb-3">NABL Labs &amp; ODOP Quality Standards</h3>
-                <p>
-                  In Uttar Pradesh, National Accreditation Board for Testing and Calibration
-                  Laboratories (NABL)-accredited laboratories play a crucial role in
-                  strengthening the One District One Product (ODOP) initiative by ensuring
-                  that products meet nationally and internationally accepted quality standards.
-                  These labs provide reliable testing, calibration, and certification services
-                  for ODOP products such as handicrafts, food items, and textiles, helping
-                  local producers validate product quality, safety, and compliance.
-                </p>
-                <p className="mt-3">
-                  This accreditation builds trust among buyers, exporters, and regulatory
-                  bodies, making ODOP goods more competitive in both domestic and global
-                  markets. By supporting standardization and quality assurance,
-                  NABL-accredited labs directly contribute to enhancing the credibility,
-                  export potential, and overall value of ODOP products from the state.
-                </p>
-              </div>
             </div>
-          </article>
+            <div className="about-overview-content">
+              <div className="section-eyebrow">Quality Assurance</div>
+              <h2 className="section-title">NABL-Accredited Laboratories</h2>
+              <p>
+                In Uttar Pradesh, National Accreditation Board for Testing and Calibration
+                Laboratories (NABL)-accredited laboratories play a crucial role in
+                strengthening the One District One Product (ODOP) initiative by ensuring
+                that products meet nationally and internationally accepted quality standards.
+              </p>
+              <p>
+                These labs provide reliable testing, calibration, and certification services
+                for ODOP products such as handicrafts, food items, and textiles, helping
+                local producers validate product quality, safety, and compliance.
+              </p>
+              <p>
+                This accreditation builds trust among buyers, exporters, and regulatory
+                bodies, making ODOP goods more competitive in both domestic and global
+                markets. By supporting standardization and quality assurance,
+                NABL-accredited labs directly contribute to enhancing the credibility,
+                export potential, and overall value of ODOP products from the state.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          {/* ── Lab List Table ── */}
-          <article className="static-card mt-6">
-            <h3 className="mb-4">District-wise NABL-Accredited Laboratories ({nablLabs.length} Labs)</h3>
-            <div className="overflow-x-auto rounded-xl border border-[#e6edf6]">
-              <table className="w-full min-w-[860px] border-collapse">
+      <main className="nabl-main-content section">
+        <div className="container">
+          <section className="nabl-section">
+            <h2>District-wise NABL-Accredited Laboratories ({nablLabs.length} Labs)</h2>
+            <div className="nabl-table-scroll">
+              <table className="nabl-table">
                 <thead>
                   <tr>
-                    <th className="bg-[#f3f7fc] text-[#27425f] text-xs font-semibold uppercase tracking-wide py-3 px-4 text-left border-b border-[#dce8f5] whitespace-nowrap">
-                      S. No.
-                    </th>
-                    <th className="bg-[#f3f7fc] text-[#27425f] text-xs font-semibold uppercase tracking-wide py-3 px-4 text-left border-b border-[#dce8f5] whitespace-nowrap">
-                      ODOP Category
-                    </th>
-                    <th className="bg-[#f3f7fc] text-[#27425f] text-xs font-semibold uppercase tracking-wide py-3 px-4 text-left border-b border-[#dce8f5] whitespace-nowrap">
-                      CAB ID
-                    </th>
-                    <th className="bg-[#f3f7fc] text-[#27425f] text-xs font-semibold uppercase tracking-wide py-3 px-4 text-left border-b border-[#dce8f5]">
-                      Laboratory Name
-                    </th>
-                    <th className="bg-[#f3f7fc] text-[#27425f] text-xs font-semibold uppercase tracking-wide py-3 px-4 text-left border-b border-[#dce8f5]">
-                      Address
-                    </th>
-                    <th className="bg-[#f3f7fc] text-[#27425f] text-xs font-semibold uppercase tracking-wide py-3 px-4 text-left border-b border-[#dce8f5] whitespace-nowrap">
-                      District
-                    </th>
-                    <th className="bg-[#f3f7fc] text-[#27425f] text-xs font-semibold uppercase tracking-wide py-3 px-4 text-left border-b border-[#dce8f5]">
-                      Discipline
-                    </th>
+                    <th>S. No.</th>
+                    <th>ODOP Category</th>
+                    <th>CAB ID</th>
+                    <th>Laboratory Name</th>
+                    <th>Address</th>
+                    <th>District</th>
+                    <th>Discipline</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {nablLabs.map((lab, index) => (
-                    <tr
-                      key={`${lab.cabId}-${lab.sNo}`}
-                      className={index % 2 === 0 ? "bg-white" : "bg-[#f9fbfd]"}
-                    >
-                      <td className="py-3 px-4 text-sm border-b border-[#edf2f8] align-top text-center font-medium text-[#153b66]">
+                  {nablLabs.map((lab) => (
+                    <tr key={`${lab.cabId}-${lab.sNo}`}>
+                      <td style={{ textAlign: "center", fontWeight: "600", color: "#153b66" }}>
                         {lab.sNo}
                       </td>
-                      <td className="py-3 px-4 text-sm border-b border-[#edf2f8] align-top whitespace-nowrap">
-                        <span className="inline-block bg-[#e8f0fb] text-[#1a4a8a] text-xs font-medium px-2 py-0.5 rounded-full">
+                      <td>
+                        <span className="category-chip">
                           {lab.category}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-sm border-b border-[#edf2f8] align-top font-mono text-[#0056b3] whitespace-nowrap">
+                      <td className="cab-id">
                         {lab.cabId}
                       </td>
-                      <td className="py-3 px-4 text-sm border-b border-[#edf2f8] align-top font-medium text-[#1f324a]">
+                      <td style={{ fontWeight: "500", color: "#1f324a" }}>
                         {lab.cabName}
                       </td>
-                      <td className="py-3 px-4 text-sm border-b border-[#edf2f8] align-top text-[#4a6078]">
+                      <td style={{ color: "#4a6078" }}>
                         {lab.address}
                       </td>
-                      <td className="py-3 px-4 text-sm border-b border-[#edf2f8] align-top whitespace-nowrap font-medium">
+                      <td style={{ fontWeight: "500" }}>
                         {lab.district}
                       </td>
-                      <td className="py-3 px-4 text-sm border-b border-[#edf2f8] align-top text-[#4a6078]">
+                      <td style={{ color: "#4a6078" }}>
                         {lab.discipline}
                       </td>
                     </tr>
@@ -238,21 +217,20 @@ export default function NablLabsPage() {
                 </tbody>
               </table>
             </div>
-            <p className="mt-4 text-xs text-[#6b8299]">
+            <p className="source-note">
               Source: National Accreditation Board for Testing and Calibration Laboratories (NABL).
               For the latest accreditation status, visit{" "}
               <a
                 href="https://www.nabl-india.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#0056b3] hover:underline"
               >
                 www.nabl-india.org
               </a>.
             </p>
-          </article>
-        </section>
-      </div>
-    </main>
+          </section>
+        </div>
+      </main>
+    </div>
   );
 }
