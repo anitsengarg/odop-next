@@ -27,10 +27,10 @@ export default function Home() {
       <div className="quick-strip" role="navigation" aria-label="Quick access">
         <div className="container">
           <div className="quick-grid">
-            <a href="supplier-registration.html" className="quick-item quick-item-primary">
+            <Link href="supplier-registration" className="quick-item quick-item-primary">
               <div className="quick-icon"><FaShop /></div>
               <span className="quick-label">Register Business</span>
-            </a>
+            </Link>
             <a href="#schemes" className="quick-item">
               <div className="quick-icon"><FaFileInvoice /> </div>
               <span className="quick-label">Govt. Schemes</span>
@@ -293,7 +293,7 @@ export default function Home() {
               <h4>Register Business</h4>
               <p>Start your ODOP supplier registration and onboarding process.</p>
               <div className="service-links">
-                <Link href="supplier-registration.html" className="btn btn-primary btn-sm">Apply for Registration</Link>
+                <Link href="/supplier-registration" className="btn btn-primary btn-sm">Apply for Registration</Link>
               </div>
             </article>
           </div>
