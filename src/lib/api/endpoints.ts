@@ -220,6 +220,9 @@ export const ENDPOINTS = {
   gallery_master: `${new_base}/api/public/gallery-master`,
   mda_reports: `${new_base}/api/public/mda-reports`,
 
-
-
+  auth: {
+    login: `${base}/api/mobile/login`,
+    register: `${base}/api/mobile/register`,
+  },
 } as const;
+

@@ -11,3 +11,15 @@ export async function fetchGovernmentSchemes(options?: RequestOptions) {
 export async function fetchLoanLinkCategories(options?: RequestOptions) {
   return httpClient.get(ENDPOINTS.loanLinkCategory, options);
 }
+
+export async function fetchKnowledgeHub(options?: RequestOptions) {
+  return httpClient.get(ENDPOINTS.knowledgeHub, options);
+}
+
+export async function fetchGalleryMaster(options?: RequestOptions) {
+  return httpClient.get(ENDPOINTS.gallery_master, options);
+}
+
+export async function fetchMdaReports(options?: RequestOptions) {
+  return httpClient.get(ENDPOINTS.mda_reports, options);
+}
