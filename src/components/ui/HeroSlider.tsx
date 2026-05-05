@@ -56,7 +56,7 @@ function HeroSlider({district}: {district?: DistrictProduct[]}) {
                     </form>
                     <div className="hero-prompt-tags" aria-label="Suggested AI searches"> 
 
-                        {district && district.slice(0, 5).map((item, index) => (
+                        {district && district?.map((item, index) => (
                             <button key={index} className="hero-prompt-chip" type="button"
                                 data-prompt={`Find ODOP products for gifting and retail from ${item.name}`}>{item.name} {item.product}</button>
                         ))}
