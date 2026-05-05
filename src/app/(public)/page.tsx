@@ -7,7 +7,7 @@ import TrackApplication from "@/components/home/TrackApplication";
 import ScrollRevealInitializer from "@/components/home/ScrollRevealInitializer";
 import { DistrictProduct } from "@/components/DistrictProductCard";
 import { fetchHamaraPradeshDistricts } from "@/services";
-import { decrypt128 } from "@/lib/api";
+import { API_CONFIG, decrypt128 } from "@/lib/api";
 
 async function getDistricts(): Promise<DistrictProduct[]> {
   try {
@@ -23,7 +23,7 @@ async function getDistricts(): Promise<DistrictProduct[]> {
       id: item.id,
       slug: item.slug || item.district_name?.toLowerCase().replace(/\s+/g, "-") || "",
       name: item.district_name || item.name || "District",
-      img:  item.thumbnail || item.hindi_thumbnail  || `/assets/img/district/${item.slug}.jpg`,
+      img: API_CONFIG.IMAGE_BASE_URL+( item.thumbnail || item.hindi_thumbnail  || `/assets/img/district/${item.slug}.jpg`),
       product: item.title || "-",
       secondary_product: item.secondary_product || "",
       tertiary_product: item.tertiary_product || "",
@@ -199,19 +199,19 @@ export default async function Home() {
           <div className="districts-grid">
 
             {
-              districtProductData.map((product, index) => (
+              districtData?.slice(0, 8)?.map((product, index) => (
                 <div key={index} className={`district-card reveal delay-${index % 4}`}>
 
-                  <div className="district-card-img"><img src={product.imageUrl} alt={`${product.district} primary product`}
-                    loading="lazy" /><span className="product-tag">{product.category}</span></div>
-                  <div className="district-card-thumb"><img src={product.imageUrl} alt="District thumbnail"
+                  <div className="district-card-img"><img src={product.img} alt={`${product.name} primary product`}
+                    loading="lazy" /><span className="product-tag">{product.product}</span></div>
+                  <div className="district-card-thumb"><img src={product.img} alt="District thumbnail"
                     loading="lazy" /></div>
 
                   <div className="district-card-body">
-                    <h4>{product.district}</h4>
-                    <p className="district-product"><FaTag /> {product.category}</p>
+                    <h4>{product.name}</h4>
+                    <p className="district-product"><FaTag /> {product.product}</p>
 
-                    <div className="district-meta district-meta-list">
+                    {/* <div className="district-meta district-meta-list">
                       {
                         product.meta.map((metaItem, metaIndex) => {
                           const Icon = metaItem.icon;
@@ -220,10 +220,10 @@ export default async function Home() {
                           );
                         })
                       }
-                    </div>
+                    </div> */}
 
-                    <a href="agra-district-profile.html" className="btn btn-outline-primary btn-sm w-100">
-                      <FaEye />  View District Profile </a>
+                    <Link href={'districts/' + product.slug} className="btn btn-outline-primary btn-sm w-100">
+                      <FaEye />  View District Profile </Link>
                   </div>
 
                 </div>
