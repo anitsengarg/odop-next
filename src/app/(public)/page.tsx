@@ -253,7 +253,7 @@ export default function Home() {
           <div className="services-grid">
             <article className="service-card reveal">
               <div className="service-icon"> <FaBookOpenReader /> </div>
-              <h4>ODOP Incubation</h4>
+              <h4>ODOP Knowledge Hub</h4>
               <p>Project reports and videos for business learning.</p>
               <div className="service-links">
                 <Link href="https://odopup.in/en/page/video-gallery" target="_blank" rel="noopener"
