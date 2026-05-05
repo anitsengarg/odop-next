@@ -1,23 +1,51 @@
-"use client";
-
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 import Counter from "@/components/Counter";
 import Link from "next/link";
 import { FaAddressBook, FaAmazon, FaArrowRight, FaBagShopping, FaBookOpenReader, FaCalendarDays, FaCartShopping, FaCircleExclamation, FaClockRotateLeft, FaCubes, FaEbay, FaFileInvoice, FaGlobe, FaHandHoldingDollar, FaHandPointDown, FaHands, FaHandshake, FaHeadset, FaIndustry, FaLayerGroup, FaListCheck, FaPaperPlane, FaPhone, FaQuoteLeft, FaShop, FaStore, FaTag, FaTruck, FaUserPlus, FaWarehouse } from "react-icons/fa6";
 import { FaEye, FaGlobeAsia, FaListAlt, FaMapMarkedAlt } from "react-icons/fa";
 import HeroSlider from "@/components/ui/HeroSlider";
-import { useState } from "react";
-import LoginModal from "@/components/ui/LoginModal";
+import TrackApplication from "@/components/home/TrackApplication";
+import ScrollRevealInitializer from "@/components/home/ScrollRevealInitializer";
+import { DistrictProduct } from "@/components/DistrictProductCard";
+import { fetchHamaraPradeshDistricts } from "@/services";
+import { decrypt128 } from "@/lib/api";
+
+async function getDistricts(): Promise<DistrictProduct[]> {
+  try {
+    const response = await fetchHamaraPradeshDistricts({
+      next: { revalidate: 3600 },
+    });
+    
+
+    let decryptedData: any = await decrypt128((response.data as any).body);
+    const items = decryptedData?.data?.district ||  [];
+
+    return items.map((item: any) => ({
+      id: item.id,
+      slug: item.slug || item.district_name?.toLowerCase().replace(/\s+/g, "-") || "",
+      name: item.district_name || item.name || "District",
+      img:  item.thumbnail || item.hindi_thumbnail  || `/assets/img/district/${item.slug}.jpg`,
+      product: item.title || "-",
+      secondary_product: item.secondary_product || "",
+      tertiary_product: item.tertiary_product || "",
+      profile: item.slug ? `/districts/${item.slug}` : "#",
+    }));
+  } catch (error) {
+    console.error("Error fetching districts:", error);
+    return [];
+  }
+}
+
+export default async function Home() {
+  const districtData = await getDistricts();
+
+  console.log("Fetched district data:", districtData);
+  
 
 
-export default function Home() {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-
-  useScrollReveal();
 
   return (
     <main>
+      <ScrollRevealInitializer />
       {/* --------------------------------
                   HERO SECTION
       -------------------------------- */}
@@ -46,10 +74,7 @@ export default function Home() {
               <div className="quick-icon"><FaCircleExclamation /></div>
               <span className="quick-label">File Grievance</span>
             </Link>
-            <button onClick={() => setIsLoginModalOpen(true)} className="quick-item">
-              <div className="quick-icon"><FaListCheck /></div>
-              <span className="quick-label">Track Application</span>
-            </button>
+            <TrackApplication />
           </div>
         </div>
       </div>
@@ -825,10 +850,6 @@ export default function Home() {
         </div>
       </section>
 
-      <LoginModal
-        open={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-      />
     </main>
   );
 }
