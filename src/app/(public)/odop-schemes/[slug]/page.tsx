@@ -15,6 +15,7 @@ export default async function SchemeDetailPage({ params }: PageProps) {
 
     try {
         const response = await fetchSchemeDetail(slug)
+        console.log("Scheme detail response:", response)
         if (response?.data) {
             scheme = response.data as Scheme
         }
@@ -185,10 +186,10 @@ export default async function SchemeDetailPage({ params }: PageProps) {
                                     <div>
                                         <h2>Required Documents</h2>
                                         <ul className="static-list">
-                                            {documentsJson.documents.map((doc, index) => (
-                                                <li key={index}>
+                                            {documentsJson.documents.map((doc) => (
+                                                <li key={doc as string}>
                                                     <FaFileLines className="text-primary mt-1" />
-                                                    <span>{doc.name}</span>
+                                                    <span>{doc as string}</span>
                                                 </li>
                                             ))}
                                         </ul>
