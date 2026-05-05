@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { FaArrowRight, FaCertificate } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
+import { DistrictProduct } from "../DistrictProductCard";
 
 const slides = [
     "/assets/img/hero-odop-1.jpeg",
@@ -12,7 +13,7 @@ const slides = [
 ];
 
 
-function HeroSlider() {
+function HeroSlider({district}: {district?: DistrictProduct[]}) {
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -54,18 +55,11 @@ function HeroSlider() {
                         </label>
                     </form>
                     <div className="hero-prompt-tags" aria-label="Suggested AI searches"> 
-                        <button className="hero-prompt-chip" type="button"
-                            data-prompt="Find ODOP products for gifting and retail">Agra leather</button>
-                        <button className="hero-prompt-chip" type="button"
-                            data-prompt="Show brass decor suppliers from Moradabad">Moradabad brass decor</button>
-                        <button className="hero-prompt-chip" type="button"
-                            data-prompt="Find Chikankari wholesalers in Lucknow">Lucknow chikankari</button>
-                        <button className="hero-prompt-chip" type="button"
-                            data-prompt="Which ODOP schemes support new businesses?">Aligarh lock and hardware</button>
-                        <button className="hero-prompt-chip" type="button"
-                            data-prompt="List exporters for Banarasi silk products">Banarasi silk exporters</button>
-                        <button className="hero-prompt-chip" type="button"
-                            data-prompt="Show artisans for Gorakhpur terracotta">Gorakhpur terracotta artisans</button>
+
+                        {district && district.slice(0, 5).map((item, index) => (
+                            <button key={index} className="hero-prompt-chip" type="button"
+                                data-prompt={`Find ODOP products for gifting and retail from ${item.name}`}>{item.name} {item.product}</button>
+                        ))}
                        
                     </div>
                 </div>

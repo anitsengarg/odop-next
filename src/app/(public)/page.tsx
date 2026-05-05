@@ -49,7 +49,7 @@ export default async function Home() {
       {/* --------------------------------
                   HERO SECTION
       -------------------------------- */}
-      <HeroSlider />
+      <HeroSlider district={districtData.slice(0 , 6)} />
 
 
       {/* --------------------------------
@@ -853,101 +853,5 @@ export default async function Home() {
     </main>
   );
 }
-
-
-const districtProductData = [
-  {
-    district: "Agra",
-    category: "Leather Products",
-    productTitle: "Agra",
-    meta: [
-      { icon: FaLayerGroup, text: "Marble inlay work" },
-      { icon: FaCubes, text: "Petha Making" }
-    ],
-    imageUrl: "/assets/img/district/agra.jpg",
-    profileLink: "agra-district-profile.html"
-  },
-  {
-    district: "Lucknow",
-    category: "Chikankari Zari Zardozi",
-    productTitle: "Lucknow",
-    meta: [
-      { icon: FaLayerGroup, text: "Chikankari Clutches & Silk Stoles" },
-      { icon: FaCubes, text: "Muslin Fabric Supply" }
-    ],
-    imageUrl: "/assets/img/district/lucknow.jpg",
-    profileLink: "lucknow-district-profile.html"
-  },
-  {
-    district: "Moradabad",
-    category: "Metal Craft",
-    productTitle: "Moradabad",
-    meta: [
-      { icon: FaLayerGroup, text: "Decorative Copper Water Pitchers Cups" },
-      { icon: FaCubes, text: "Engraving &amp; Design Work" }
-    ],
-    imageUrl: "/assets/img/district/moradabad.jpg",
-    profileLink: "moradabad-district-profile.html"
-  },
-  {
-    district: "Bhadohi",
-    category: "Carpet (Dari)",
-    productTitle: "Bhadohi",
-    meta: [
-      { icon: FaLayerGroup, text: "Wool" },
-      { icon: FaCubes, text: "Carpet Cleaning &amp; Repair Service" }
-    ],
-    imageUrl: "/assets/img/district/bhadohi.jpg",
-    profileLink: "bhadohi-district-profile.html"
-  },
-  {
-    district: "Varanasi",
-    category: "Banarasi Silk Saree",
-    productTitle: "Varanasi",
-    meta: [
-      { icon: FaLayerGroup, text: "Banarasi Silk Garments (Kurta, Jackets)" },
-      { icon: FaCubes, text: "Spice Box Making" }
-    ],
-    imageUrl: "/assets/img/district/varanasi.jpg",
-    profileLink: "varanasi-district-profile.html"
-  },
-  {
-    district: "Aligarh",
-    category: "Locks",
-    productTitle: "Aligarh",
-    meta: [
-      { icon: FaLayerGroup, text: "Brass Furniture Hardware" },
-      { icon: FaCubes, text: "Steel Sheet Cutting Stamping" }
-    ],
-    imageUrl: "/assets/img/district/aligarh.jpg",
-    profileLink: "aligarh-district-profile.html"
-  },
-  {
-    district: "Firozabad",
-    category: "Glassware bangles",
-    productTitle: "Firozabad",
-    meta: [
-      { icon: FaLayerGroup, text: "Glass Lamp" },
-      { icon: FaCubes, text: "Silica Sand" }
-    ],
-    imageUrl: "/assets/img/district/firozabad.jpg",
-    profileLink: "firozabad-district-profile.html"
-  },
-  {
-    district: "Kannauj",
-    category: "Perfume (Attar)",
-    productTitle: "Kannauj",
-    meta: [
-      { icon: FaLayerGroup, text: "Rose Water" },
-      { icon: FaCubes, text: "Perfume Bottles Manufacturing" }
-    ],
-    imageUrl: "/assets/img/district/kannauj.jpg",
-    profileLink: "kannauj-district-profile.html"
-  },
-
-
-
-
-];
 
 
