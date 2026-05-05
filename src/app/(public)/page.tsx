@@ -38,11 +38,7 @@ async function getDistricts(): Promise<DistrictProduct[]> {
 export default async function Home() {
   const districtData = await getDistricts();
 
-  console.log("Fetched district data:", districtData);
   
-
-
-
   return (
     <main>
       <ScrollRevealInitializer />
@@ -242,7 +238,7 @@ export default async function Home() {
         <div className="container">
           <div className="stats-grid">
             <div className="stat-card reveal">
-              <div className="stat-icon"> <FaMapMarkedAlt /> </div>
+              <div className="stat-icon "> <FaMapMarkedAlt /> </div>
               <span className="stat-number"><Counter value="75" /></span>
               <span className="stat-label">ODOP Districts</span>
             </div>

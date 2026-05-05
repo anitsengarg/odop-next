@@ -4194,6 +4194,7 @@ p:last-child {
     color: var(--gold);
     margin-bottom: 12px;
     opacity: 0.85;
+    display:inline-block !important;
 }
 
 .stat-card .stat-number {
