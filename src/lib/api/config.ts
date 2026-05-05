@@ -3,6 +3,7 @@ export const API_CONFIG = {
   IMAGE_BASE_URL:
     process.env.NEXT_PUBLIC_IMAGE_BASE_URL ||
     "https://udyamsarthi.co.in/storage/",
+  NEW_BASE_URL: process.env.NEXT_PUBLIC_NEW_BASE_URL || "http://192.168.2.5:8099",
   TIMEOUT: 30000,
   RETRY_ATTEMPTS: 2,
   RETRY_DELAY: 1000,

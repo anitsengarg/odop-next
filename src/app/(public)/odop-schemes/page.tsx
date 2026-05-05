@@ -12,6 +12,8 @@ import {
     FaUserCheck,
 } from 'react-icons/fa6'
 import { SCHEMES_PAGE_CATALOG, SCHEME_META_ICONS, SchemeCardData } from '@/lib/schemes'
+import { fetchSchemesList } from '@/services/schemes.service'
+import { useEffect, useState } from 'react'
 
 function SchemeMetaIcon({ name }: { name: string }) {
     const Icon = SCHEME_META_ICONS[name]
@@ -75,7 +77,27 @@ function SchemeCard({ scheme }: { scheme: SchemeCardData }) {
     )
 }
 
-export default function OdopSchemes() {
+export default  function OdopSchemes() {
+    const [odopSchemes, setOdopSchemes] = useState<Array<SchemeCardData>>([])
+    const [otherSchemes, setOtherSchemes] = useState<Array<SchemeCardData>>([])
+
+   useEffect(() => {
+  const loadSchemes = async () => {
+    try {
+      const response = await fetchSchemesList();
+
+      console.log("Fetched schemes:", response.data);
+
+      if (Array.isArray(response?.data)) {
+        // setOdopSchemes(response.data || []);    
+      }
+    } catch (error) {
+      console.error("Failed to fetch schemes:", error);
+    }
+  };
+
+  loadSchemes();
+}, []);
     return (
         <>
             <section className="page-hero schemes-hero">
@@ -130,7 +152,7 @@ export default function OdopSchemes() {
                     </div>
 
                     <div className="schemes-grid" id="schemesGrid">
-                        {SCHEMES_PAGE_CATALOG.odop.map((scheme) => (
+                        {odopSchemes.map((scheme) => (
                             <SchemeCard key={scheme.id} scheme={scheme} />
                         ))}
                     </div>
@@ -142,7 +164,7 @@ export default function OdopSchemes() {
                     </div>
 
                     <div className="schemes-grid">
-                        {SCHEMES_PAGE_CATALOG.otherMsme.map((scheme) => (
+                        {otherSchemes.map((scheme) => (
                             <SchemeCard key={scheme.id} scheme={scheme} />
                         ))}
                     </div>

@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { SCHEMES_PAGE_CATALOG, SCHEME_META_ICONS } from '@/lib/schemes'
+import { SCHEMES_PAGE_CATALOG, SCHEME_META_ICONS, SchemeCardData } from '@/lib/schemes'
 import { FaArrowUpRightFromSquare, FaBookOpen, FaChevronRight, FaFileLines, FaFileInvoice, FaBuildingColumns, FaIdCard, FaHeadset, FaFileSignature, FaCircleInfo, FaEnvelope, FaCircleCheck } from 'react-icons/fa6'
 import { FaPhoneAlt } from 'react-icons/fa'
+import { fetchSchemeDetail } from '@/services/schemes.service'
 
 interface PageProps {
     params: Promise<{ slug: string }>
@@ -10,9 +11,21 @@ interface PageProps {
 
 export default async function SchemeDetailPage({ params }: PageProps) {
     const { slug } = await params
+    let scheme: SchemeCardData | null = null
 
-    const allSchemes = [...SCHEMES_PAGE_CATALOG.odop, ...SCHEMES_PAGE_CATALOG.otherMsme]
-    const scheme = allSchemes.find((s) => s.id === slug)
+    try {
+        const response = await fetchSchemeDetail(slug)
+        if (response?.data) {
+            scheme = response.data
+        } else {
+            const allSchemes = [...SCHEMES_PAGE_CATALOG.odop, ...SCHEMES_PAGE_CATALOG.otherMsme]
+            scheme = allSchemes.find((s) => s.id === slug) || null
+        }
+    } catch (error) {
+        console.error("Failed to fetch scheme detail on server:", error)
+        const allSchemes = [...SCHEMES_PAGE_CATALOG.odop, ...SCHEMES_PAGE_CATALOG.otherMsme]
+        scheme = allSchemes.find((s) => s.id === slug) || null
+    }
 
     if (!scheme || !scheme.detail) {
         notFound()

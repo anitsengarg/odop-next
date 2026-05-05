@@ -14,3 +14,4 @@ export * from "./exhibition.service";
 export * from "./documentary.service";
 export * from "./success-story.service";
 export * from "./project-video.service";
+export * from "./schemes.service";
