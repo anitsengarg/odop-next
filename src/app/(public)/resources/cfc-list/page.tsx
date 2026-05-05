@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/cfc-list.css";
 import Link from "next/link";
 import { fetchCfcList } from "@/services/schemes.service";
+import Pagination from "@/components/shared/Pagination";
 
 export const metadata: Metadata = {
   title: "CFC List | ODOP UP - One District One Product",
@@ -22,8 +23,19 @@ interface CfcItem {
   is_under_implementation?: boolean;
 }
 
-export default async function CfcListPage() {
-  const { data: cfcList } = await fetchCfcList();
+export default async function CfcListPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
+  const limit = 20;
+
+  const { data: paginatedData } = await fetchCfcList(currentPage, limit);
+  const cfcList = paginatedData?.data || [];
+  const totalPages = paginatedData?.last_page || 1;
+  const perPage = paginatedData?.per_page || limit;
 
   const functionalCfc = Array.isArray(cfcList) ? cfcList.filter(item => !item.is_under_implementation) : [];
   const underImplementationCfc = Array.isArray(cfcList) ? cfcList.filter(item => item.is_under_implementation) : [];
@@ -220,49 +232,69 @@ export default async function CfcListPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {functionalCfc.map((item, index) => (
-                    <tr key={item.id || index}>
-                      <td>{index + 1}</td>
-                      <td>
-                        {item.slug ? (
-                          <Link className="district-link" href={`/resources/cfc-list/${item.slug}`}>
-                            {item.district}
-                          </Link>
-                        ) : (
-                          <span className="district-link">{item.district}</span>
-                        )}
+                  {cfcList.length === 0 ? (
+                    <tr>
+                      <td colSpan={8} className="no-data-cell">
+                        <div className="no-data-found">
+                          <i className="fas fa-search"></i>
+                          <p>No CFC data found.</p>
+                        </div>
                       </td>
-                      <td>{item.product}</td>
-                      <td>{item.spv_name}</td>
-                      <td>{item.address}</td>
-                      <td>{item.intervention}</td>
-                      <td>{item.contact}</td>
-                      <td>{renderStatus(item)}</td>
                     </tr>
-                  ))}
-                  
-                  {underImplementationCfc.length > 0 && (
+                  ) : (
                     <>
-                      <tr className="section-row">
-                        <td colSpan={8}>CFCs Under Implementation</td>
-                      </tr>
-                      {underImplementationCfc.map((item, index) => (
+                      {functionalCfc.map((item, index) => (
                         <tr key={item.id || index}>
-                          <td>{functionalCfc.length + index + 1}</td>
-                          <td>{item.district}</td>
+                          <td>{(currentPage - 1) * perPage + index + 1}</td>
+                          <td>
+                            {item.slug ? (
+                              <Link className="district-link" href={`/resources/cfc-list/${item.slug}`}>
+                                {item.district}
+                              </Link>
+                            ) : (
+                              <span className="district-link">{item.district}</span>
+                            )}
+                          </td>
                           <td>{item.product}</td>
                           <td>{item.spv_name}</td>
-                          <td>{item.address || "-"}</td>
-                          <td>{item.intervention || "-"}</td>
-                          <td>{item.contact || "-"}</td>
+                          <td>{item.address}</td>
+                          <td>{item.intervention}</td>
+                          <td>{item.contact}</td>
                           <td>{renderStatus(item)}</td>
                         </tr>
                       ))}
+                      
+                      {underImplementationCfc.length > 0 && (
+                        <>
+                          <tr className="section-row">
+                            <td colSpan={8}>CFCs Under Implementation</td>
+                          </tr>
+                          {underImplementationCfc.map((item, index) => (
+                            <tr key={item.id || index}>
+                              <td>{(currentPage - 1) * perPage + functionalCfc.length + index + 1}</td>
+                              <td>{item.district}</td>
+                              <td>{item.product}</td>
+                              <td>{item.spv_name}</td>
+                              <td>{item.address || "-"}</td>
+                              <td>{item.intervention || "-"}</td>
+                              <td>{item.contact || "-"}</td>
+                              <td>{renderStatus(item)}</td>
+                            </tr>
+                          ))}
+                        </>
+                      )}
                     </>
                   )}
                 </tbody>
               </table>
             </div>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              baseUrl="/resources/cfc-list"
+              searchParams={params}
+            />
           </section>
         </div>
       </main>

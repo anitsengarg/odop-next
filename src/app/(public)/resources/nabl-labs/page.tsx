@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/nabl-labs.css";
 import { fetchNablLabsList } from "@/services/schemes.service";
+import Pagination from "@/components/shared/Pagination";
 
 export const metadata: Metadata = {
   title: "List of NABL Labs | Resources | ODOP UP",
@@ -18,9 +19,20 @@ type NablLab = {
   discipline: string;
 };
 
-export default async function NablLabsPage() {
-  const { data: nablLabsData } = await fetchNablLabsList();
-  const nablLabs = (Array.isArray(nablLabsData) ? nablLabsData : []) as NablLab[];
+export default async function NablLabsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
+  const limit = 20;
+
+  const { data: paginatedData } = await fetchNablLabsList(currentPage, limit);
+  const nablLabs = (Array.isArray(paginatedData?.data) ? paginatedData.data : []) as NablLab[];
+  const totalPages = paginatedData?.last_page || 1;
+  const perPage = paginatedData?.per_page || limit;
+  const totalItems = paginatedData?.total || nablLabs.length;
 
   return (
     <div className="nabl-labs-page">
@@ -77,7 +89,7 @@ export default async function NablLabsPage() {
       <main className="nabl-main-content section">
         <div className="container">
           <section className="nabl-section">
-            <h2>District-wise NABL-Accredited Laboratories ({nablLabs.length} Labs)</h2>
+            <h2>District-wise NABL-Accredited Laboratories ({totalItems} Labs)</h2>
             <div className="nabl-table-scroll">
               <table className="nabl-table">
                 <thead>
@@ -92,36 +104,55 @@ export default async function NablLabsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {nablLabs.map((lab, index) => (
-                    <tr key={lab.cabId || index}>
-                      <td style={{ textAlign: "center", fontWeight: "600", color: "#153b66" }}>
-                        {lab.sNo || index + 1}
-                      </td>
-                      <td>
-                        <span className="category-chip">
-                          {lab.category}
-                        </span>
-                      </td>
-                      <td className="cab-id">
-                        {lab.cabId}
-                      </td>
-                      <td style={{ fontWeight: "500", color: "#1f324a" }}>
-                        {lab.cabName}
-                      </td>
-                      <td style={{ color: "#4a6078" }}>
-                        {lab.address}
-                      </td>
-                      <td style={{ fontWeight: "500" }}>
-                        {lab.district}
-                      </td>
-                      <td style={{ color: "#4a6078" }}>
-                        {lab.discipline}
+                  {nablLabs.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="no-data-cell">
+                        <div className="no-data-found">
+                          <i className="fas fa-microscope"></i>
+                          <p>No NABL labs found.</p>
+                        </div>
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    nablLabs.map((lab, index) => (
+                      <tr key={lab.cabId || index}>
+                        <td style={{ textAlign: "center", fontWeight: "600", color: "#153b66" }}>
+                          {(currentPage - 1) * perPage + index + 1}
+                        </td>
+                        <td>
+                          <span className="category-chip">
+                            {lab.category}
+                          </span>
+                        </td>
+                        <td className="cab-id">
+                          {lab.cabId}
+                        </td>
+                        <td style={{ fontWeight: "500", color: "#1f324a" }}>
+                          {lab.cabName}
+                        </td>
+                        <td style={{ color: "#4a6078" }}>
+                          {lab.address}
+                        </td>
+                        <td style={{ fontWeight: "500" }}>
+                          {lab.district}
+                        </td>
+                        <td style={{ color: "#4a6078" }}>
+                          {lab.discipline}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              baseUrl="/resources/nabl-labs"
+              searchParams={params}
+            />
+
             <p className="source-note">
               Source: National Accreditation Board for Testing and Calibration Laboratories (NABL).
               For the latest accreditation status, visit{" "}

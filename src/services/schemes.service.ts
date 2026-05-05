@@ -1,4 +1,4 @@
-import { ENDPOINTS, httpClient, RequestOptions } from "@/lib/api";
+import { ENDPOINTS, httpClient, RequestOptions, PaginatedResponse } from "@/lib/api";
 import { Scheme } from "@/lib/schemes";
 
 export async function fetchSchemesList(options?: RequestOptions) {
@@ -9,12 +9,12 @@ export async function fetchSchemeDetail(slug: string, options?: RequestOptions) 
   return httpClient.get<Scheme>(ENDPOINTS.schemes.detail(slug), options);
 }
 
-export async function fetchCfcList(options?: RequestOptions) {
-  return httpClient.get(ENDPOINTS.cfc.list, options);
+export async function fetchCfcList(page: number = 1, limit: number = 10, options?: RequestOptions) {
+  return httpClient.get<PaginatedResponse<any>>(`${ENDPOINTS.cfc.list}?page=${page}&limit=${limit}`, options);
 }
 
-export async function fetchNablLabsList(options?: RequestOptions) {
-  return httpClient.get(ENDPOINTS.nablLabs.list, options);
+export async function fetchNablLabsList(page: number = 1, limit: number = 10, options?: RequestOptions) {
+  return httpClient.get<PaginatedResponse<any>>(`${ENDPOINTS.nablLabs.list}?page=${page}&limit=${limit}`, options);
 }
 
 
