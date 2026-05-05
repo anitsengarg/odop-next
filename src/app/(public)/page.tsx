@@ -49,7 +49,7 @@ export default async function Home() {
       {/* --------------------------------
                   HERO SECTION
       -------------------------------- */}
-      <HeroSlider district={districtData.slice(0 , 6)} />
+      <HeroSlider district={districtData.slice(0 , 7)} />
 
 
       {/* --------------------------------
