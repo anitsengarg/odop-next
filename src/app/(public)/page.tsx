@@ -667,41 +667,41 @@ export default async function Home() {
                   <a href="https://odopup.in/pdf/Coffee-Table-Book_040424.pdf" target="_blank" rel="noopener"
                     className="resource-card-item resource-card-wide">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/201903121306546330cover.jpg"
+                      src="assets/img/coffee-table-book.jpg"
                       alt="Coffee Table Book" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
                   <a href="https://odopmart.up.gov.in/" target="_blank" rel="noopener"
                     className="resource-card-item">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/202504221623071306ODOP-MART_220425.jpg"
+                      src="assets/img/odop-mart.jpg"
                       alt="ODOP Mart" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
                   <a href="https://odopup.in/en/newsletter" target="_blank" rel="noopener"
                     className="resource-card-item">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/202107241651555215newsletter_240721.jpg"
+                      src="assets/img/newsletter.jpg"
                       alt="Newsletter" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
                   <a href="https://www.nsic.co.in/" target="_blank" rel="noopener" className="resource-card-item">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/202106241644073014NSIC_240621.jpg"
+                      src="assets/img/nsic.jpg"
                       alt="National Small Industries Corporation" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
                   <a href="https://apps.apple.com/in/app/msme-sathi/id1538917709" target="_blank"
                     rel="noopener" className="resource-card-item">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/202107241651555059msme-sathi_240721.jpg"
+                      src="assets/img/msme-sathi.jpg"
                       alt="MSME Sathi" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
                   <a href="https://apps.apple.com/in/app/udyam-sarthi/id1545330242" target="_blank"
                     rel="noopener" className="resource-card-item">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/202107241651555059udhyan_240721.jpg"
+                      src="assets/img/udyam-sarthi.jpg"
                       alt="Udyam Sarthi" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
@@ -709,7 +709,7 @@ export default async function Home() {
                   <a href="https://odopup.in/pdf/_FINAL-ODOP-ENG-BOOKLET-compressed.pdf" target="_blank"
                     rel="noopener" className="resource-card-item">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/202107241651555371booklet_240721.jpg"
+                      src="assets/img/odop-booklet.jpg"
                       alt="ODOP Booklet" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
@@ -718,7 +718,7 @@ export default async function Home() {
                   <a href="https://www.msmemart.com/" target="_blank" rel="noopener"
                     className="resource-card-item">
                     <div className="resource-card-thumb"><img
-                      src="https://odopup.in/downloadmedia/siteContent/202106241644072858MSME_240621.jpg"
+                      src="assets/img/msme-global-mart.jpg"
                       alt="MSME Global Mart" loading="lazy" /></div>
                     <span className="resource-card-link">Open Resource <FaArrowRight /> </span>
                   </a>
