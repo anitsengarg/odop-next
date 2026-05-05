@@ -114,7 +114,7 @@ export default function OdopSchemes() {
                         </div>
                         <div className="about-overview-content">
                             <div className="section-eyebrow">Flagship Scheme</div>
-                            <h2 className="section-title">ODOP Promotion Scheme - Uttar Pradesh</h2>
+                            <h2 className="section-title">ODOP Support Schemes - Uttar Pradesh</h2>
                             <p>
                                 The ODOP Schemes of Uttar Pradesh are a set of targeted support programs designed to strengthen
                                 district-specific industries by addressing key gaps in finance, infrastructure, skills, and market

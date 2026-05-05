@@ -38,8 +38,8 @@ function HeroSlider({district}: {district?: DistrictProduct[]}) {
             <div className="hero-overlay"></div>
             <div className="container">
                 <div className="hero-content animate-fadeInUp">
-                    <div className="hero-eyebrow"><FaCertificate /> Government of Uttar Pradesh Initiative
-                    </div>
+                    {/* <div className="hero-eyebrow"><FaCertificate /> Government of Uttar Pradesh Initiative
+                    </div> */}
                     <h1>One District One Product<br /> Uttar Pradesh</h1>
                     <p className="hero-subtitle">Connecting buyers, manufacturers, wholesalers and artisans across 75 districts
                         of Uttar Pradesh. Discover authentic local products, find trusted suppliers and explore business
