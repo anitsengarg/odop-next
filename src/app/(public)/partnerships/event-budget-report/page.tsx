@@ -294,23 +294,21 @@ export default function EventBudgetReportPage() {
 
   return (
     <main className="main-content schemes-page about-static-page event-budget-report-page">
-      <section className="page-hero event-budget-hero">
-        <div className="container">
-          <div className="breadcrumb-wrap">
-            <span className="breadcrumb-item">Partnerships &amp; Reports</span>
-            <span className="breadcrumb-sep">/</span>
-            <span className="breadcrumb-item active">Budget Report</span>
-          </div>
-          <h1>
-            <FaFileInvoiceDollar className="page-title-icon" />
-            Events &amp; Webinars Budget Report
-          </h1>
-          <p>
-            Detailed analysis of budget allocation, utilization and financial
-            impact of ODOP exhibitions and digital events in FY 2025–26.
-          </p>
-        </div>
-      </section>
+     <section className="page-hero events-report-hero">
+    <div className="page-hero-overlay"></div>
+    <div className="container page-hero-content">
+      <h1 className="page-hero-title">ODOP Events &amp; Webinars Report<br/>FY 2025–26</h1>
+      <p className="page-hero-subtitle">Budget Allocation, Utilization &amp; Impact Analysis – Events, Exhibitions
+        &amp; Webinars under ODOP Schemes</p>
+      <div className="report-hero-meta">
+        <span className="report-hero-meta-item"><i className="fas fa-calendar-alt"></i> Financial Year: April 2025 – March 2026</span>
+        <span className="report-hero-meta-item"><i className="fas fa-building"></i> ODOP Cell, Directorate of Industries, Uttar Pradesh</span>
+      </div>
+      <button className="report-print-btn" onClick={() => window.print()}>
+        <i className="fas fa-print"></i> Print / Download Report
+      </button>
+    </div>
+  </section>
 
       <div className="container">
         {/* SECTION 1 – FINANCIAL OVERVIEW */}
@@ -357,113 +355,6 @@ export default function EventBudgetReportPage() {
               </div>
               <div className="kpi-value">₹<Counter value="9.00" /> Cr</div>
               <div className="kpi-label">Remaining Balance</div>
-            </div>
-          </div>
-
-          <div className="allocation-shell">
-            <div className="report-card allocation-card">
-              <div className="report-card-title">
-                <FaChartLine /> Budget Allocation by Category
-              </div>
-              <div className="allocation-content">
-                <div className="chart-wrap-doughnut">
-                  <canvas ref={allocationChartRef} id="allocationChart"></canvas>
-                  <div className="chart-center-label">
-                    <span className="total-val">₹35 Cr</span>
-                    <span className="total-label">Total</span>
-                  </div>
-                </div>
-                <div className="allocation-legend">
-                  <div className="legend-item">
-                    <span className="dot blue"></span>
-                    <div className="legend-info">
-                      <strong>National Trade Fairs</strong>
-                      <span>₹15 Cr (43%)</span>
-                    </div>
-                  </div>
-                  <div className="legend-item">
-                    <span className="dot orange"></span>
-                    <div className="legend-info">
-                      <strong>International Exhibitions</strong>
-                      <span>₹8 Cr (23%)</span>
-                    </div>
-                  </div>
-                  <div className="legend-item">
-                    <span className="dot purple"></span>
-                    <div className="legend-info">
-                      <strong>Workshops &amp; Training</strong>
-                      <span>₹6 Cr (17%)</span>
-                    </div>
-                  </div>
-                  <div className="legend-item">
-                    <span className="dot green"></span>
-                    <div className="legend-info">
-                      <strong>Webinars &amp; Digital</strong>
-                      <span>₹6 Cr (17%)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="report-card summary-card">
-              <div className="report-card-title">
-                <FaFlag /> Utilization Status (₹ Crore)
-              </div>
-              <div className="summary-status-list">
-                <div className="status-item">
-                  <div className="status-head">
-                    <span>National Trade Fairs</span>
-                    <strong>80%</strong>
-                  </div>
-                  <div className="status-bar-wrap">
-                    <div
-                      className="status-bar blue"
-                      style={{ width: "80%" }}
-                    ></div>
-                  </div>
-                  <div className="status-meta">Spent: ₹12 Cr / ₹15 Cr</div>
-                </div>
-                <div className="status-item">
-                  <div className="status-head">
-                    <span>International Exhibitions</span>
-                    <strong>62%</strong>
-                  </div>
-                  <div className="status-bar-wrap">
-                    <div
-                      className="status-bar orange"
-                      style={{ width: "62%" }}
-                    ></div>
-                  </div>
-                  <div className="status-meta">Spent: ₹5 Cr / ₹8 Cr</div>
-                </div>
-                <div className="status-item">
-                  <div className="status-head">
-                    <span>Workshops &amp; Training</span>
-                    <strong>67%</strong>
-                  </div>
-                  <div className="status-bar-wrap">
-                    <div
-                      className="status-bar purple"
-                      style={{ width: "67%" }}
-                    ></div>
-                  </div>
-                  <div className="status-meta">Spent: ₹4 Cr / ₹6 Cr</div>
-                </div>
-                <div className="status-item">
-                  <div className="status-head">
-                    <span>Webinars &amp; Digital</span>
-                    <strong>83%</strong>
-                  </div>
-                  <div className="status-bar-wrap">
-                    <div
-                      className="status-bar green"
-                      style={{ width: "83%" }}
-                    ></div>
-                  </div>
-                  <div className="status-meta">Spent: ₹5 Cr / ₹6 Cr</div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
