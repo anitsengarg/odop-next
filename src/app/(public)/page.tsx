@@ -111,12 +111,14 @@ export default function Home() {
                 </article>
                 <article className="leadership-card reveal delay-2">
                   <div className="leadership-photo-wrap">
-                    <img src="/assets/img/Shri-Alok-Kumar-IAS.jpg" alt="Shri Alok Kumar IAS portrait"
+                    <img src="/assets/img/Shashi-Bhushan-Lal-Susheel.jpg" alt="Shri Alok Kumar IAS portrait"
                       className="leadership-photo" loading="lazy" />
                   </div>
                   <div className="leadership-card-body">
                     <span className="leadership-role">IAS Officer</span>
-                    <h4>Shri Alok Kumar, <br />IAS</h4>
+                    <h4>Shashi Bhushan Lal, <br />
+                    Susheel, <br/>
+                    IAS</h4>
                     <p>MSME & Export Promotion Department
                       Uttar Pradesh.</p>
                   </div>
