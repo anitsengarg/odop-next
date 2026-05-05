@@ -144,6 +144,18 @@ export default function OdopSchemes() {
                             <SchemeCard key={scheme.id} scheme={scheme} />
                         ))}
                     </div>
+
+                      <div className="section-header">
+                        <div className="section-header-left">
+                            <h2 className="section-title">Other MSME Schemes</h2>
+                        </div>
+                    </div>
+
+                    <div className="schemes-grid">
+                        {schemes.map((scheme) => (
+                            <SchemeCard key={scheme.id} scheme={scheme} />
+                        ))}
+                    </div>
                 </div>
             </main>
 
