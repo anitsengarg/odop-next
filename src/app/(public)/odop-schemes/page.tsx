@@ -11,7 +11,10 @@ import {
 import {
     FaUserCheck,
 } from 'react-icons/fa6'
-import { SCHEMES_PAGE_CATALOG, SCHEME_META_ICONS, SchemeCardData } from '@/lib/schemes'
+import { SCHEME_META_ICONS, Scheme } from '@/lib/schemes'
+import { fetchSchemesList } from '@/services/schemes.service'
+import { useEffect, useState } from 'react'
+import { API_CONFIG } from '@/lib/api'
 
 function SchemeMetaIcon({ name }: { name: string }) {
     const Icon = SCHEME_META_ICONS[name]
@@ -19,56 +22,46 @@ function SchemeMetaIcon({ name }: { name: string }) {
     return <Icon aria-hidden />
 }
 
-function SchemeCard({ scheme }: { scheme: SchemeCardData }) {
-    const applyLabel = scheme.applyLabel ?? 'View Details & Apply'
-    const brochureLabel = scheme.brochureLabel ?? 'Brochure'
-
+function SchemeCard({ scheme }: { scheme: Scheme }) {
     return (
-        <div className="scheme-card" data-category={scheme.category}>
+        <div className="scheme-card">
             <div className="scheme-card-header">
-                <div className={`scheme-icon ${scheme.iconColorClass}`}>
-                    <img src={scheme.image.src} alt={scheme.image.alt} loading="lazy" />
+                <div className="scheme-icon">
+                    <img src={API_CONFIG.NEW_BASE_URL + scheme.logo} alt={scheme.name} loading="lazy" />
                 </div>
                 <div className="scheme-title-block">
-                    <h3 className="scheme-name">{scheme.title}</h3>
+                    <h3 className="scheme-name">{scheme.name}</h3>
                 </div>
             </div>
             <div className="scheme-card-body">
-                <p className="scheme-description">{scheme.description}</p>
+                <p className="scheme-description">{scheme.shortDescription}</p>
                 <div className="scheme-meta">
-                    {scheme.meta.map((row, idx) => (
+                    {scheme.highlightsJson?.slice(0, 3).map((row, idx) => (
                         <div className="scheme-meta-item" key={`${scheme.id}-meta-${idx}`}>
                             <span className="scheme-meta-label">
-                                <SchemeMetaIcon name={row.labelIcon} />
-                                {row.label}
+                                <SchemeMetaIcon name={row.icon} />
+                                {row.title}
                             </span>
-                            <span className="scheme-meta-value">{row.value}</span>
+                            <span className="scheme-meta-value">{row.description}</span>
                         </div>
-                    ))}
-                </div>
-                <div className="scheme-tags">
-                    {scheme.tags.map((t, i) => (
-                        <span className="scheme-tag" key={`${scheme.id}-tag-${i}`}>
-                            {t}
-                        </span>
                     ))}
                 </div>
                 <div className="eligibility-bar">
                     <FaUserCheck />
-                    <span dangerouslySetInnerHTML={{ __html: scheme.eligibility }} />
+                    <span>{scheme.eligibilityJson?.points?.[0]}</span>
                 </div>
             </div>
             <div className="scheme-card-footer">
                 <Link
-                    href={`/odop-schemes/${scheme.id}`}
+                    href={`/odop-schemes/${scheme.slug}`}
                     className="btn btn-primary btn-sm scheme-apply-btn"
                 >
                     <FaExternalLinkAlt className="mr-2" />
-                    {applyLabel}
+                    View Details & Apply
                 </Link>
-                <a className="btn btn-ghost btn-sm" href="#" onClick={(e) => e.preventDefault()}>
+                <a className="btn btn-ghost btn-sm" href={scheme.ctaJson?.apply_url} target="_blank" rel="noopener noreferrer">
                     <FaDownload />
-                    {brochureLabel}
+                    Brochure
                 </a>
             </div>
         </div>
@@ -76,6 +69,23 @@ function SchemeCard({ scheme }: { scheme: SchemeCardData }) {
 }
 
 export default function OdopSchemes() {
+    const [schemes, setSchemes] = useState<Array<Scheme>>([])
+
+    useEffect(() => {
+        const loadSchemes = async () => {
+            try {
+                const response = await fetchSchemesList();
+                if (Array.isArray(response?.data)) {
+                    console.log("Fetched schemes:", response.data);
+                    setSchemes(response.data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch schemes:", error);
+            }
+        };
+        loadSchemes();
+    }, []);
+
     return (
         <>
             <section className="page-hero schemes-hero">
@@ -125,24 +135,24 @@ export default function OdopSchemes() {
                 <div className="container">
                     <div className="section-header">
                         <div className="section-header-left">
-                            <h2 className="section-title">All ODOP Schemes</h2>
+                            <h2 className="section-title">Government Schemes</h2>
                         </div>
                     </div>
 
                     <div className="schemes-grid" id="schemesGrid">
-                        {SCHEMES_PAGE_CATALOG.odop.map((scheme) => (
+                        {schemes.map((scheme) => (
                             <SchemeCard key={scheme.id} scheme={scheme} />
                         ))}
                     </div>
 
-                    <div className="section-header">
+                      <div className="section-header">
                         <div className="section-header-left">
                             <h2 className="section-title">Other MSME Schemes</h2>
                         </div>
                     </div>
 
                     <div className="schemes-grid">
-                        {SCHEMES_PAGE_CATALOG.otherMsme.map((scheme) => (
+                        {schemes.map((scheme) => (
                             <SchemeCard key={scheme.id} scheme={scheme} />
                         ))}
                     </div>

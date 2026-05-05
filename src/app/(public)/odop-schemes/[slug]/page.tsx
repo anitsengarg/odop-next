@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { SCHEMES_PAGE_CATALOG, SCHEME_META_ICONS } from '@/lib/schemes'
-import { FaArrowUpRightFromSquare, FaBookOpen, FaChevronRight, FaFileLines, FaFileInvoice, FaBuildingColumns, FaIdCard, FaHeadset, FaFileSignature, FaCircleInfo, FaEnvelope, FaCircleCheck } from 'react-icons/fa6'
+import { SCHEME_META_ICONS, Scheme } from '@/lib/schemes'
+import { FaArrowUpRightFromSquare, FaBookOpen, FaFileLines, FaHeadset, FaFileSignature, FaCircleInfo, FaEnvelope, FaCircleCheck } from 'react-icons/fa6'
 import { FaPhoneAlt } from 'react-icons/fa'
+import { fetchSchemeDetail } from '@/services/schemes.service'
 
 interface PageProps {
     params: Promise<{ slug: string }>
@@ -10,25 +11,44 @@ interface PageProps {
 
 export default async function SchemeDetailPage({ params }: PageProps) {
     const { slug } = await params
+    let scheme: Scheme | null = null
 
-    const allSchemes = [...SCHEMES_PAGE_CATALOG.odop, ...SCHEMES_PAGE_CATALOG.otherMsme]
-    const scheme = allSchemes.find((s) => s.id === slug)
+    try {
+        const response = await fetchSchemeDetail(slug)
+        console.log("Scheme detail response:", response)
+        if (response?.data) {
+            scheme = response.data as Scheme
+        }
+    } catch (error) {
+        console.error("Failed to fetch scheme detail on server:", error)
+    }
 
-    if (!scheme || !scheme.detail) {
+    if (!scheme) {
         notFound()
     }
 
-    const { detail } = scheme
+    const {
+        introJson,
+        highlightsJson,
+        eligibilityJson,
+        subsidyJson,
+        howItWorksJson,
+        calculationJson,
+        documentsJson,
+        ctaJson,
+        footerInfoJson,
+        dynamicSectionsJson
+    } = scheme
 
     return (
         <div className="about-static-page policy-page scheme-detail-page">
             <section className="page-hero scheme-detail-hero">
                 <div className="page-hero-overlay"></div>
                 <div className="container page-hero-content">
-                    <h1 className="page-hero-title">{scheme.title}</h1>
-                    <p className="page-hero-subtitle scheme-hero-lead">{detail.heroSubtitle}</p>
+                    <h1 className="page-hero-title">{scheme.name}</h1>
+                    <p className="page-hero-subtitle scheme-hero-lead">{scheme.shortDescription}</p>
                     <a
-                        href={detail.cta.applyUrl}
+                        href={ctaJson.apply_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-primary btn-lg"
@@ -40,174 +60,173 @@ export default async function SchemeDetailPage({ params }: PageProps) {
 
             <main className="main-content schemes-page about-static-page policy-page">
                 <div className="container">
-                    <div className="section-header">
-                        <span className="eyebrow">Scheme Overview</span>
-                        <h2>{scheme.title} for Entrepreneurs, MSMEs, and Artisans</h2>
-                        <p>Understand the subsidy pattern, eligibility, process, and documents required before you apply through the official portal.</p>
-                        <div className="divider"><span></span><span></span><span></span></div>
-                    </div>
+                    {dynamicSectionsJson.intro && (
+                        <div className="section-header">
+                            <span className="eyebrow">{introJson.tag}</span>
+                            <h2>{introJson.title}</h2>
+                            <p>{introJson.description}</p>
+                            <div className="divider"><span></span><span></span><span></span></div>
+                        </div>
+                    )}
 
                     <section className="static-content-wrap">
                         <article className="static-card">
                             <h2>About the Scheme</h2>
-                            <p>{detail.overview}</p>
+                            <p>{scheme.longDescription}</p>
                         </article>
 
-                        <article className="static-card">
-                            <h2>Key Highlights</h2>
-                            <div className="scheme-highlight-grid">
-                                {detail.highlights.map((highlight, index) => {
-                                    const Icon = SCHEME_META_ICONS[highlight.icon] || FaCircleInfo
-                                    return (
-                                        <div className="scheme-highlight-card" key={index}>
-                                            <div className="scheme-highlight-icon">
-                                                <Icon />
+                        {dynamicSectionsJson.highlights && (
+                            <article className="static-card">
+                                <h2>Key Highlights</h2>
+                                <div className="scheme-highlight-grid">
+                                    {highlightsJson.map((highlight, index) => {
+                                        const Icon = SCHEME_META_ICONS[highlight.icon] || FaCircleInfo
+                                        return (
+                                            <div className="scheme-highlight-card" key={index}>
+                                                <div className="scheme-highlight-icon">
+                                                    <Icon />
+                                                </div>
+                                                <h3>{highlight.title}</h3>
+                                                <p>{highlight.description}</p>
                                             </div>
-                                            <h3>{highlight.title}</h3>
-                                            <p>{highlight.description}</p>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </article>
-
-                        <article className="static-card">
-                            <div className="scheme-split-card">
-                                <div>
-                                    <h2>Eligibility Criteria</h2>
-                                    <ul className="static-list">
-                                        {detail.eligibility.map((item, index) => (
-                                            <li key={index}>
-                                                <FaCircleCheck className="text-primary mt-1" />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    {detail.eligibilityNote && (
-                                        <p className="scheme-inline-note">{detail.eligibilityNote}</p>
-                                    )}
+                                        )
+                                    })}
                                 </div>
-                                {detail.visuals?.eligibility && (
-                                    <figure className="scheme-visual">
-                                        <img src={detail.visuals.eligibility} alt="Eligibility visual" loading="lazy" />
-                                    </figure>
-                                )}
-                            </div>
-                        </article>
+                            </article>
+                        )}
 
-                        <article className="static-card">
-                            <div className="scheme-split-card">
-                                <div>
-                                    <h2>Subsidy Structure</h2>
-                                    <div className="policy-table-wrap">
-                                        <table className="policy-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Project Cost</th>
-                                                    <th>Subsidy</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {detail.benefits.map((row, index) => (
-                                                    <tr key={index}>
-                                                        <td>{row.slab}</td>
-                                                        <td>{row.subsidy}</td>
-                                                    </tr>
+                        {dynamicSectionsJson.eligibility && (
+                            <article className="static-card">
+                                <h2>Eligibility Criteria</h2>
+                                <ul className="static-list">
+                                    {eligibilityJson.points.map((item, index) => (
+                                        <li key={index}>
+                                            <FaCircleCheck className="text-primary mt-1" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                {eligibilityJson.note && (
+                                    <p className="scheme-inline-note">{eligibilityJson.note}</p>
+                                )}
+                            </article>
+                        )}
+
+                        {dynamicSectionsJson.subsidy && (
+                            <article className="static-card">
+                                <h2>Subsidy Structure</h2>
+                                <div className="policy-table-wrap">
+                                    <table className="policy-table">
+                                        <thead>
+                                            <tr>
+                                                {subsidyJson.columns.map(col => (
+                                                    <th key={col.id}>{col.label}</th>
                                                 ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    {detail.benefitsNote && (
-                                        <p className="static-note">{detail.benefitsNote}</p>
-                                    )}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {subsidyJson.rows.map((row, index) => (
+                                                <tr key={index}>
+                                                    {subsidyJson.columns.map(col => (
+                                                        <td key={col.id}>{row[col.id]}</td>
+                                                    ))}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
-                                {detail.visuals?.benefits && (
-                                    <figure className="scheme-visual">
-                                        <img src={detail.visuals.benefits} alt="Subsidy structure visual" loading="lazy" />
-                                    </figure>
+                                {subsidyJson.footnote && (
+                                    <p className="static-note">{subsidyJson.footnote}</p>
                                 )}
-                            </div>
-                        </article>
+                            </article>
+                        )}
 
-                        <article className="static-card">
-                            <h2>How It Works</h2>
-                            <div className="scheme-flow-grid">
-                                {detail.howItWorks.map((step, index) => (
-                                    <div className="scheme-step" key={index}>
-                                        <span className="scheme-step-number">{step.number}</span>
-                                        <h3>{step.title}</h3>
-                                        <p>{step.description}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </article>
+                        {dynamicSectionsJson.how_it_works && (
+                            <article className="static-card">
+                                <h2>How It Works</h2>
+                                <div className="scheme-flow-grid">
+                                    {howItWorksJson.steps.map((step, index) => {
+                                         const Icon = step.icon ? (SCHEME_META_ICONS[step.icon] || FaCircleInfo) : null;
+                                         return (
+                                            <div className="scheme-step" key={index}>
+                                                <span className="scheme-step-number">{index + 1}</span>
+                                                <h3>{step.title}</h3>
+                                                <p>{step.description}</p>
+                                            </div>
+                                         )
+                                    })}
+                                </div>
+                            </article>
+                        )}
 
-                        {detail.example && (
+                        {dynamicSectionsJson.calculation && (
                             <article className="static-card">
                                 <h2>Example Calculation</h2>
-                                <p>For a small ODOP manufacturing or artisan-led project with a cost of {detail.example.projectCost}, the subsidy can reduce the effective loan burden substantially.</p>
+                                <p>{calculationJson.intro}</p>
                                 <div className="scheme-example-box">
                                     <div className="scheme-example-metric">
                                         <span className="scheme-example-label">Project Cost</span>
-                                        <strong>{detail.example.projectCost}</strong>
+                                        <strong>{calculationJson.project_cost}</strong>
                                     </div>
                                     <div className="scheme-example-metric">
                                         <span className="scheme-example-label">Eligible Subsidy</span>
-                                        <strong>{detail.example.eligibleSubsidy}</strong>
+                                        <strong>{calculationJson.eligible_subsidy}</strong>
                                     </div>
                                     <div className="scheme-example-metric is-highlighted">
                                         <span className="scheme-example-label">Effective Loan</span>
-                                        <strong>{detail.example.effectiveLoan}</strong>
+                                        <strong>{calculationJson.effective_loan}</strong>
                                     </div>
                                 </div>
                             </article>
                         )}
 
-                        <article className="static-card">
-                            <div className="scheme-doc-grid">
-                                <div>
-                                    <h2>Required Documents</h2>
-                                    <ul className="static-list">
-                                        {detail.documents.map((doc, index) => (
-                                            <li key={index}>
-                                                <FaFileLines className="text-primary mt-1" />
-                                                <span>{doc}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                {detail.docSidebox && (
+                        {dynamicSectionsJson.documents && (
+                            <article className="static-card">
+                                <div className="scheme-doc-grid">
+                                    <div>
+                                        <h2>Required Documents</h2>
+                                        <ul className="static-list">
+                                            {documentsJson.documents.map((doc) => (
+                                                <li key={doc as string}>
+                                                    <FaFileLines className="text-primary mt-1" />
+                                                    <span>{doc as string}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                     <div className="scheme-doc-sidebox">
-                                        <h3>{detail.docSidebox.title}</h3>
-                                        <p>{detail.docSidebox.description}</p>
-                                        <Link href={detail.docSidebox.linkHref} className="btn btn-ghost btn-sm">
-                                            <FaBookOpen className="mr-2" /> {detail.docSidebox.linkText}
+                                        <h3>{documentsJson.before_submit_title}</h3>
+                                        <p>{documentsJson.before_submit_body}</p>
+                                        <Link href={ctaJson.helpdesk_url} className="btn btn-ghost btn-sm">
+                                            <FaBookOpen className="mr-2" /> {documentsJson.resources_label}
                                         </Link>
                                     </div>
-                                )}
-                            </div>
-                        </article>
+                                </div>
+                            </article>
+                        )}
 
-                        <article className="static-card scheme-cta-card">
-                            <div className="scheme-cta-copy">
-                                <span className="eyebrow">Apply Today</span>
-                                <h2>{detail.cta.title}</h2>
-                                <p>{detail.cta.description}</p>
-                            </div>
-                            <div className="scheme-cta-actions">
-                                <a
-                                    href={detail.cta.applyUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="btn btn-primary btn-lg"
-                                >
-                                    <FaArrowUpRightFromSquare className="mr-2" /> Apply Now
-                                </a>
-                                <Link href="/contact-us" className="btn btn-secondary btn-lg">
-                                    <FaHeadset className="mr-2" /> Contact Helpdesk
-                                </Link>
-                            </div>
-                        </article>
+                        {dynamicSectionsJson.cta && (
+                            <article className="static-card scheme-cta-card">
+                                <div className="scheme-cta-copy">
+                                    <span className="eyebrow">Apply Today</span>
+                                    <h2>{ctaJson.cta_title}</h2>
+                                    <p>{ctaJson.cta_subtitle}</p>
+                                </div>
+                                <div className="scheme-cta-actions">
+                                    <a
+                                        href={ctaJson.apply_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn btn-primary btn-lg"
+                                    >
+                                        <FaArrowUpRightFromSquare className="mr-2" /> Apply Now
+                                    </a>
+                                    <Link href="/contact-us" className="btn btn-secondary btn-lg">
+                                        <FaHeadset className="mr-2" /> Contact Helpdesk
+                                    </Link>
+                                </div>
+                            </article>
+                        )}
                     </section>
                 </div>
             </main>
@@ -215,46 +234,18 @@ export default async function SchemeDetailPage({ params }: PageProps) {
             <section className="quick-contact-section">
                 <div className="container">
                     <div className="quick-contact-grid">
-                        <div className="quick-contact-card">
-                            <div className="qc-icon qc-icon-orange">
-                                <FaFileSignature />
+                        {footerInfoJson.map((info, index) => (
+                            <div className="quick-contact-card" key={index}>
+                                <div className={`qc-icon qc-icon-${index % 4}`}>
+                                    {index === 0 ? <FaFileSignature /> : index === 1 ? <FaCircleInfo /> : index === 2 ? <FaPhoneAlt /> : <FaEnvelope />}
+                                </div>
+                                <div className="qc-content">
+                                    <h3>{info.title}</h3>
+                                    <p>{info.description}</p>
+                                    <Link href="/contact-us" className="qc-link">Support Page</Link>
+                                </div>
                             </div>
-                            <div className="qc-content">
-                                <h3>Official Application</h3>
-                                <p>Proceed to the official portal for ODOP-linked registration and application submission.</p>
-                                <a href="https://msme1connect.up.gov.in/registration" className="qc-link" target="_blank" rel="noopener noreferrer">Open Application Portal</a>
-                            </div>
-                        </div>
-                        <div className="quick-contact-card">
-                            <div className="qc-icon qc-icon-blue">
-                                <FaCircleInfo />
-                            </div>
-                            <div className="qc-content">
-                                <h3>Scheme Details</h3>
-                                <p>Read the official scheme listing for the latest operational conditions and updates.</p>
-                                <a href="https://msme1connect.up.gov.in/scheme-list/financial-assistance-scheme-for-one-district-one-product-(odop-margin-money-scheme)" className="qc-link" target="_blank" rel="noopener noreferrer">View Official Scheme Note</a>
-                            </div>
-                        </div>
-                        <div className="quick-contact-card">
-                            <div className="qc-icon qc-icon-green">
-                                <FaPhoneAlt />
-                            </div>
-                            <div className="qc-content">
-                                <h3>ODOP Email</h3>
-                                <p>Reach the support desk for guidance on eligibility, application flow, and documentation.</p>
-                                <a href="mailto:odop-up@nic.in" className="qc-link">odop-up@nic.in</a>
-                            </div>
-                        </div>
-                        <div className="quick-contact-card">
-                            <div className="qc-icon qc-icon-purple">
-                                <FaEnvelope />
-                            </div>
-                            <div className="qc-content">
-                                <h3>Contact and Support</h3>
-                                <p>Use the portal contact page for assistance from the ODOP support team and district-level offices.</p>
-                                <Link href="/contact-us" className="qc-link">Open Contact Page</Link>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>

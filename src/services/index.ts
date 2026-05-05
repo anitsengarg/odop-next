@@ -1,3 +1,4 @@
+export * from "./auth.service";
 export * from "./content.service";
 export * from "./entrepreneur.service";
 export * from "./project-report.service";
@@ -14,3 +15,4 @@ export * from "./exhibition.service";
 export * from "./documentary.service";
 export * from "./success-story.service";
 export * from "./project-video.service";
+export * from "./schemes.service";

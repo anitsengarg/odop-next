@@ -1,6 +1,7 @@
 import { API_CONFIG } from "./config";
 
 const base = API_CONFIG.BASE_URL;
+const new_base = API_CONFIG.NEW_BASE_URL;
 
 function buildUrl(
   template: string,
@@ -201,4 +202,27 @@ export const ENDPOINTS = {
     photoGallery: `${base}/api/mobile/photogallery`,
     videoGallery: `${base}/api/mobile/videogallery`,
   },
+
+  schemes: {
+    list: `${new_base}/api/public/schemes`,
+    detail: (slug: string) =>
+      buildUrl(`${new_base}/api/public/schemes/{slug}`, { slug }),
+  },
+
+  cfc: {
+    list: `${new_base}/api/public/cfc`,
+  },
+
+  nablLabs:{
+    list: `${new_base}/api/public/nabl-labs`
+  },
+  knowledgeHub: `${new_base}/api/public/knowledge-hub`,
+  gallery_master: `${new_base}/api/public/gallery-master`,
+  mda_reports: `${new_base}/api/public/mda-reports`,
+
+  auth: {
+    login: `${base}/api/mobile/login`,
+    register: `${base}/api/mobile/register`,
+  },
 } as const;
+
