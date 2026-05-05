@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaPlay, FaXmark, FaUpRightFromSquare } from "react-icons/fa6";
 import { API_CONFIG } from "@/lib/api";
 import { VideoModal } from "@/components/ui/VideoModal";
+import Link from "next/link";
 
 // Interfaces based on provided structure
 export interface DistrictProduct {
@@ -64,12 +64,11 @@ interface DistrictDetailClientProps {
 }
 
 export default function DistrictDetailClient({ data }: DistrictDetailClientProps) {
-  const [selectedItem, setSelectedItem] = useState<{ name: string; descriptions: string; thumbnail: string } | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"products" | "overview" | "knowledge">("products");
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
   const { district, districtType } = data;
-  const featuredProduct = district.district_product?.[0];
+  const products = district.district_product || [];
 
   const getImageUrl = (path: string) => {
     if (!path) return "/assets/img/placeholder.jpg";
@@ -85,197 +84,407 @@ export default function DistrictDetailClient({ data }: DistrictDetailClientProps
     return (match && match[2].length === 11) ? match[2] : null;
   };
 
-  const openModal = (item: { name: string; descriptions: string; thumbnail: string }) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setTimeout(() => setSelectedItem(null), 300);
-    document.body.style.overflow = "";
-  };
-
   return (
-    <div className="min-h-screen pb-20">
-      {/* 1. HEADER SECTION */}
-      <section className="page-hero">
-        <div className="page-hero-overlay"></div>
-        <div className="container page-hero-content">
-          <h1 className="page-hero-title">{district.name}</h1>
-          <p className="page-hero-subtitle">
-            Exploring the unique heritage, products, and culture of {district.name} district in Uttar Pradesh.
-          </p>
-        </div>
-      </section>
-
-      {/* 2. DISTRICT OVERVIEW SECTION */}
-      <section className="about-section">
+    <main className="district-portal-page">
+      {/* HERO SECTION */}
+      <section className="page-hero district-hero">
+        <div 
+          className="district-hero-bg" 
+          style={{ backgroundImage: `url(${getImageUrl(district.thumbnail)})` }}
+        ></div>
+        <div className="district-hero-overlay"></div>
         <div className="container">
-          <div className="about-overview-grid">
-            <div className="about-overview-visual">
-              <div className="relative group overflow-hidden shadow-2xl aspect-video bg-gray-200 rounded-xl">
-                <img
-                  src={getImageUrl(district.thumbnail)}
-                  alt={district.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <button 
-                    onClick={() => setActiveVideoId(getYoutubeId(district.url))}
-                    className="w-16 h-16 bg-[#E8562E] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform cursor-pointer"
-                  >
-                    <FaPlay className="ml-1 text-xl" />
-                  </button>
+          <div className="district-hero-content">
+            <div className="district-hero-layout district-hero-layout-single">
+              <div className="district-hero-copy">
+                <div className="d-flex align-center gap-16 mb-16 district-hero-badges">
+                  <span className="badge badge-gold district-hero-badge">
+                    <i className="fas fa-certificate"></i> ODOP District
+                  </span>
+                  <span className="badge badge-success district-hero-badge">
+                    <i className="fas fa-check-circle"></i> GI Tagged Product
+                  </span>
+                  <span className="badge district-hero-badge district-hero-badge-export">
+                    <i className="fas fa-globe"></i> Top Export District
+                  </span>
                 </div>
+
+                <h1 className="district-hero-title">{district.name}, Uttar Pradesh</h1>
+                <p className="district-hero-subtitle">
+                  <i className="fas fa-star district-hero-star"></i>&nbsp; ODOP Product: <strong
+                    className="district-hero-product-name">{district.title}</strong>
+                </p>
+                <p className="district-hero-description">
+                  {district.short_description || `Exploring the unique heritage, products, and culture of ${district.name} district.`}
+                </p>
               </div>
-            </div>
-            <div className="about-overview-content">
-              <div className="section-eyebrow">District Overview</div>
-              <h2 className="section-title">{district.name} - {district.hindi_name}</h2>
-              <div 
-                className="text-gray-700 text-lg leading-relaxed prose prose-red max-w-none"
-                dangerouslySetInnerHTML={{ __html: district.description }}
-              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. SPECIAL SECTION: DISTRICT PRODUCT (ODOP) */}
-      {featuredProduct && (
-        <section className="about-section bg-gray-50">
-          <div className="container">
-            <div className="section-header">
-              <span className="eyebrow">Featured Product</span>
-              <h2 className="section-title">One District One Product (ODOP)</h2>
+      {/* TABS SECTION */}
+      <section className="section district-portal-products">
+        <div className="container">
+          <div className="section-header district-portal-section-head">
+            <div className="district-portal-tab-list" role="tablist">
+              <button 
+                className={`eyebrow district-portal-tab ${activeTab === "products" ? "active" : ""}`} 
+                onClick={() => setActiveTab("products")}
+                type="button"
+                role="tab" 
+                aria-selected={activeTab === "products"}
+              >
+                Explore Products &amp; Suppliers
+              </button>
+              <button 
+                className={`eyebrow district-portal-tab ${activeTab === "overview" ? "active" : ""}`} 
+                onClick={() => setActiveTab("overview")}
+                type="button" 
+                role="tab"
+                aria-selected={activeTab === "overview"}
+              >
+                District Overview &amp; Insights
+              </button>
+              <button 
+                className={`eyebrow district-portal-tab ${activeTab === "knowledge" ? "active" : ""}`} 
+                onClick={() => setActiveTab("knowledge")}
+                type="button" 
+                role="tab"
+                aria-selected={activeTab === "knowledge"}
+              >
+                Knowledge Hub
+              </button>
             </div>
-            <div className="about-overview-grid items-center">
-              <div className="about-overview-content">
-                <div className="section-eyebrow">Main Product</div>
-                <h2 className="section-title">{featuredProduct.name}</h2>
-                <div 
-                  className="text-gray-600 mb-8 line-clamp-6 leading-relaxed prose prose-sm"
-                  dangerouslySetInnerHTML={{ __html: featuredProduct.description }}
-                />
-                <button 
-                  onClick={() => openModal({
-                    name: featuredProduct.name,
-                    descriptions: featuredProduct.description,
-                    thumbnail: featuredProduct.thumbnail
-                  })}
-                  className="btn btn-primary btn-lg"
-                >
-                  Explore Details <FaUpRightFromSquare />
-                </button>
-              </div>
-              <div className="about-overview-visual">
-                <div className="about-image-stack">
-                  <img
-                    src={getImageUrl(featuredProduct.thumbnail)}
-                    alt={featuredProduct.name}
-                    className="about-main-image !rounded-2xl shadow-2xl"
-                  />
+            <h2>{district.name} District Products, Suppliers and Profile</h2>
+            <p>Discover {district.name}&apos;s ODOP products, connect with suppliers, and access district and scheme information from one page.</p>
+            </div>
+
+            <div className="district-portal-tab-panels">
+            {/* TAB 1: PRODUCTS */}
+            {activeTab === "products" && (
+              <div className="district-portal-tab-panel active">
+                <form className="hero-search district-profile-inline-search reveal" onSubmit={(e) => e.preventDefault()}>
+                  <label className="hero-search-field">
+                    <i className="fas fa-search"></i>
+                    <input type="text" placeholder={`Ask AI something like 'Show ${district.name} ${district.title} suppliers'`} />
+                    <button className="hero-search-action" type="submit">
+                      <i className="fas fa-arrow-right"></i>
+                    </button>
+                  </label>
+                </form>
+                <div className="district-about-grid district-portal-overview-grid district-portal-products-grid">
+                  <section className="district-side-stack district-portal-products-copy">
+                    <div className="district-portal-product-stack">
+                      {products.map((product, idx) => (
+                        <div key={idx} className="district-business-shell">
+                          <div className={`district-product-panel ${idx !== products.length - 1 ? "district-product-divider" : ""}`}>
+                            <div className="district-product-showcase">
+                              <div className="district-product-chip-row">
+                                <span className="district-product-chip">
+                                  {idx === 0 ? "Primary Product" : idx === 1 ? "Secondary Product" : "Tertiary Product"}
+                                </span>
+                              </div>
+                              <div className="district-product-copy">
+                                <h2>{product.name}</h2>
+                                <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                              </div>
+                              <div className="district-product-gallery-strip">
+                                <figure className="district-product-visual district-product-visual-strip">
+                                  <img src={getImageUrl(product.thumbnail)} alt={product.name} loading="lazy" />
+                                </figure>
+                                <figure className="district-product-visual district-product-visual-strip">
+                                  <img src={getImageUrl(product.thumbnail)} alt={product.name} loading="lazy" />
+                                </figure>
+                                <figure className="district-product-visual district-product-visual-strip">
+                                  <img src={getImageUrl(product.thumbnail)} alt={product.name} loading="lazy" />
+                                </figure>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* Sidebar - Suppliers (Static design with placeholders) */}
+                  <section className="district-side-stack district-portal-products-side">
+                    <div className="district-portal-supplier-rail-inner">
+                      <div className="district-portal-split-head district-portal-supplier-head">
+                        <span className="eyebrow">Suppliers</span>
+                        <h3>Featured suppliers from {district.name}</h3>
+                        <p>See the top supplier details side by side with the product information.</p>
+                      </div>
+
+                      <div className="top-five-stack district-portal-top-suppliers">
+                        <div className="top-five-group">
+                          <div className="top-five-group-head">
+                            <h3>Top Manufacturers</h3>
+                          </div>
+                          <div className="top-five-card-grid">
+                            <article className="top-five-media-card">
+                              <div className="top-five-media-top">
+                                <img src={getImageUrl(district.thumbnail)} alt="Manufacturer facility" loading="lazy" />
+                                <span className="top-five-badge"><i className="far fa-bell"></i></span>
+                                <span className="top-five-verified"><i className="fas fa-id-card"></i> Verified</span>
+                              </div>
+                              <div className="top-five-media-body">
+                                <h4>{district.name} Excellence Units</h4>
+                                <div className="top-five-location"><i className="fas fa-location-dot"></i> {district.name}, UP</div>
+                                <p>Leading manufacturers of {district.title} and related accessories in the district.</p>
+                                <div className="top-five-card-actions">
+                                  <Link href="/supplier-listing" className="top-five-primary-btn">View Profile <i className="fas fa-arrow-right"></i></Link>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                          <div className="district-portal-supplier-group-cta">
+                            <Link href="/supplier-listing?type=manufacturer" className="top-five-view-all">View All Manufacturers <i className="fas fa-arrow-right"></i></Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-      )}
+            )}
 
-      {/* 3. DYNAMIC SECTIONS */}
-      {districtType && districtType.map((section, sIdx) => (
-        <section key={sIdx} className="section pb-20">
-          <div className="container">
-            <div className="section-header centered-header !mb-12">
-               <h2 className="section-title">{section.name}</h2>
-               <div className="divider"><span></span><span></span><span></span></div>
-            </div>
-            
-            <div className="schemes-grid">
-              {section.district_famous.map((item, iIdx) => (
-                <div 
-                  key={iIdx}
-                  className="scheme-card cursor-pointer"
-                  onClick={() => openModal({
-                    name: item.name,
-                    descriptions: item.descriptions,
-                    thumbnail: item.thumbnail
-                  })}
-                >
-                  <div className="overflow-hidden h-60 rounded-t-2xl">
-                    <img 
-                      src={getImageUrl(item.thumbnail)} 
-                      alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
+            {/* TAB 2: OVERVIEW */}
+            {activeTab === "overview" && (
+              <div className="district-portal-tab-panel active">
+                <div className="district-portal-overview-shell">
+                  <div className="mini-stats-grid district-portal-overview-stats">
+                    <div className="mini-stat">
+                      <span className="mini-stat-number">22.1L</span>
+                      <span className="mini-stat-label"><i className="fas fa-users district-stat-icon district-stat-icon-primary"></i> Metro Population</span>
+                    </div>
+                    <div className="mini-stat">
+                      <span className="mini-stat-number">6</span>
+                      <span className="mini-stat-label"><i className="fas fa-map district-stat-icon district-stat-icon-secondary"></i> Tehsils</span>
+                    </div>
+                    <div className="mini-stat">
+                      <span className="mini-stat-number">15</span>
+                      <span className="mini-stat-label"><i className="fas fa-sitemap district-stat-icon district-stat-icon-success"></i> Blocks</span>
+                    </div>
+                    <div className="mini-stat">
+                      <span className="mini-stat-number">7200</span>
+                      <span className="mini-stat-label"><i className="fas fa-industry district-stat-icon district-stat-icon-gold"></i> Small Industries</span>
+                    </div>
                   </div>
-                  <div className="scheme-card-body">
-                    <h3 className="scheme-name mb-3">{item.name}</h3>
-                    <div 
-                      className="text-gray-600 line-clamp-3 text-sm prose prose-sm"
-                      dangerouslySetInnerHTML={{ __html: item.descriptions }}
-                    />
-                  </div>
-                  <div className="scheme-card-footer">
-                    <button className="btn btn-outline-primary btn-sm btn-full">Learn More</button>
+
+                  <div className="district-about-grid district-portal-overview-grid">
+                    <div className="district-portal-overview-copy">
+                      <span className="eyebrow district-about-eyebrow">About the District</span>
+                      <h2 className="district-about-title">{district.name} - Heritage and Enterprise</h2>
+                      <div className="district-about-copy" dangerouslySetInnerHTML={{ __html: district.description }} />
+
+                      <div className="district-about-facts-grid">
+                        <div className="district-about-fact">
+                          <div className="district-about-fact-icon district-about-fact-icon-primary"><i className="fas fa-map-marker-alt"></i></div>
+                          <h5 className="district-about-fact-title">Location</h5>
+                          <p className="district-about-fact-text">{district.name} district, Uttar Pradesh.</p>
+                        </div>
+                        <div className="district-about-fact">
+                          <div className="district-about-fact-icon district-about-fact-icon-success"><i className="fas fa-globe"></i></div>
+                          <h5 className="district-about-fact-title">Reach</h5>
+                          <p className="district-about-fact-text">Strong tourism demand and an internationally known identity.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="district-side-stack district-portal-overview-side">
+                      <div className="district-feature-card district-portal-overview-feature">
+                        <img src={getImageUrl(district.thumbnail)} alt={district.name} className="district-feature-image" loading="lazy" />
+                        <div className="district-feature-overlay">
+                          <p className="district-feature-caption">
+                            <i 
+                              className="fas fa-play-circle district-feature-caption-icon cursor-pointer" 
+                              onClick={() => setActiveVideoId(getYoutubeId(district.url))}
+                            ></i>
+                            {district.name} ecosystem - manufacturing, trading and export-ready production hubs
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="card-base district-dossier-card district-portal-overview-dossier">
+                        <div className="district-detail-list">
+                          {districtType.map((type, idx) => (
+                            <details key={idx} className="district-detail-card">
+                              <summary>
+                                <span>
+                                  <i className={`fas ${
+                                    idx === 0 ? "fa-monument" : 
+                                    idx === 1 ? "fa-utensils" : 
+                                    idx === 2 ? "fa-place-of-worship" : 
+                                    "fa-feather-pointed"
+                                  }`}></i> {type.name}
+                                </span>
+                                <i className="fas fa-plus"></i>
+                              </summary>
+                              <div className="district-detail-body">
+                                <div className="district-detail-pair-list">
+                                  {type.district_famous.map((item, fIdx) => (
+                                    <div key={fIdx} className="district-detail-pair">
+                                      <div className="district-detail-copy">
+                                        <strong>{item.name}:</strong>
+                                        <div dangerouslySetInnerHTML={{ __html: item.descriptions }} />
+                                      </div>
+                                      <figure className="district-inline-photo">
+                                        <img src={getImageUrl(item.thumbnail)} alt={item.name} loading="lazy" />
+                                        <figcaption>{item.name}</figcaption>
+                                      </figure>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </details>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
+
+            {/* TAB 3: KNOWLEDGE HUB */}
+            {activeTab === "knowledge" && (
+              <div className="district-portal-tab-panel active">
+                <div className="district-portal-knowledge-grid">
+                  <article className="district-portal-resource-card">
+                    <h3>Video references</h3>
+                    <p>Access district media, craft documentation and promotional references.</p>
+                    <ul className="district-portal-resource-list">
+                      <li><a href="#">{district.name} district industry overview video</a></li>
+                      <li><a href="#">ODOP promotional media</a></li>
+                    </ul>
+                  </article>
+                  <article className="district-portal-resource-card">
+                    <h3>Project report</h3>
+                    <p>Download project and planning documents for reference before contacting suppliers.</p>
+                    <ul className="district-portal-resource-list">
+                      <li><a href="#">{district.title} Project Report</a></li>
+                      <li><a href="#">ODOP PPR List</a></li>
+                    </ul>
+                  </article>
+                  <article className="district-portal-resource-card">
+                    <h3>Other information</h3>
+                    <p>Use these knowledge links for scheme review and enquiry planning.</p>
+                    <ul className="district-portal-resource-list">
+                      <li><Link href="/odop-schemes">Government schemes</Link></li>
+                      <li><Link href="/supplier-listing">Supplier directory</Link></li>
+                      <li><Link href="/contact-us">Support and contact details</Link></li>
+                    </ul>
+                  </article>
+                </div>
+                <div className="district-portal-knowledge-links">
+                  <a href="#" className="btn btn-outline-primary">Access Videos</a>
+                  <a href="#" className="btn btn-primary">Download Project Report</a>
+                  <Link href="/odop-schemes" className="btn btn-outline-secondary">View Related Information</Link>
+                </div>
+              </div>
+            )}
           </div>
-        </section>
-      ))}
+        </div>
+      </section>
 
-      {/* 4. MODAL INTERACTION */}
-      {isModalOpen && selectedItem && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          {/* Overlay */}
-          <div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
-            onClick={closeModal}
-          ></div>
-          
-          {/* Content */}
-          <div 
-            className={`relative bg-white  w-full max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl transition-all duration-300 transform ${isModalOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
-          >
-            <button 
-              onClick={closeModal}
-              className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/20 hover:bg-black/40 backdrop-blur-md  flex items-center justify-center text-white transition-colors cursor-pointer"
-            >
-              <FaXmark className="text-xl" />
-            </button>
+      {/* SEARCH SECTION */}
+      <section className="section district-portal-search">
+        <div className="container">
+          <div className="district-portal-search-panel">
+            <div className="district-portal-search-head">
+              <span className="eyebrow">Product Type Search</span>
+              <h2>Supplier Search for {district.name} District</h2>
+              <p>Search by product name, supplier type, category or local area within {district.name}.</p>
+            </div>
+            <form className="district-portal-search-form">
+              <div className="district-portal-search-field district-portal-search-field-wide">
+                <label>Product name</label>
+                <input type="text" placeholder="Search products..." />
+              </div>
+              <div className="district-portal-search-field">
+                <label>Supplier type</label>
+                <select>
+                  <option>All supplier types</option>
+                  <option>Manufacturer</option>
+                  <option>Wholesaler</option>
+                </select>
+              </div>
+              <div className="district-portal-search-field">
+                <label>Category</label>
+                <select>
+                  <option>All categories</option>
+                  <option>{district.title}</option>
+                  <option>Handicrafts</option>
+                </select>
+              </div>
+              <div className="district-portal-search-field">
+                <label>Location</label>
+                <select>
+                  <option>All {district.name} locations</option>
+                </select>
+              </div>
+              <div className="district-portal-search-actions">
+                <Link href="/supplier-listing" className="btn btn-primary btn-lg">Open Supplier Directory</Link>
+                <Link href="/supplier-registration" className="btn btn-outline-primary btn-lg">Submit Enquiry</Link>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
 
-            <div className="flex flex-col md:flex-row h-full">
-              <div className="md:w-1/2 h-64 md:h-auto overflow-hidden">
-                <img 
-                  src={getImageUrl(selectedItem.thumbnail)} 
-                  alt={selectedItem.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto">
-                <h2 className="text-3xl font-bold mb-6 text-gray-900">
-                  {selectedItem.name}
-                </h2>
-                <div className="w-20 h-1 bg-[#E8562E] mb-8"></div>
-                <div 
-                  className="text-gray-700 leading-relaxed text-lg prose prose-red max-w-none"
-                  dangerouslySetInnerHTML={{ __html: selectedItem.descriptions }}
-                />
-              </div>
+      {/* SCHEMES SECTION */}
+      <section className="section section-alt district-portal-schemes">
+        <div className="container">
+          <div className="section-header district-portal-section-head">
+            <span className="eyebrow">Government Schemes</span>
+            <h2>Scheme Support for {district.name} District</h2>
+            <p>Explore scheme categories relevant to supplier growth and ODOP participation.</p>
+          </div>
+          <div className="district-portal-schemes-grid">
+            <article className="district-portal-scheme-card">
+              <h3>MSME Support</h3>
+              <p>Business development assistance and enterprise facilitation for small units.</p>
+              <Link href="/odop-schemes">View Details</Link>
+            </article>
+            <article className="district-portal-scheme-card">
+              <h3>ODOP Schemes</h3>
+              <p>District-linked ODOP incentives and product development support.</p>
+              <Link href="/odop-schemes">View Eligibility</Link>
+            </article>
+            <article className="district-portal-scheme-card">
+              <h3>Loan / Subsidy</h3>
+              <p>Capital support and linked subsidy routes for unit expansion.</p>
+              <Link href="/odop-schemes">View Details</Link>
+            </article>
+            <article className="district-portal-scheme-card">
+              <h3>Machinery Support</h3>
+              <p>Technology assistance for production capacity and quality.</p>
+              <Link href="/odop-schemes">View Eligibility</Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* ENQUIRY SECTION */}
+      <section className="section district-portal-enquiry-section">
+        <div className="container">
+          <div className="district-portal-enquiry-banner">
+            <div>
+              <span className="district-portal-enquiry-kicker">Business Enquiry</span>
+              <h2>Submit a Supplier Enquiry for {district.name}</h2>
+              <p>Use the enquiry route to connect with suitable manufacturers and wholesalers.</p>
+            </div>
+            <div className="district-portal-enquiry-actions">
+              <Link href="/supplier-registration" className="btn btn-primary btn-lg">Submit Enquiry</Link>
+              <Link href="/contact-us" className="btn btn-outline-white btn-lg">Contact ODOP Helpdesk</Link>
             </div>
           </div>
         </div>
-      )}
+      </section>
 
       {/* Video Modal Component */}
-      <VideoModal 
-        videoId={activeVideoId} 
-        onClose={() => setActiveVideoId(null)} 
-      />
-    </div>
+      <VideoModal videoId={activeVideoId} onClose={() => setActiveVideoId(null)} />
+    </main>
   );
 }

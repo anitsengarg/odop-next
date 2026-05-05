@@ -15657,3 +15657,1010 @@ select.form-control {
         width: 100%;
     }
 }
+
+.district-portal-page {
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+}
+
+.district-portal-hero {
+    position: relative;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.district-portal-hero-media,
+.district-portal-hero-overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.district-portal-hero-media {
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.02);
+}
+
+.district-portal-hero-overlay {
+    background:
+        linear-gradient(90deg, rgba(7, 15, 29, 0.86) 0%, rgba(10, 24, 49, 0.72) 46%, rgba(13, 32, 64, 0.34) 100%),
+        linear-gradient(180deg, rgba(10, 20, 34, 0.18) 0%, rgba(10, 20, 34, 0.62) 100%);
+}
+
+.district-portal-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.district-portal-hero-content {
+    width: min(760px, 100%);
+    padding: 28px 0 14px;
+}
+
+.district-portal-breadcrumb {
+    margin-bottom: 12px;
+}
+
+.district-portal-breadcrumb a,
+.district-portal-breadcrumb .current,
+.district-portal-breadcrumb .separator {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.district-portal-kicker {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.district-portal-hero h1 {
+    color: var(--white);
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    line-height: 1.04;
+    margin-bottom: 8px;
+}
+
+.district-portal-hero-subtitle {
+    color: #f7c766;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.district-portal-hero-copy {
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 700px;
+    font-size: 0.96rem;
+    line-height: 1.65;
+    margin-bottom: 16px;
+}
+
+.district-portal-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.district-portal-hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 760px;
+}
+
+.district-portal-hero-metric {
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
+}
+
+.district-portal-hero-metric strong {
+    display: block;
+    color: var(--white);
+    font-size: 1.45rem;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.district-portal-hero-metric span {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.district-portal-section-head {
+    margin-bottom: 34px;
+}
+
+.district-portal-tab-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.district-portal-tab {
+    padding: 8px 18px;
+    font-size: 0.88rem;
+    line-height: 1.2;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.district-portal-tab:hover,
+.district-portal-tab:focus-visible {
+    border-color: rgba(232, 86, 46, 0.24);
+    box-shadow: 0 10px 24px rgba(232, 86, 46, 0.10);
+}
+
+.district-portal-tab.active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.district-portal-tab-panels {
+    position: relative;
+}
+
+.district-portal-tab-panel.active {
+    display: block;
+}
+
+.district-portal-section-head h2 {
+    margin-bottom: 10px;
+}
+
+.district-portal-section-head p {
+    max-width: 760px;
+}
+
+.district-portal-section-head-secondary h2,
+.district-portal-section-head-secondary p {
+    opacity: 0.92;
+}
+
+.district-portal-products {
+    position: relative;
+    margin-top: -50px;
+    z-index: 3;
+}
+
+.district-portal-product-primary {
+    display: grid;
+    grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+    gap: 0;
+    overflow: hidden;
+    border-radius: 30px;
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.88);
+    box-shadow: 0 24px 54px rgba(14, 25, 43, 0.10);
+    margin-bottom: 34px;
+}
+
+.district-portal-product-primary-media img {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+.district-portal-product-primary-body {
+    padding: 38px;
+}
+
+.district-portal-product-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.district-portal-product-primary-body h3,
+.district-portal-product-subhead h3,
+.district-portal-search-head h2,
+.district-portal-enquiry-banner h2 {
+    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+    margin-bottom: 14px;
+}
+
+.district-portal-product-primary-body p {
+    color: var(--text-body);
+    line-height: 1.82;
+}
+
+.district-portal-product-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.district-portal-product-stats div {
+    padding: 18px;
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.district-portal-product-stats strong {
+    display: block;
+    color: var(--secondary-dark);
+    font-size: 1.45rem;
+    margin-bottom: 6px;
+}
+
+.district-portal-product-stats span {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.district-portal-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.district-portal-card-actions-stack .btn {
+    flex: 1 1 calc(50% - 6px);
+    text-align: center;
+    justify-content: center;
+}
+
+.district-portal-product-grid-wrap+.district-portal-product-grid-wrap {
+    margin-top: 30px;
+}
+
+.district-portal-tab-supplier-block {
+    margin-top: 34px;
+}
+
+.district-portal-products-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 34px;
+    align-items: start;
+}
+
+.district-portal-products-copy {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+}
+
+.district-portal-split-head {
+    margin-bottom: 24px;
+}
+
+.district-portal-products-head {
+    padding: 24px 26px;
+    border-radius: 24px;
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.92);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.district-portal-split-head h3 {
+    margin: 10px 0 10px;
+    font-size: clamp(1.45rem, 2vw, 1.9rem);
+}
+
+.district-portal-split-head p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+
+.district-portal-product-stack {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 0;
+}
+
+.district-portal-products-copy .district-business-shell {
+    margin-bottom: 0;
+}
+
+.district-portal-products-copy .district-product-panel {
+    padding: 24px;
+    border: 1px solid rgba(226, 232, 240, 0.92);
+    border-radius: 24px;
+    background: var(--white);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+}
+
+.district-portal-products-copy .district-product-divider {
+    border-bottom: none;
+    padding-bottom: 24px;
+}
+
+.district-portal-products-copy .district-product-copy,
+.district-portal-products-copy .district-product-gallery-strip,
+.district-portal-products-copy .district-product-summary {
+    max-width: 100%;
+}
+
+.district-portal-supplier-rail-inner {
+    display: grid;
+    gap: 18px;
+    padding: 0;
+}
+
+.district-portal-products-copy,
+.district-portal-products-side {
+    min-width: 0;
+}
+
+.district-portal-products-side {
+    gap: 18px;
+}
+
+.district-portal-supplier-head h3 {
+    margin: 10px 0 10px;
+}
+
+.district-portal-supplier-head p {
+    margin: 0;
+}
+
+.district-portal-top-suppliers {
+    gap: 28px;
+}
+
+.district-portal-products-side .top-five-group-head {
+    margin-bottom: 16px;
+}
+
+.district-portal-products-side .top-five-group-head h3 {
+    font-size: clamp(1.3rem, 1.6vw, 1.55rem);
+}
+
+.district-portal-products-side .top-five-card-grid,
+.district-portal-products-side .top-five-compact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.district-portal-products-side .top-five-media-top {
+    height: 104px;
+}
+
+.district-portal-products-side .top-five-media-body,
+.district-portal-products-side .top-five-compact-card {
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.district-portal-supplier-group-cta {
+    margin-top: 14px;
+}
+
+.district-portal-supplier-group-cta .top-five-view-all {
+    width: 100%;
+    justify-content: center;
+}
+
+.district-portal-supplier-spotlight {
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.district-portal-supplier-spotlight-media {
+    position: relative;
+}
+
+.district-portal-supplier-spotlight-media img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.district-portal-supplier-verified {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: var(--radius-full);
+    background: rgba(15, 23, 42, 0.82);
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.district-portal-supplier-spotlight-body {
+    display: grid;
+    gap: 12px;
+    padding: 22px;
+}
+
+.district-portal-supplier-meta,
+.district-portal-supplier-type {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 11px;
+    border-radius: var(--radius-full);
+    background: rgba(146, 32, 60, 0.08);
+    color: #92203C;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.district-portal-supplier-spotlight-body h4,
+.district-portal-supplier-quick-card h4 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.district-portal-supplier-location,
+.district-portal-supplier-quick-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.district-portal-supplier-points {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text-body);
+    line-height: 1.7;
+}
+
+.district-portal-supplier-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.district-portal-supplier-actions .btn {
+    justify-content: center;
+}
+
+.district-portal-supplier-quick-list {
+    display: grid;
+    gap: 12px;
+}
+
+.district-portal-supplier-quick-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 20px;
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.95);
+}
+
+.district-portal-supplier-quick-card>div {
+    display: grid;
+    gap: 8px;
+}
+
+.district-portal-supplier-quick-card a {
+    color: var(--primary-dark);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.district-portal-supplier-cta {
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(47, 131, 197, 0.06);
+    border: 1px solid rgba(47, 131, 197, 0.16);
+}
+
+.district-portal-supplier-cta p {
+    margin: 0 0 14px;
+    color: var(--text-body);
+}
+
+.district-portal-supplier-actions-stack .btn {
+    flex: 1 1 100%;
+}
+
+@media (max-width: 640px) {
+
+    .district-portal-products-side .top-five-card-grid,
+    .district-portal-products-side .top-five-compact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .district-portal-supplier-quick-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .district-portal-supplier-actions {
+        flex-direction: column;
+    }
+
+    .district-portal-supplier-actions .btn {
+        width: 100%;
+    }
+}
+
+.district-portal-product-subhead {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.district-portal-product-subhead p {
+    max-width: 560px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.district-portal-secondary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.district-portal-secondary-card,
+.district-portal-supplier-card,
+.district-portal-scheme-card,
+.district-portal-tertiary-card,
+.district-portal-flow-card,
+.district-portal-search-panel {
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.92);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.district-portal-secondary-card {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    overflow: hidden;
+    border-radius: 24px;
+}
+
+.district-portal-secondary-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.district-portal-secondary-card-body {
+    padding: 20px;
+}
+
+.district-portal-secondary-card-body h4,
+.district-portal-tertiary-card h4,
+.district-portal-supplier-body h3,
+.district-portal-flow-card h3,
+.district-portal-scheme-card h3 {
+    margin-bottom: 10px;
+}
+
+.district-portal-secondary-card-body p,
+.district-portal-tertiary-card p,
+.district-portal-supplier-copy,
+.district-portal-flow-card p,
+.district-portal-scheme-card p,
+.district-portal-search-head p,
+.district-portal-enquiry-banner p {
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+
+.district-portal-secondary-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 14px 0 18px;
+}
+
+.district-portal-secondary-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    color: var(--secondary-dark);
+    font-weight: 600;
+}
+
+.district-portal-tertiary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.district-portal-insights-grid,
+.district-portal-knowledge-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.district-portal-insight-card,
+.district-portal-knowledge-card,
+.district-portal-resource-card,
+.district-portal-overview-band {
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.92);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.district-portal-insight-card,
+.district-portal-knowledge-card,
+.district-portal-resource-card {
+    padding: 24px;
+    border-radius: 24px;
+}
+
+.district-portal-overview-shell {
+    display: grid;
+    gap: 28px;
+}
+
+.district-portal-overview-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.district-portal-overview-grid {
+    gap: 34px;
+}
+
+.district-portal-overview-feature {
+    box-shadow: var(--shadow-xl);
+}
+
+.district-portal-overview-dossier {
+    padding-top: 18px;
+}
+
+.district-portal-insight-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    background: var(--secondary-light);
+    color: var(--secondary-dark);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.district-portal-insight-card strong {
+    display: block;
+    color: var(--primary);
+    margin-top: 16px;
+    font-size: 0.95rem;
+}
+
+.district-portal-overview-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-radius: 26px;
+    padding: 26px 28px;
+    margin-top: 22px;
+}
+
+.district-portal-overview-band p,
+.district-portal-knowledge-card p,
+.district-portal-resource-card p {
+    margin-bottom: 0;
+}
+
+.district-portal-knowledge-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.district-portal-resource-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.district-portal-resource-list li {
+    color: var(--text-body);
+    font-size: 0.94rem;
+}
+
+.district-portal-resource-list a {
+    font-weight: 600;
+}
+
+.district-portal-tertiary-card {
+    border-radius: 20px;
+    padding: 22px;
+    background: linear-gradient(180deg, #fbfcfe 0%, #f5f8fc 100%);
+}
+
+.district-portal-tertiary-card a,
+.district-portal-scheme-card a {
+    font-weight: 700;
+}
+
+.district-portal-suppliers {
+    background: linear-gradient(180deg, #f4f7fd 0%, #eef3fb 100%);
+}
+
+.district-portal-supplier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.district-portal-supplier-card {
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.district-portal-supplier-media {
+    position: relative;
+    height: 210px;
+    background: #e9eef7;
+}
+
+.district-portal-supplier-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.district-portal-supplier-media-artisan img {
+    object-fit: contain;
+    padding: 16px;
+}
+
+.district-portal-supplier-badge {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    background: rgba(7, 15, 29, 0.84);
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.district-portal-supplier-body {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.district-portal-supplier-location {
+    color: var(--secondary-dark);
+    font-weight: 600;
+    margin: 0;
+}
+
+.district-portal-supplier-meta {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+}
+
+.district-portal-supplier-meta li {
+    color: var(--text-body);
+    font-size: 0.9rem;
+}
+
+.district-portal-search-panel {
+    border-radius: 30px;
+    padding: 34px;
+}
+
+.district-portal-search-head {
+    margin-bottom: 22px;
+}
+
+.district-portal-search-form {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.district-portal-search-field-wide {
+    grid-column: span 2;
+}
+
+.district-portal-search-field label {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--secondary-dark);
+    margin-bottom: 8px;
+}
+
+.district-portal-search-field input,
+.district-portal-search-field select {
+    width: 100%;
+    min-height: 54px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #fbfcfe;
+    color: var(--text-body);
+}
+
+.district-portal-search-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 8px;
+}
+
+.district-portal-flow-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.district-portal-flow-card {
+    position: relative;
+    border-radius: 26px;
+    padding: 28px;
+}
+
+.district-portal-flow-card::after {
+    content: '\2192';
+    position: absolute;
+    top: 28px;
+    right: -14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 0.9rem;
+    box-shadow: 0 10px 20px rgba(232, 86, 46, 0.24);
+}
+
+.district-portal-flow-card:last-child::after {
+    display: none;
+}
+
+.district-portal-flow-step {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.district-portal-district-info {
+    background: linear-gradient(180deg, #fbfcfe 0%, #f4f7fb 100%);
+}
+
+.district-portal-info-accordion {
+    display: grid;
+    gap: 12px;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.district-portal-info-item {
+    border: 1px solid rgba(226, 232, 240, 0.92);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.86);
+    overflow: hidden;
+}
+
+.district-portal-info-item summary {
+    padding: 18px 22px;
+    list-style: none;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--secondary-dark);
+}
+
+.district-portal-info-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.district-portal-info-item p {
+    padding: 0 22px 20px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.75;
+}
+
+.district-portal-schemes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.district-portal-scheme-card {
+    border-radius: 22px;
+    padding: 24px;
+}
+
+.district-portal-enquiry-section {
+    padding-top: 0;
+}
+
+.district-portal-enquiry-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 34px 38px;
+    border-radius: 30px;
+    background:
+        linear-gradient(120deg, rgba(11, 31, 65, 0.98) 0%, rgba(27, 60, 114, 0.98) 54%, rgba(232, 86, 46, 0.96) 100%);
+    box-shadow: 0 24px 50px rgba(13, 29, 54, 0.18);
+}
+
+.district-portal-enquiry-kicker {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.district-portal-enquiry-banner h2,
+.district-portal-enquiry-banner p {
+    color: var(--white);
+}
+
+.district-portal-enquiry-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-end;
+}
