@@ -94,7 +94,7 @@ async function getDistricts(): Promise<DistrictProduct[]> {
       next: { revalidate: 3600 },
     });
     
-    let data: any
+
     let decryptedData: any = await decrypt128((response.data as any).body);
     const items = decryptedData?.data?.district ||  [];
 
@@ -107,7 +107,7 @@ async function getDistricts(): Promise<DistrictProduct[]> {
       id: item.id,
       slug: item.slug || item.district_name?.toLowerCase().replace(/\s+/g, "-") || "",
       name: item.district_name || item.name || "District",
-      img: item.image || item.thumbnail || `/assets/img/district/${item.slug}.jpg`,
+      img:  item.thumbnail || item.hindi_thumbnail  || `/assets/img/district/${item.slug}.jpg`,
       product: item.title || "-",
       secondary_product: item.secondary_product || "",
       tertiary_product: item.tertiary_product || "",
@@ -121,7 +121,7 @@ async function getDistricts(): Promise<DistrictProduct[]> {
 
 export default async function DistrictsPage() {
   const districts = await getDistricts();
-
+ 
   return (
     <main className="main-content district-products-page">
       {/* ===== PAGE HERO ===== */}
