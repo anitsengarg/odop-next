@@ -11,6 +11,7 @@ export interface SuccessStory {
   district: string;
   thumbnail: string;
   video_id: string;
+  video_url: string;
   duration?: string;
 }
 

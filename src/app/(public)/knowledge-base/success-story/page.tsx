@@ -15,6 +15,7 @@ async function getSuccessStories(): Promise<any> {
     });
     let decryptedData: any = await decrypt128((response.data as any).body);
     let data = decryptedData?.data?.data || decryptedData?.data || decryptedData;
+    console.log("Decrypted Success Stories Data:", data);
     if (data && typeof data === 'object' && !Array.isArray(data)) {
       const arrayVal = Object.values(data).find(val => Array.isArray(val));
       if (arrayVal) data = arrayVal;
@@ -41,7 +42,8 @@ export default async function SuccessStoryPage() {
     description: item.short_description || item.description || "Success Story",
     district: item.district?.name || item.district || "Uttar Pradesh",
     thumbnail: item.thumbnail ? `${API_CONFIG.IMAGE_BASE_URL}${item.thumbnail}` : "/assets/img/placeholder.jpg",
-    video_id: getYouTubeId(item.url) || item.video_id || "",
+    video_id: getYouTubeId(item.video_url) || item.video_id || "",
+    video_url: item.video_url || "",
     duration: item.duration || undefined,
   }));
 
