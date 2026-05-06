@@ -49,7 +49,7 @@ const sitemapSections: Array<{ title: string; links: Array<{ label: string; href
       { label: "Project Report", href: "/knowledge-base/project-report" },
       { label: "Documentary", href: "/knowledge-base/documentary" },
       { label: "Success Story", href: "/knowledge-base/success-story" },
-      { label: "Project Video", href: "/knowledge-base/project-video" },
+      { label: "Product Video", href: "/knowledge-base/project-video" },
     ],
   },
   {
