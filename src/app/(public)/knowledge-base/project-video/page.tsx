@@ -39,6 +39,7 @@ async function getProjectVideos(): Promise<ProjectVideo[]> {
       id: item.id || Math.random().toString(),
       title: item.title || item.name || item.product_name || "Product Video",
       district: item.district || item.district_name || "Uttar Pradesh",
+      city_name: item.sub_category.name || item.sub_category.hindi_name || "Lucknow",
       description: item.description || item.short_description || item.content || "Description not available.",
       thumbnail: item.thumbnail || item.image || item.image_url || "",
       video_url: getYouTubeId(item?.sub_category?.video_url || item?.sub_category?.url),

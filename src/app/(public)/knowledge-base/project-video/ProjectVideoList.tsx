@@ -9,6 +9,7 @@ export interface ProjectVideo {
   id: number | string;
   title: string;
   district: string;
+  city_name: string;
   description: string;
   thumbnail: string;
   video_url: string; // Used to extract youtube id
@@ -68,7 +69,7 @@ export function ProjectVideoList({ videos }: ProjectVideoListProps) {
               </span>
               <span className="kb-pv-card__shade" aria-hidden="true"></span>
               <span className="kb-pv-card__inner">
-                <span className="kb-pv-card__tag">{video.district}</span>
+                <span className="kb-pv-card__tag">{video.city_name}</span>
                 <span className="kb-pv-card__title">{video.title}</span>
                 <span className="kb-pv-card__cta">Watch Video</span>
               </span>

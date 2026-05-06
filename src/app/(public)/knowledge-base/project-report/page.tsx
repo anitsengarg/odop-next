@@ -22,7 +22,7 @@ const reports = [
 
 async function DynamicProjectReports() {
   const reportsData = await fetchProjectReports();
-  let decryptedData: any = null;
+  let decryptedData: any = null ;
 
   if (reportsData.success && reportsData.data && typeof (reportsData.data as any).body === "string") {
     try {
