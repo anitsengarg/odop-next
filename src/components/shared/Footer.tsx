@@ -38,7 +38,7 @@ function Footer() {
                                         <Link href="/knowledge-base/success-story"><LuChevronRight /> Success Story</Link>
                                     </li>
                                     <li>
-                                        <Link href="/knowledge-base/project-video"><LuChevronRight /> Project Video</Link>
+                                        <Link href="/knowledge-base/project-video"><LuChevronRight /> Product Video</Link>
                                     </li>
                                     <li>
                                         <Link href="/districts"><LuChevronRight /> Districts</Link>

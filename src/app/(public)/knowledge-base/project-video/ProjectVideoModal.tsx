@@ -47,7 +47,7 @@ export function ProjectVideoModal({ video, onClose }: ProjectVideoModalProps) {
           </div>
           <div id="kb-pv-modal-desc" className="kb-pv-modal__desc">
             <span>Description</span>
-            <p>{video.description}</p>
+            <p dangerouslySetInnerHTML={{ __html: video.description }} />
           </div>
         </div>
       </div>

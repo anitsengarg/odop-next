@@ -4,9 +4,17 @@ import { ProjectVideoList, ProjectVideo } from "./ProjectVideoList";
 import { decrypt128 } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "Project Video | Knowledge Base | ODOP UP Portal",
-  description: "ODOP UP project videos — district-level documentations and programme highlights."
+  title: "Product Video | Knowledge Base | ODOP UP Portal",
+  description: "ODOP UP product videos — district-level documentations and programme highlights."
 };
+
+  const getYouTubeId = (url: string | undefined | null): string => {
+    if (!url || url === "null") return "";
+    const match = url.match(/[?&]v=([^&]+)/);
+    return match ? match[1] : url;
+  };
+
+
 
 async function getProjectVideos(): Promise<ProjectVideo[]> {
   try {
@@ -19,25 +27,24 @@ async function getProjectVideos(): Promise<ProjectVideo[]> {
       const decryptedData = await decrypt128((response.data as any).body);
 
       data = typeof decryptedData === "string" ? JSON.parse(decryptedData) : decryptedData;
+      console.log("Decrypted product video data:", data);
     } else {
       data = response.data;
     }
 
-    // Adapt to actual API response structure based on typical ODOP endpoints
     const items = data?.data?.product || data?.data || data || [];
-
     if (!Array.isArray(items)) return [];
 
     return items.map((item: any) => ({
       id: item.id || Math.random().toString(),
-      title: item.title || item.name || item.product_name || "Project Video",
+      title: item.title || item.name || item.product_name || "Product Video",
       district: item.district || item.district_name || "Uttar Pradesh",
       description: item.description || item.short_description || item.content || "Description not available.",
       thumbnail: item.thumbnail || item.image || item.image_url || "",
-      video_url: item.video_url || item.url || item.youtube_id || "",
+      video_url: getYouTubeId(item?.sub_category?.video_url || item?.sub_category?.url),
     }));
   } catch (error) {
-    console.error("Error fetching project videos:", error);
+    console.error("Error fetching Product videos:", error);
     return [];
   }
 }
@@ -45,7 +52,6 @@ async function getProjectVideos(): Promise<ProjectVideo[]> {
 export default async function ProjectVideoPage() {
   const videos = await getProjectVideos();
 
-  // If API has no data, fallback to dummy data based on HTML design
   const displayVideos = videos.length > 0 ? videos : [
     {
       id: "x4yQU1nxa_Q",
@@ -102,7 +108,7 @@ export default async function ProjectVideoPage() {
       <section className="page-hero schemes-hero">
         <div className="page-hero-overlay" />
         <div className="container page-hero-content">
-          <h1 className="page-hero-title">Project Video</h1>
+          <h1 className="page-hero-title">Product Video</h1>
           <p className="page-hero-subtitle">
             Official programme videos, event highlights and knowledge capsules from ODOP Uttar Pradesh.
           </p>
@@ -112,7 +118,7 @@ export default async function ProjectVideoPage() {
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">Knowledge Base</span>
-          <h2>Project Video</h2>
+          <h2>Product Video</h2>
           <div className="divider">
             <span />
             <span />

@@ -343,7 +343,7 @@ function Navbar() {
                                             <li role="listitem"><Link href="/knowledge-base/project-report" onClick={onLeafNavClick} aria-current={pathname === "/knowledge-base/project-report" ? "page" : undefined}>Project Report</Link></li>
                                             <li role="listitem"><Link href="/knowledge-base/documentary" onClick={onLeafNavClick} aria-current={pathname === "/knowledge-base/documentary" ? "page" : undefined}>Documentary</Link></li>
                                             <li role="listitem"><Link href="/knowledge-base/success-story" onClick={onLeafNavClick} aria-current={pathname === "/knowledge-base/success-story" ? "page" : undefined}>Success Story</Link></li>
-                                            <li role="listitem"><Link href="/knowledge-base/project-video" onClick={onLeafNavClick} aria-current={pathname === "/knowledge-base/project-video" ? "page" : undefined}>Project Video</Link></li>
+                                            <li role="listitem"><Link href="/knowledge-base/project-video" onClick={onLeafNavClick} aria-current={pathname === "/knowledge-base/project-video" ? "page" : undefined}>Product Video</Link></li>
                                         </ul>
                                     </li>
                                     <li

@@ -21,7 +21,6 @@ interface ProjectVideoListProps {
 export function ProjectVideoList({ videos }: ProjectVideoListProps) {
   const [selectedVideo, setSelectedVideo] = useState<{ id: string; title: string; description: string } | null>(null);
 
-  // Helper to extract YouTube ID
   const getYouTubeId = (url: string | undefined | null): string => {
     if (!url || url === "null") return "";
     const match = url.match(/[?&]v=([^&]+)/);

@@ -15009,6 +15009,9 @@ select.form-control {
     z-index: 1;
     width: 100%;
     max-width: 700px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     background: var(--white);
     border-radius: var(--radius-lg);
@@ -15052,6 +15055,10 @@ select.form-control {
 
 .kb-pv-modal__body {
     padding: 6px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
 }
 
 .kb-pv-modal__title {
@@ -15088,12 +15095,13 @@ select.form-control {
 /* Short preview only — keeps the dialog within the viewport with no scrollbars */
 .kb-pv-modal__desc {
     margin-top: 10px;
-    /* max-height: 7.5rem; */
-    /* overflow: hidden; */
+    flex: 1;
+    overflow-y: auto;
     font-size: 0.8125rem;
     line-height: 1.45;
     color: var(--text-body);
     text-align: left;
+    padding-right: 4px;
 }
 
 .kb-pv-modal__desc span {
