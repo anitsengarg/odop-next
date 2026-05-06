@@ -361,7 +361,6 @@ function Navbar() {
                                         </Link>
                                         <ul id="partnerships-submenu" role="list" className={`${styles.navSubmenu} nav-submenu`}>
                                             <li role="listitem"><Link href="/partnerships/mous-list" onClick={onLeafNavClick} aria-current={pathname === "/partnerships/mous-list" ? "page" : undefined}>MOUs/GOs</Link></li>
-                                            <li role="listitem"><Link href="/partnerships/mous-list/amazon-flipkart-ecommerce-marketplace-mou" onClick={onLeafNavClick} aria-current={pathname === "/partnerships/mous-list/amazon-flipkart-ecommerce-marketplace-mou" ? "page" : undefined}>MOU Report</Link></li>
                                             <li role="listitem"><Link href="/partnerships/event-budget-report" onClick={onLeafNavClick} aria-current={pathname === "/partnerships/event-budget-report" ? "page" : undefined}>Budget Report</Link></li>
                                         </ul>
                                     </li>

@@ -1551,7 +1551,7 @@ p:last-child {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(18, 40, 85, 0.80);
+    background: rgba(103, 104, 104, 0.8);
 }
 
 .hero .container {
